@@ -4,7 +4,7 @@ This repository contains the landing page for CBAX.
 
 ## Description
 
-A simple, elegant landing page for the CBAX initiative.
+A simple landing page for the CBAX initiative.
 
 ## Development
 
