@@ -12,4 +12,4 @@ This is a static HTML website. To make changes, simply edit the HTML, CSS, and J
 
 ## Deployment
 
-The website is deployed via GitHub Pages from the main branch. 
+The website is deployed via GitHub Pages from the main branch and accessible at [cbax.io](https://cbax.io). 
