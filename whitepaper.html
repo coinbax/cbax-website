@@ -100,6 +100,23 @@
         .hidden {
             display: none;
         }
+        #loading {
+            display: none;
+            margin-top: 10px;
+        }
+        .loader {
+            border: 3px solid #2a2a2a;
+            border-radius: 50%;
+            border-top: 3px solid #605cff;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -108,81 +125,115 @@
     
     <div class="form-container">
         <p>Enter your email to download our whitepaper:</p>
-        <form id="whitepaper-form" action="https://formspree.io/f/mpzvbnpj" method="POST">
-            <input type="email" id="email" name="email" placeholder="Your email address" required>
-            <input type="hidden" name="_subject" value="New Whitepaper Download">
+        <form id="whitepaper-form">
+            <input type="email" id="email" name="emailAddress" placeholder="Your email address" required>
             <button type="submit">Submit</button>
         </form>
+        <div id="loading">
+            <div class="loader"></div>
+        </div>
         <div id="success-message" class="success-message">
             <p>Thank you! Click the button below to download the whitepaper.</p>
-            <a href="assets/Coinbax_whitepaper_DRAFT_v3.5.pdf" class="manual-download-btn" download="Coinbax_Whitepaper.pdf" id="download-link" onclick="notifyDownload()">Download Whitepaper</a>
+            <a href="assets/Coinbax_whitepaper_DRAFT_v3.5.pdf" class="manual-download-btn" download="Coinbax_Whitepaper.pdf" id="download-link">Download Whitepaper</a>
         </div>
-        
-        <!-- Hidden form for download notification -->
-        <form id="download-notification-form" action="https://formspree.io/f/mpzvbnpj" method="POST" class="hidden">
-            <input type="hidden" name="notification" value="Whitepaper was downloaded">
-            <input type="hidden" name="user_email" id="user-email-hidden">
-            <input type="hidden" name="_subject" value="Whitepaper Downloaded">
-        </form>
     </div>
     
     <a href="index.html" class="back-link">← Back to Home</a>
 
     <script>
-        // Store the submitted email to use in download notification
+        // Your Google Form submission URL
+        // Replace this with your actual Google Form URL
+        const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdpOZ6OoQ9gQ6yOqpM3JvZd4oKA-cdXTHI_UgN3wJ-5T68uQQ/formResponse';
+        
+        // ID of your email field in the Google Form
+        // Replace this with your actual field ID
+        const emailFieldId = 'entry.702654454';
+        
+        // ID of your "downloaded" field in the Google Form
+        // Replace this with your actual field ID
+        const downloadedFieldId = 'entry.1864523731';
+        
+        // Store the submitted email
         let submittedEmail = '';
         
         document.getElementById('whitepaper-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            // Show loading spinner
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('whitepaper-form').style.display = 'none';
+            
             submittedEmail = document.getElementById('email').value;
             
-            // Submit the form data to Formspree
-            const formData = new FormData(this);
+            // Create iframe for form submission
+            let iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
             
-            fetch(this.action, {
-                method: this.method,
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Show success message and download link
-                    document.getElementById('whitepaper-form').style.display = 'none';
-                    document.getElementById('success-message').style.display = 'block';
-                } else {
-                    throw new Error('Form submission failed');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                // Even if there's an error with the form, still show the download link
-                document.getElementById('whitepaper-form').style.display = 'none';
+            // Create a form within the iframe
+            let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            let form = iframeDoc.createElement('form');
+            form.action = googleFormUrl;
+            form.method = 'POST';
+            
+            // Add email field
+            let emailField = iframeDoc.createElement('input');
+            emailField.type = 'email';
+            emailField.name = emailFieldId;
+            emailField.value = submittedEmail;
+            form.appendChild(emailField);
+            
+            // Add downloaded field (initially false)
+            let downloadedField = iframeDoc.createElement('input');
+            downloadedField.type = 'text';
+            downloadedField.name = downloadedFieldId;
+            downloadedField.value = 'No';
+            form.appendChild(downloadedField);
+            
+            // Append form to iframe and submit
+            iframeDoc.body.appendChild(form);
+            form.submit();
+            
+            // Show success message after a short delay
+            setTimeout(function() {
+                document.getElementById('loading').style.display = 'none';
                 document.getElementById('success-message').style.display = 'block';
-            });
+            }, 1500);
         });
         
-        // Function to send a notification when the whitepaper is downloaded
-        function notifyDownload() {
+        // Track download clicks
+        document.getElementById('download-link').addEventListener('click', function() {
             if (submittedEmail) {
-                document.getElementById('user-email-hidden').value = submittedEmail;
+                // Create iframe for form submission
+                let iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
                 
-                const formData = new FormData(document.getElementById('download-notification-form'));
+                // Create a form within the iframe
+                let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                let form = iframeDoc.createElement('form');
+                form.action = googleFormUrl;
+                form.method = 'POST';
                 
-                fetch(document.getElementById('download-notification-form').action, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                .catch(error => {
-                    console.error('Notification error:', error);
-                });
+                // Add email field
+                let emailField = iframeDoc.createElement('input');
+                emailField.type = 'email';
+                emailField.name = emailFieldId;
+                emailField.value = submittedEmail;
+                form.appendChild(emailField);
+                
+                // Add downloaded field (set to true)
+                let downloadedField = iframeDoc.createElement('input');
+                downloadedField.type = 'text';
+                downloadedField.name = downloadedFieldId;
+                downloadedField.value = 'Yes';
+                form.appendChild(downloadedField);
+                
+                // Append form to iframe and submit
+                iframeDoc.body.appendChild(form);
+                form.submit();
             }
-        }
+        });
     </script>
 </body>
 </html> 
