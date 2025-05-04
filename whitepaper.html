@@ -84,6 +84,19 @@
             margin-top: 40px;
             display: inline-block;
         }
+        .manual-download-btn {
+            display: inline-block;
+            margin-top: 15px;
+            background-color: #605cff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .manual-download-btn:hover {
+            background-color: #4b48c7;
+        }
     </style>
 </head>
 <body>
@@ -94,11 +107,11 @@
         <p>Enter your email to download our whitepaper:</p>
         <form id="whitepaper-form">
             <input type="email" id="email" placeholder="Your email address" required>
-            <button type="submit">Download Whitepaper</button>
+            <button type="submit">Submit</button>
         </form>
         <div id="success-message" class="success-message">
-            <p>Thank you! Click the link below to download the whitepaper.</p>
-            <a href="assets/Coinbax_whitepaper_DRAFT_v3.5.pdf" download="Coinbax_Whitepaper.pdf" id="download-link" type="application/pdf">Download Whitepaper</a>
+            <p>Thank you! Click the button below to download the whitepaper.</p>
+            <a href="assets/Coinbax_whitepaper_DRAFT_v3.5.pdf" class="manual-download-btn" download="Coinbax_Whitepaper.pdf" id="download-link">Download Whitepaper</a>
         </div>
     </div>
     
