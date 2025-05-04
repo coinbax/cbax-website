@@ -98,7 +98,7 @@
         </form>
         <div id="success-message" class="success-message">
             <p>Thank you! Click the link below to download the whitepaper.</p>
-            <a href="assets/Coinbax_whitepaper_DRAFT_v3.5.pdf" download id="download-link">Download Whitepaper</a>
+            <a href="assets/Coinbax_whitepaper_DRAFT_v3.5.pdf" download="Coinbax_Whitepaper.pdf" id="download-link" type="application/pdf">Download Whitepaper</a>
         </div>
     </div>
     
@@ -116,6 +116,11 @@
             // Show success message and download link
             document.getElementById('whitepaper-form').style.display = 'none';
             document.getElementById('success-message').style.display = 'block';
+            
+            // Optional: Direct download approach
+            setTimeout(function() {
+                document.getElementById('download-link').click();
+            }, 500);
             
             // Optional: You can log the email to console for testing
             console.log('Email submitted:', email);
