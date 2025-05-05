@@ -141,17 +141,14 @@
     <a href="index.html" class="back-link">← Back to Home</a>
 
     <script>
-        // Your Google Form submission URL
-        // Replace this with your actual Google Form URL
-        const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdpOZ6OoQ9gQ6yOqpM3JvZd4oKA-cdXTHI_UgN3wJ-5T68uQQ/formResponse';
+        // Your Google Form submission URL with the correct form ID
+        const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfPVdQ55YToXc7G54xhswK9BD_GBAYgUzsjO7wqvWLikOY1wA/formResponse';
         
         // ID of your email field in the Google Form
-        // Replace this with your actual field ID
-        const emailFieldId = 'entry.702654454';
+        const emailFieldId = 'entry.817156646';
         
         // ID of your "downloaded" field in the Google Form
-        // Replace this with your actual field ID
-        const downloadedFieldId = 'entry.1864523731';
+        const downloadedFieldId = 'entry.1660808567';
         
         // Store the submitted email
         let submittedEmail = '';
@@ -183,7 +180,7 @@
             emailField.value = submittedEmail;
             form.appendChild(emailField);
             
-            // Add downloaded field (initially false)
+            // Add downloaded field (initially No)
             let downloadedField = iframeDoc.createElement('input');
             downloadedField.type = 'text';
             downloadedField.name = downloadedFieldId;
@@ -222,7 +219,7 @@
                 emailField.value = submittedEmail;
                 form.appendChild(emailField);
                 
-                // Add downloaded field (set to true)
+                // Add downloaded field (set to Yes)
                 let downloadedField = iframeDoc.createElement('input');
                 downloadedField.type = 'text';
                 downloadedField.name = downloadedFieldId;
