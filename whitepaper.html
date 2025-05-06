@@ -199,7 +199,10 @@
         });
         
         // Track download clicks
-        document.getElementById('download-link').addEventListener('click', function() {
+        document.getElementById('download-link').addEventListener('click', function(e) {
+            // Prevent the default link behavior
+            e.preventDefault();
+            
             if (submittedEmail) {
                 // Create iframe for form submission
                 let iframe = document.createElement('iframe');
@@ -229,6 +232,16 @@
                 // Append form to iframe and submit
                 iframeDoc.body.appendChild(form);
                 form.submit();
+                
+                // After a small delay to ensure the form submission completes,
+                // navigate to the PDF URL
+                const pdfUrl = document.getElementById('download-link').href;
+                setTimeout(function() {
+                    window.location.href = pdfUrl;
+                }, 300);
+            } else {
+                // If somehow no email is stored, just open the PDF directly
+                window.location.href = document.getElementById('download-link').href;
             }
         });
     </script>
