@@ -1,0 +1,17 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="200" fill="#121212" />
+  <rect x="20" y="80" width="80" height="40" rx="5" fill="#605cff" />
+  <text x="60" y="105" font-family="IBM Plex Mono, monospace" font-size="14" fill="white" text-anchor="middle">Payer</text>
+  
+  <line x1="100" y1="100" x2="150" y2="100" stroke="white" stroke-width="2" />
+  <polygon points="150,100 145,95 145,105" fill="white" />
+  
+  <rect x="160" y="80" width="80" height="40" rx="5" fill="#605cff" />
+  <text x="200" y="105" font-family="IBM Plex Mono, monospace" font-size="14" fill="white" text-anchor="middle">Escrow</text>
+  
+  <line x1="240" y1="100" x2="290" y2="100" stroke="white" stroke-width="2" />
+  <polygon points="290,100 285,95 285,105" fill="white" />
+  
+  <rect x="300" y="80" width="80" height="40" rx="5" fill="#605cff" />
+  <text x="340" y="105" font-family="IBM Plex Mono, monospace" font-size="14" fill="white" text-anchor="middle">Release</text>
+</svg> 

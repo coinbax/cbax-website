@@ -1,0 +1,59 @@
+<svg width="450" height="280" xmlns="http://www.w3.org/2000/svg" font-family="Space Grotesk, IBM Plex Mono, monospace">
+  <!-- Definitions for CSS variables (optional, can be inherited if set on parent HTML) -->
+  <style>
+    /* Default/Dark theme values as fallback if not defined in external CSS */
+    :root {
+      --diagram-node-bg: #3B82F6; /* Blue-500 */
+      --diagram-node-alt-bg: #EF4444; /* Red-500 */
+      --diagram-node-text: #FFFFFF;
+      --diagram-label-text: #D1D5DB; /* Gray-300 */
+      --diagram-arrow-stroke: #9CA3AF; /* Gray-400 */
+    }
+    /* Apply font smoothing */
+    text {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  </style>
+
+  <!-- Node 1: Payment -->
+  <circle cx="70" cy="70" r="25" fill="var(--diagram-node-bg)" />
+  <text x="70" y="75" font-size="14" fill="var(--diagram-node-text)" text-anchor="middle">1</text>
+  <text x="70" y="110" font-size="12" fill="var(--diagram-label-text)" text-anchor="middle">Payment</text>
+  
+  <!-- Arrow 1 -> 2 -->
+  <line x1="95" y1="70" x2="145" y2="70" stroke="var(--diagram-arrow-stroke)" stroke-width="2" />
+  <polygon points="145,70 138,66 138,74" fill="var(--diagram-arrow-stroke)" />
+  
+  <!-- Node 2: Risk Check -->
+  <circle cx="170" cy="70" r="25" fill="var(--diagram-node-bg)" />
+  <text x="170" y="75" font-size="14" fill="var(--diagram-node-text)" text-anchor="middle">2</text>
+  <text x="170" y="110" font-size="12" fill="var(--diagram-label-text)" text-anchor="middle">Risk Check</text>
+  
+  <!-- Arrow 2 -> 3 -->
+  <line x1="195" y1="70" x2="245" y2="70" stroke="var(--diagram-arrow-stroke)" stroke-width="2" />
+  <polygon points="245,70 238,66 238,74" fill="var(--diagram-arrow-stroke)" />
+  
+  <!-- Node 3: Review -->
+  <circle cx="270" cy="70" r="25" fill="var(--diagram-node-bg)" />
+  <text x="270" y="75" font-size="14" fill="var(--diagram-node-text)" text-anchor="middle">3</text>
+  <text x="270" y="110" font-size="12" fill="var(--diagram-label-text)" text-anchor="middle">Review</text>
+  
+  <!-- Arrow 3 -> 4 -->
+  <line x1="295" y1="70" x2="345" y2="70" stroke="var(--diagram-arrow-stroke)" stroke-width="2" />
+  <polygon points="345,70 338,66 338,74" fill="var(--diagram-arrow-stroke)" />
+  
+  <!-- Node 4: Release -->
+  <circle cx="370" cy="70" r="25" fill="var(--diagram-node-bg)" />
+  <text x="370" y="75" font-size="14" fill="var(--diagram-node-text)" text-anchor="middle">4</text>
+  <text x="370" y="110" font-size="12" fill="var(--diagram-label-text)" text-anchor="middle">Release</text>
+  
+  <!-- Arrow 3 -> 5 (Dispute) -->
+  <line x1="270" y1="95" x2="270" y2="145" stroke="var(--diagram-arrow-stroke)" stroke-width="2" />
+  <polygon points="270,145 266,138 274,138" fill="var(--diagram-arrow-stroke)" />
+  
+  <!-- Node 5: Dispute -->
+  <circle cx="270" cy="170" r="25" fill="var(--diagram-node-alt-bg)" />
+  <text x="270" y="175" font-size="14" fill="var(--diagram-node-text)" text-anchor="middle">5</text>
+  <text x="270" y="210" font-size="12" fill="var(--diagram-label-text)" text-anchor="middle">Dispute</text>
+</svg> 

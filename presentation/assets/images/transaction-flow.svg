@@ -1,0 +1,111 @@
+<svg width="600" height="280" viewBox="0 0 600 280" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+    
+    :root {
+      /* Dark mode (default) */
+      --background: transparent;
+      --primary-color: #7C8EC9;
+      --accent-color: #FF6969;
+      --text-color: #FFFFFF;
+      --line-color: rgba(255, 255, 255, 0.25);
+      --step-bg: rgba(35, 39, 47, 0.5);
+    }
+    
+    @media (prefers-color-scheme: light) {
+      :root {
+        --background: transparent;
+        --primary-color: #4F5EB3;
+        --accent-color: #E55353;
+        --text-color: #1A202C;
+        --line-color: rgba(0, 0, 0, 0.2);
+        --step-bg: rgba(239, 242, 248, 0.6);
+      }
+    }
+    
+    text {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .step {
+      fill: var(--step-bg);
+      stroke: none;
+    }
+    
+    .step-number {
+      font-weight: 600;
+      fill: var(--primary-color);
+      font-size: 24px;
+    }
+    
+    .step-alt .step-number {
+      fill: var(--accent-color);
+    }
+    
+    .step-label {
+      font-weight: 500;
+      fill: var(--text-color);
+      font-size: 15px;
+    }
+    
+    .connector {
+      stroke: var(--line-color);
+      stroke-width: 1.5;
+    }
+    
+    .arrow {
+      fill: var(--line-color);
+    }
+  </style>
+  
+  <!-- Step 1: Payment -->
+  <g class="step-group">
+    <rect class="step" x="40" y="105" width="100" height="50" rx="10" />
+    <text class="step-number" x="58" y="137" text-anchor="middle">1</text>
+    <text class="step-label" x="120" y="137" text-anchor="end">Payment</text>
+  </g>
+  
+  <!-- Connector 1 → 2 -->
+  <path class="connector" d="M150 130 H 190" />
+  <polygon class="arrow" points="190,130 185,127 185,133" />
+  
+  <!-- Step 2: Escrow -->
+  <g class="step-group">
+    <rect class="step" x="200" y="105" width="100" height="50" rx="10" />
+    <text class="step-number" x="218" y="137" text-anchor="middle">2</text>
+    <text class="step-label" x="280" y="137" text-anchor="end">Escrow</text>
+  </g>
+  
+  <!-- Connector 2 → 3 -->
+  <path class="connector" d="M310 130 H 350" />
+  <polygon class="arrow" points="350,130 345,127 345,133" />
+  
+  <!-- Step 3: Review -->
+  <g class="step-group">
+    <rect class="step" x="360" y="105" width="100" height="50" rx="10" />
+    <text class="step-number" x="378" y="137" text-anchor="middle">3</text>
+    <text class="step-label" x="440" y="137" text-anchor="end">Review</text>
+  </g>
+  
+  <!-- Connector 3 → 4 -->
+  <path class="connector" d="M470 130 H 510" />
+  <polygon class="arrow" points="510,130 505,127 505,133" />
+  
+  <!-- Step 4: Release -->
+  <g class="step-group">
+    <rect class="step" x="520" y="105" width="100" height="50" rx="10" />
+    <text class="step-number" x="538" y="137" text-anchor="middle">4</text>
+    <text class="step-label" x="600" y="137" text-anchor="end">Release</text>
+  </g>
+  
+  <!-- Connector 3 → 5 -->
+  <path class="connector" d="M410 165 V 200" />
+  <polygon class="arrow" points="410,200 407,195 413,195" />
+  
+  <!-- Step 5: Dispute -->
+  <g class="step-group step-alt">
+    <rect class="step" x="360" y="210" width="100" height="50" rx="10" />
+    <text class="step-number" x="378" y="242" text-anchor="middle">5</text>
+    <text class="step-label" x="440" y="242" text-anchor="end">Dispute</text>
+  </g>
+</svg> 

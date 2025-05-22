@@ -1,0 +1,730 @@
+/**
+ * CBAX Design System
+ * A comprehensive CSS framework for consistent presentation design
+ */
+
+:root {
+  /* Color Palette */
+  --cbax-primary: #605cff;
+  --cbax-primary-light: rgba(96, 92, 255, 0.1);
+  --cbax-primary-medium: rgba(96, 92, 255, 0.3);
+  --cbax-primary-border: rgba(96, 92, 255, 0.3);
+  --cbax-secondary: #4b48c7;
+  --cbax-accent: #ff5c5c;
+  --cbax-accent-light: rgba(255, 92, 92, 0.1);
+  --cbax-success: #00C49F;
+  --cbax-success-light: rgba(0, 196, 159, 0.1);
+  --cbax-warning: #FFB142;
+  --cbax-warning-light: rgba(255, 177, 66, 0.1);
+
+  /* Dark theme variables (default) */
+  --cbax-dark: #121212;
+  --cbax-darker: #0a0a0a;
+  --cbax-light: #f5f5f5;
+  --cbax-text: #ffffff;
+  --cbax-text-secondary: rgba(255, 255, 255, 0.7);
+  --cbax-border: rgba(255, 255, 255, 0.2);
+  --cbax-card-bg: rgba(255, 255, 255, 0.05);
+  --cbax-table-header: rgba(255, 255, 255, 0.1);
+
+  /* Typography */
+  --cbax-heading-font: 'Space Grotesk', sans-serif;
+  --cbax-body-font: 'IBM Plex Mono', monospace;
+  
+  /* Spacing */
+  --cbax-space-xs: 4px;
+  --cbax-space-sm: 8px;
+  --cbax-space-md: 16px;
+  --cbax-space-lg: 24px;
+  --cbax-space-xl: 32px;
+  
+  /* Borders & Shadows */
+  --cbax-border-radius: 8px;
+  --cbax-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.15);
+  --cbax-border-width: 2px;
+  
+  /* Transitions */
+  --cbax-transition-fast: 0.2s ease;
+  --cbax-transition-normal: 0.3s ease;
+  
+  /* Responsive Breakpoints */
+  --cbax-mobile-breakpoint: 480px;
+  --cbax-tablet-breakpoint: 768px;
+  --cbax-laptop-breakpoint: 1024px;
+  --cbax-desktop-breakpoint: 1200px;
+}
+
+/* Light Theme Variables */
+html[data-theme="light"] {
+  --cbax-dark: #f5f5f5;
+  --cbax-darker: #ffffff;
+  --cbax-light: #121212;
+  --cbax-text: #121212;
+  --cbax-text-secondary: rgba(0, 0, 0, 0.7);
+  --cbax-border: rgba(0, 0, 0, 0.2);
+  --cbax-card-bg: rgba(0, 0, 0, 0.03);
+  --cbax-table-header: rgba(0, 0, 0, 0.05);
+}
+
+/* ====== COMPONENT: CARDS & BOXES ====== */
+
+/* Standard Card */
+.cbax-card {
+  background-color: var(--cbax-card-bg);
+  border-radius: var(--cbax-border-radius);
+  padding: var(--cbax-space-md);
+  margin-bottom: var(--cbax-space-md);
+  border: 1px solid var(--cbax-border);
+  transition: transform var(--cbax-transition-normal), box-shadow var(--cbax-transition-normal);
+}
+
+.cbax-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--cbax-box-shadow);
+}
+
+/* Accent Cards with Left Border */
+.cbax-card-primary {
+  border-left: 4px solid var(--cbax-primary);
+  background-color: var(--cbax-primary-light);
+}
+
+.cbax-card-accent {
+  border-left: 4px solid var(--cbax-accent);
+  background-color: var(--cbax-accent-light);
+}
+
+.cbax-card-success {
+  border-left: 4px solid var(--cbax-success);
+  background-color: var(--cbax-success-light);
+}
+
+.cbax-card-warning {
+  border-left: 4px solid var(--cbax-warning);
+  background-color: var(--cbax-warning-light);
+}
+
+/* Feature Box - Outlined style */
+.cbax-feature-box {
+  border: var(--cbax-border-width) solid var(--cbax-primary);
+  border-radius: var(--cbax-border-radius);
+  padding: var(--cbax-space-lg);
+  text-align: center;
+  transition: background-color var(--cbax-transition-normal);
+}
+
+.cbax-feature-box:hover {
+  background-color: var(--cbax-primary-light);
+}
+
+/* Responsive card adjustments */
+@media (max-width: 768px) {
+  .cbax-card,
+  .cbax-feature-box {
+    padding: var(--cbax-space-sm);
+  }
+}
+
+/* ====== COMPONENT: CHARTS ====== */
+
+/* Chart Container */
+.cbax-chart-container {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 300px;
+  margin: var(--cbax-space-md) 0;
+  border-radius: var(--cbax-border-radius);
+  padding: var(--cbax-space-md);
+  background-color: var(--cbax-card-bg);
+  border-left: 4px solid var(--cbax-primary);
+  overflow: hidden;
+}
+
+/* Chart Legend */
+.cbax-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cbax-space-md);
+  margin-top: var(--cbax-space-sm);
+  justify-content: center;
+}
+
+.cbax-legend-item {
+  display: flex;
+  align-items: center;
+  font-family: var(--cbax-body-font);
+  font-size: 0.85em;
+  color: var(--cbax-text-secondary);
+}
+
+.cbax-legend-color {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: var(--cbax-space-xs);
+  border-radius: 3px;
+}
+
+.cbax-legend-color.primary {
+  background-color: var(--cbax-primary);
+}
+
+.cbax-legend-color.accent {
+  background-color: var(--cbax-accent);
+}
+
+.cbax-legend-color.success {
+  background-color: var(--cbax-success);
+}
+
+.cbax-legend-color.warning {
+  background-color: var(--cbax-warning);
+}
+
+/* Chart JS Customization */
+.cbax-chart {
+  font-family: var(--cbax-body-font);
+}
+
+/* ====== COMPONENT: DATA VISUALIZATION ====== */
+
+/* Flow Diagram */
+.cbax-flow-diagram {
+  width: 100%;
+  max-width: 700px;
+  max-height: 300px;
+  height: auto;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.cbax-flow-box {
+  fill: var(--cbax-card-bg);
+  stroke: var(--cbax-primary);
+  stroke-width: 2px;
+  rx: var(--cbax-border-radius);
+  ry: var(--cbax-border-radius);
+}
+
+.cbax-flow-box.alternate {
+  stroke: var(--cbax-accent);
+}
+
+.cbax-flow-text {
+  font-family: var(--cbax-heading-font);
+  font-size: 14px;
+  fill: var(--cbax-text);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+/* Text color overrides for light mode */
+html[data-theme="light"] .cbax-flow-text {
+  fill: var(--cbax-primary);
+}
+
+html[data-theme="light"] .cbax-flow-box-accent + text.cbax-flow-text,
+html[data-theme="light"] .cbax-flow-box.alternate + text.cbax-flow-text {
+  fill: var(--cbax-accent);
+}
+
+.cbax-flow-arrow {
+  stroke: var(--cbax-text-secondary);
+  stroke-width: 1.5px;
+  fill: none;
+}
+
+.cbax-flow-arrowhead {
+  fill: var(--cbax-text-secondary);
+}
+
+/* Flow diagram label specific styles */
+.cbax-flow-label {
+  font-family: var(--cbax-heading-font);
+  font-size: 14px;
+  fill: var(--cbax-text-secondary);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+html[data-theme="light"] .cbax-flow-label {
+  fill: var(--cbax-text);
+}
+
+/* SVG responsive adjustments */
+@media (max-width: 768px) {
+  .cbax-flow-text {
+    font-size: 12px;
+  }
+  
+  .cbax-flow-label {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cbax-flow-text {
+    font-size: 10px;
+  }
+  
+  .cbax-flow-label {
+    font-size: 8px;
+  }
+  
+  .cbax-flow-arrow {
+    stroke-width: 1px;
+  }
+}
+
+/* ====== COMPONENT: TABLES ====== */
+
+.cbax-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--cbax-space-md) 0;
+  font-family: var(--cbax-body-font);
+}
+
+.cbax-table th,
+.cbax-table td {
+  padding: var(--cbax-space-md);
+  text-align: left;
+  border-bottom: 1px solid var(--cbax-border);
+}
+
+.cbax-table th {
+  background-color: var(--cbax-table-header);
+  font-weight: 600;
+  color: var(--cbax-text);
+}
+
+.cbax-table tr:hover {
+  background-color: var(--cbax-primary-light);
+}
+
+.cbax-table tr.highlighted {
+  background-color: var(--cbax-primary-light);
+  border-left: 3px solid var(--cbax-primary);
+}
+
+/* Responsive table adjustments */
+@media (max-width: 768px) {
+  .cbax-table th,
+  .cbax-table td {
+    padding: var(--cbax-space-sm);
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .cbax-table {
+    font-size: 0.85em;
+  }
+  
+  .cbax-table th,
+  .cbax-table td {
+    padding: 6px;
+  }
+  
+  /* For very narrow screens, adapt the table display */
+  .cbax-table.responsive {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ====== COMPONENT: GRIDS ====== */
+
+.cbax-grid {
+  display: grid;
+  gap: var(--cbax-space-md);
+}
+
+.cbax-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.cbax-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.cbax-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .cbax-grid-3,
+  .cbax-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .cbax-grid {
+    gap: var(--cbax-space-sm);
+  }
+}
+
+@media (max-width: 768px) {
+  .cbax-grid-2,
+  .cbax-grid-3,
+  .cbax-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ====== COMPONENT: TEXT STYLES ====== */
+
+.cbax-heading {
+  font-family: var(--cbax-heading-font);
+  color: var(--cbax-text);
+  margin-bottom: var(--cbax-space-md);
+  font-weight: 700;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.cbax-heading-primary {
+  color: var(--cbax-primary);
+  border-bottom: 2px solid var(--cbax-primary);
+  padding-bottom: var(--cbax-space-xs);
+}
+
+.cbax-text-primary {
+  color: var(--cbax-primary);
+}
+
+.cbax-text-accent {
+  color: var(--cbax-accent);
+}
+
+.cbax-text-success {
+  color: var(--cbax-success);
+}
+
+.cbax-text-large {
+  font-size: 1.2em;
+}
+
+.cbax-text-small {
+  font-size: 0.85em;
+}
+
+.cbax-text-center {
+  text-align: center;
+}
+
+.cbax-source {
+  font-size: 0.75em;
+  font-style: italic;
+  color: var(--cbax-text-secondary);
+  margin-top: var(--cbax-space-sm);
+}
+
+/* Responsive text adjustments */
+@media (max-width: 768px) {
+  .cbax-heading {
+    margin-bottom: var(--cbax-space-sm);
+  }
+  
+  .cbax-text-large {
+    font-size: 1.1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .cbax-source {
+    font-size: 0.7em;
+  }
+}
+
+/* ====== COMPONENT: BUTTONS ====== */
+
+.cbax-button {
+  display: inline-block;
+  background-color: var(--cbax-primary-light);
+  color: var(--cbax-text);
+  padding: var(--cbax-space-sm) var(--cbax-space-lg);
+  border-radius: var(--cbax-border-radius);
+  border: 2px solid var(--cbax-primary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all var(--cbax-transition-normal);
+  font-family: var(--cbax-heading-font);
+  cursor: pointer;
+}
+
+.cbax-button:hover {
+  background-color: var(--cbax-primary-medium);
+  text-decoration: none;
+  color: var(--cbax-text);
+}
+
+.cbax-button-solid {
+  background-color: var(--cbax-primary);
+}
+
+.cbax-button-solid:hover {
+  background-color: var(--cbax-secondary);
+}
+
+/* Responsive button adjustments */
+@media (max-width: 768px) {
+  .cbax-button {
+    padding: 8px 16px;
+    font-size: 0.9em;
+  }
+}
+
+/* Touch device optimization for buttons */
+@media (pointer: coarse) {
+  .cbax-button {
+    min-height: 44px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+
+/* ====== COMPONENT: LISTS ====== */
+
+.cbax-list {
+  display: inline-block;
+  text-align: left;
+  margin-left: 0;
+  padding-left: 1.5em;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+  list-style-type: none;
+}
+
+.cbax-list li {
+  margin-bottom: 0.5em;
+  position: relative;
+}
+
+.cbax-list li::before {
+  content: "▪";
+  position: absolute;
+  left: -1.2em;
+  top: 0.05em;
+  color: var(--cbax-primary);
+  font-size: 0.8em;
+}
+
+.cbax-list-numbered {
+  counter-reset: item;
+  list-style-type: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.cbax-list-numbered li {
+  position: relative;
+  padding-left: 2.2em;
+  margin-bottom: 0.8em;
+}
+
+.cbax-list-numbered li::before {
+  content: counter(item) ".";
+  counter-increment: item;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: bold;
+  color: var(--cbax-primary);
+}
+
+/* Responsive list adjustments */
+@media (max-width: 768px) {
+  .cbax-list {
+    padding-left: 1.2em;
+  }
+  
+  .cbax-list li {
+    margin-bottom: 0.4em;
+  }
+  
+  .cbax-list-numbered li {
+    padding-left: 1.8em;
+  }
+}
+
+/* ====== COMPONENT: TWO-COLUMN LAYOUT ====== */
+
+.cbax-two-column {
+  display: flex;
+  width: 100%;
+  gap: var(--cbax-space-xl);
+}
+
+.cbax-column-left {
+  flex: 0.45;
+}
+
+.cbax-column-right {
+  flex: 0.55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1024px) {
+  .cbax-two-column {
+    gap: var(--cbax-space-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .cbax-two-column {
+    flex-direction: column;
+    gap: var(--cbax-space-md);
+  }
+  
+  .cbax-column-left, 
+  .cbax-column-right {
+    flex: 1;
+    width: 100%;
+  }
+}
+
+/* ====== COMPONENT: METRICS ====== */
+
+.cbax-metric {
+  text-align: center;
+  padding: var(--cbax-space-md);
+}
+
+.cbax-metric-value {
+  font-size: 3em;
+  font-weight: 700;
+  color: var(--cbax-primary);
+  font-family: var(--cbax-heading-font);
+  line-height: 1;
+}
+
+.cbax-metric-label {
+  font-size: 0.9em;
+  color: var(--cbax-text-secondary);
+  margin-top: var(--cbax-space-xs);
+}
+
+/* Responsive metric adjustments */
+@media (max-width: 1024px) {
+  .cbax-metric-value {
+    font-size: 2.5em;
+  }
+}
+
+@media (max-width: 768px) {
+  .cbax-metric-value {
+    font-size: 2em;
+  }
+  
+  .cbax-metric-label {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .cbax-metric-value {
+    font-size: 1.8em;
+  }
+}
+
+/* ====== COMPONENT: IMAGES ====== */
+
+.cbax-image {
+  max-width: 100%;
+  max-height: 320px;
+  height: auto;
+  width: auto;
+  border-radius: var(--cbax-border-radius);
+  box-shadow: var(--cbax-box-shadow);
+  border: 1px solid var(--cbax-primary-border);
+  transition: transform var(--cbax-transition-normal), box-shadow var(--cbax-transition-normal);
+  object-fit: contain;
+}
+
+.cbax-image:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cbax-image-caption {
+  text-align: center;
+  font-size: 0.85em;
+  color: var(--cbax-text-secondary);
+  margin-top: var(--cbax-space-sm);
+}
+
+/* Responsive image adjustments */
+@media (max-width: 768px) {
+  .cbax-image {
+    max-height: 250px;
+  }
+  
+  .cbax-image-caption {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 480px) {
+  .cbax-image {
+    max-height: 200px;
+  }
+  
+  .cbax-image-caption {
+    font-size: 0.75em;
+  }
+}
+
+/* ====== COMPONENT: MOBILE OPTIMIZATIONS ====== */
+
+/* Better touch targets on mobile */
+@media (pointer: coarse) {
+  .cbax-button, 
+  button, 
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Prevent accidental triggers by adding more space */
+  .cbax-table td, 
+  .cbax-list li, 
+  a {
+    padding: 6px 0;
+  }
+  
+  /* Improve scroll performance on touch devices */
+  .cbax-table.responsive, 
+  .cbax-chart-container {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent zooming issues on touch inputs */
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+
+/* High-density screen optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .cbax-card, 
+  .cbax-image, 
+  .cbax-table td, 
+  .cbax-table th {
+    border-width: 0.5px;
+  }
+  
+  /* Optimize images for retina displays */
+  .cbax-image {
+    image-rendering: -webkit-optimize-contrast;
+  }
+} 

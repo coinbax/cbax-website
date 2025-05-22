@@ -1,0 +1,1819 @@
+/**
+ * CBAX Presentation Custom Styles
+ * Specific styles for the presentation slides
+ * Relies on cbax-design-system.css for core components
+ */
+
+/* Only keep the SVG diagram colors from the original :root since everything else is in our design system */
+:root {
+  /* SVG Diagram Colors - Dark Theme */
+  --diagram-node-bg: #3B82F6; /* Blue-500 */
+  --diagram-node-alt-bg: #EF4444; /* Red-500 */
+  --diagram-node-text: #FFFFFF;
+  --diagram-label-text: #D1D5DB; /* Gray-300 */
+  --diagram-arrow-stroke: #9CA3AF; /* Gray-400 */
+}
+
+html[data-theme="light"] {
+  /* SVG Diagram Colors - Light Theme */
+  --diagram-node-bg: #2563EB; /* Blue-600 */
+  --diagram-node-alt-bg: #DC2626; /* Red-600 */
+  --diagram-node-text: #FFFFFF;
+  --diagram-label-text: #374151; /* Gray-700 */
+  --diagram-arrow-stroke: #6B7280; /* Gray-500 */
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.theme-toggle button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--cbax-text);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.theme-toggle button:hover {
+  background-color: var(--cbax-card-bg);
+}
+
+/* Only show the sun icon in dark mode and moon icon in light mode */
+html[data-theme="dark"] .sun-icon {
+  display: inline-block;
+}
+
+html[data-theme="dark"] .moon-icon {
+  display: none;
+}
+
+html[data-theme="light"] .sun-icon {
+  display: none;
+}
+
+html[data-theme="light"] .moon-icon {
+  display: inline-block;
+}
+
+/* Base styles */
+body {
+  background-color: var(--cbax-dark);
+  color: var(--cbax-text);
+  overflow-x: hidden;
+}
+
+/* Reveal.js specific overrides */
+.reveal {
+  font-family: var(--cbax-body-font);
+  color: var(--cbax-text);
+  height: 100vh;
+  font-size: 0.9em;
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  font-family: var(--cbax-heading-font);
+  font-weight: 700;
+  margin-bottom: 0.4em;
+  color: var(--cbax-text);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.reveal h1 {
+  font-size: 2.8em;
+  color: var(--cbax-primary);
+  margin-bottom: 0.5em;
+}
+
+.reveal h2 {
+  font-size: 1.6em;
+  color: var(--cbax-text);
+  border-bottom: 2px solid var(--cbax-primary);
+  padding-bottom: 0.2em;
+  margin-bottom: 0.6em;
+}
+
+.reveal h3 {
+  font-size: 1.2em;
+  margin-bottom: 0.4em;
+}
+
+.reveal p {
+  margin-bottom: 0.8em;
+  line-height: 1.4;
+}
+
+.reveal ul, .reveal ol {
+  display: inline-block;
+  text-align: left;
+  margin-left: 0;
+  padding-left: 1.5em;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+}
+
+.reveal ul li, .reveal ol li {
+  margin-bottom: 0.5em;
+  position: relative;
+}
+
+.reveal ul li::before {
+  content: "▪";
+  position: absolute;
+  left: -1.2em;
+  top: 0.05em;
+  color: var(--cbax-primary);
+  font-size: 0.8em;
+}
+
+.reveal ol li::before {
+  content: "";
+}
+
+.reveal .slides {
+  text-align: left;
+  height: 700px;
+}
+
+.reveal .slides section {
+  padding: 30px;
+  height: 700px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* Fix for content overflowing */
+.reveal .slides section > * {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.reveal .slides section > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Chart containers - can use cbax-chart-container from design system */
+.chart-container {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 250px;
+  margin: 15px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Slide-specific styles */
+.slide-cover {
+  text-align: center;
+}
+
+.slide-cover h1 {
+  font-size: 3.5em;
+  margin-bottom: 0.2em;
+}
+
+.slide-cover h2 {
+  font-size: 2em;
+  border: none;
+  color: var(--cbax-text);
+  margin-bottom: 0.3em;
+}
+
+.slide-cover .subtitle {
+  font-size: 1.2em;
+  color: var(--cbax-text-secondary);
+  margin-bottom: 2em;
+}
+
+.slide-cover .logo-placeholder {
+  display: flex;
+  justify-content: center;
+  margin: 1.5em 0;
+}
+
+.slide-cover .coinbax-text {
+  background-color: var(--cbax-primary);
+  color: white;
+  font-family: var(--cbax-heading-font);
+  font-weight: 700;
+  font-size: 2em;
+  padding: 0.8em 1.5em;
+  border-radius: var(--cbax-border-radius);
+  display: inline-block;
+  text-align: center;
+}
+
+.slide-cover .presenter-info {
+  margin-top: 2em;
+  font-size: 0.9em;
+  color: var(--cbax-text-secondary);
+}
+
+/* Problem slide */
+.slide-problem .context {
+  margin-top: 1.2em;
+  font-style: italic;
+  color: var(--cbax-text-secondary);
+}
+
+/* Market Slide Specific */
+.stablecoin-market-total {
+  text-align: center;
+  margin: 10px 0 15px;
+  background-color: var(--cbax-primary-light);
+  border-radius: var(--cbax-border-radius);
+  border-left: 4px solid var(--cbax-primary);
+  padding: 10px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.total-value {
+  font-size: 4.5em;
+  font-weight: 700;
+  color: var(--cbax-primary);
+  font-family: var(--cbax-heading-font);
+  line-height: 1;
+  text-shadow: 0px 2px 8px rgba(96, 92, 255, 0.3);
+}
+
+.total-label {
+  font-size: 1em;
+  color: var(--cbax-text-secondary);
+  margin-top: -5px;
+}
+
+.sector-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.market-item {
+  padding: 10px 15px;
+  border-radius: var(--cbax-border-radius);
+  font-size: 0.85em;
+  line-height: 1.4;
+  background-color: var(--cbax-card-bg);
+  border: 1px solid var(--cbax-border);
+  margin-bottom: 5px;
+}
+
+.market-item strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--cbax-text);
+  font-weight: 600;
+  font-size: 1em;
+}
+
+.sector-item {
+  padding: 6px 10px;
+  border-radius: var(--cbax-border-radius);
+  font-size: 0.85em;
+  line-height: 1.3;
+}
+
+.sector-item strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--cbax-text);
+  font-weight: 600;
+  font-size: 0.95em;
+}
+
+.sector-item.global-b2b {
+  background-color: var(--cbax-primary-light);
+  border-left: 3px solid var(--cbax-primary);
+}
+
+.sector-item.high-value-b2b {
+  background-color: var(--cbax-success-light);
+  border-left: 3px solid var(--cbax-success);
+}
+
+.sector-item.corp-treasury {
+  background-color: var(--cbax-accent-light);
+  border-left: 3px solid var(--cbax-accent);
+}
+
+.sector-item.ecommerce {
+  background-color: var(--cbax-warning-light);
+  border-left: 3px solid var(--cbax-warning);
+}
+
+/* Source citation styling */
+.source {
+  font-size: 0.75em;
+  font-style: italic;
+  color: var(--cbax-text-secondary);
+  margin-top: 5px;
+  text-align: right;
+}
+
+/* Business Model table */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0;
+  font-size: 0.9em;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--cbax-border);
+}
+
+.comparison-table th {
+  background-color: var(--cbax-table-header);
+  font-weight: 600;
+}
+
+.comparison-table tr.highlighted-row {
+  background-color: var(--cbax-success-light);
+  border-left: 3px solid var(--cbax-success);
+}
+
+.slide-competitive .yes {
+  color: var(--cbax-primary);
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.slide-competitive .no {
+  color: var(--cbax-accent);
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.slide-competitive .qualifier {
+  font-size: 0.8em;
+  color: var(--cbax-text-secondary);
+  font-weight: normal;
+  margin-left: 0.3em;
+}
+
+/* Team slide */
+.team-members {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin: 1.5em 0;
+}
+
+.team-member {
+  text-align: center;
+  max-width: 300px;
+  margin: 0 auto 1em;
+}
+
+.team-member img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  object-fit: cover;
+  border: 4px solid var(--cbax-primary);
+  background-color: var(--cbax-primary-light);
+  padding: 3px;
+  box-shadow: var(--cbax-box-shadow);
+  transition: transform var(--cbax-transition-normal), box-shadow var(--cbax-transition-normal);
+}
+
+.team-member img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.team-image {
+  width: 180px;
+  height: 180px;
+  border-radius: 50% !important;
+  object-fit: cover;
+  margin: 0 auto 1rem;
+  border: 4px solid var(--cbax-primary) !important;
+  background-color: var(--cbax-primary-light);
+  padding: 3px;
+  box-shadow: var(--cbax-box-shadow);
+}
+
+/* New styles for centered team member and framed image */
+.team-member-centered {
+  display: flex;
+  justify-content: center;
+  margin: 1.2em 0;
+}
+
+.team-member-featured {
+  text-align: center;
+  max-width: 350px;
+}
+
+.team-image-framed {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 0.7em;
+  object-fit: cover;
+  border: 4px solid var(--cbax-success);
+  background-color: var(--cbax-success-light);
+  padding: 4px;
+  box-shadow: var(--cbax-box-shadow);
+  transition: transform var(--cbax-transition-normal), box-shadow var(--cbax-transition-normal);
+}
+
+.team-image-framed:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Download buttons */
+.btn {
+  display: inline-block;
+  background-color: var(--cbax-primary-light);
+  color: var(--cbax-text);
+  padding: 0.7em 1.3em;
+  border-radius: var(--cbax-border-radius);
+  border: 2px solid var(--cbax-primary);
+  text-decoration: none;
+  font-weight: 600;
+  margin: 0 0.5em;
+  transition: all var(--cbax-transition-normal);
+  font-family: var(--cbax-heading-font);
+}
+
+.btn:hover {
+  background-color: var(--cbax-primary-medium);
+  text-decoration: none;
+  color: var(--cbax-text);
+}
+
+/* UI Screenshot styling */
+.ui-screenshot {
+  max-width: 100%;
+  max-height: 400px;
+  height: auto;
+  border-radius: var(--cbax-border-radius);
+  box-shadow: var(--cbax-box-shadow);
+  border: 1px solid var(--cbax-primary-border);
+  transition: transform var(--cbax-transition-normal), box-shadow var(--cbax-transition-normal);
+  object-fit: contain;
+}
+
+.ui-screenshot:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ui-caption {
+  text-align: center;
+  font-size: 0.85em;
+  color: var(--cbax-text-secondary);
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* Progress bar */
+.reveal .progress {
+  height: 4px;
+  color: var(--cbax-primary);
+}
+
+/* Override reveal.js default styles */
+.reveal .controls {
+  color: var(--cbax-primary);
+}
+
+.reveal a {
+  color: var(--cbax-primary);
+}
+
+/* Enhanced Responsive adjustments */
+@media (max-width: 1200px) {
+  .reveal h1 {
+    font-size: 2.2em;
+  }
+  
+  .reveal h2 {
+    font-size: 1.5em;
+  }
+  
+  .slide-cover h1 {
+    font-size: 2.2em;
+  }
+  
+  .slide-cover h2 {
+    font-size: 1.4em;
+  }
+  
+  .cbax-metric-value {
+    font-size: 2.5em;
+  }
+  
+  .visual svg {
+    max-height: 240px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .reveal {
+    font-size: 0.85em;
+  }
+  
+  .reveal h1 {
+    font-size: 1.8em;
+  }
+  
+  .reveal h2 {
+    font-size: 1.3em;
+  }
+  
+  .slide-cover h1 {
+    font-size: 2em;
+  }
+  
+  .slide-cover h2 {
+    font-size: 1.3em;
+  }
+  
+  .slide-cover .coinbax-text {
+    font-size: 1.5em;
+    padding: 0.6em 1.2em;
+  }
+  
+  .comparison-table th,
+  .comparison-table td {
+    padding: 6px 8px;
+    font-size: 0.9em;
+  }
+  
+  .cbax-metric-value {
+    font-size: 2em;
+  }
+  
+  .market-item {
+    font-size: 0.8em;
+  }
+  
+  .team-image-framed {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .team-member-featured {
+    max-width: 300px;
+  }
+  
+  .cbax-grid-2 {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .visual svg {
+    max-height: 200px;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 480px) {
+  body {
+    font-size: 12px;
+  }
+  
+  .reveal {
+    font-size: 0.75em;
+  }
+  
+  .reveal .slides section {
+    padding: 15px;
+  }
+  
+  .reveal h1 {
+    font-size: 1.5em;
+  }
+  
+  .reveal h2 {
+    font-size: 1.1em;
+    margin-bottom: 0.4em;
+  }
+  
+  .slide-cover h1 {
+    font-size: 1.6em;
+  }
+  
+  .slide-cover h2 {
+    font-size: 1.2em;
+  }
+  
+  .slide-cover .coinbax-text {
+    font-size: 1.2em;
+    padding: 0.5em 1em;
+  }
+  
+  .comparison-table th,
+  .comparison-table td {
+    padding: 4px 6px;
+    font-size: 0.8em;
+  }
+  
+  .cbax-metric-value {
+    font-size: 1.6em;
+  }
+  
+  .team-image-framed {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .team-member-featured {
+    max-width: 250px;
+  }
+  
+  .reveal ul, .reveal ol {
+    padding-left: 1.2em;
+  }
+  
+  .sectors-breakdown .cbax-grid-2 {
+    gap: 5px;
+  }
+  
+  .market-item {
+    padding: 8px 10px;
+  }
+  
+  .visual svg {
+    max-height: 180px;
+  }
+  
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+  }
+  
+  .theme-toggle button {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .btn {
+    padding: 0.5em 1em;
+    font-size: 0.9em;
+  }
+}
+
+@media print {
+  .reveal .slides section {
+    height: auto !important;
+    min-height: initial !important;
+    page-break-inside: avoid;
+  }
+
+  .theme-toggle {
+    display: none !important;
+  }
+}
+
+.payment-stack-gap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  margin: 10px auto 20px;
+  max-width: 100%;
+}
+
+.payment-stack-gap svg {
+  max-width: 100%;
+  height: auto;
+  max-height: 340px;
+}
+
+/* Two column layout for certain slides */
+.two-column {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: var(--cbax-space-xl);
+  align-items: flex-start;
+}
+
+.left-column {
+  flex: 1;
+  min-width: 40%;
+}
+
+.right-column {
+  flex: 1;
+  min-width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* Visual containers for diagrams and graphics */
+.visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 15px auto 0;
+  max-height: 280px;
+  overflow: visible;
+}
+
+/* SVG sizing in visuals */
+.visual svg,
+.visual img {
+  max-width: 100%;
+  height: auto;
+  max-height: 280px;
+}
+
+/* UI Screenshot container */
+.ui-screenshot-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* Responsive layout for tablets and mobile */
+@media (max-width: 1024px) {
+  .two-column {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .left-column,
+  .right-column {
+    width: 100%;
+    flex: none;
+  }
+  
+  .visual,
+  .ui-screenshot-container {
+    margin-top: 5px;
+  }
+  
+  .comparison-table {
+    font-size: 0.8em;
+  }
+  
+  .market-item strong {
+    font-size: 0.9em;
+  }
+}
+
+/* SVG Diagram text colors in light mode */
+.cbax-diagram-text,
+.cbax-diagram-text-small {
+  transition: fill var(--cbax-transition-normal);
+}
+
+.cbax-diagram-text-accent {
+  transition: fill var(--cbax-transition-normal);
+}
+
+.cbax-diagram-caption {
+  transition: fill var(--cbax-transition-normal);
+}
+
+/* Light mode adjustments for SVG diagrams */
+html[data-theme="light"] .cbax-diagram-text,
+html[data-theme="light"] .cbax-diagram-text-small {
+  fill: var(--cbax-text);
+}
+
+html[data-theme="light"] .cbax-diagram-box-accent + .cbax-diagram-text-small,
+html[data-theme="light"] .cbax-diagram-text-accent {
+  fill: var(--cbax-accent);
+}
+
+html[data-theme="light"] .cbax-diagram-title {
+  fill: var(--cbax-text);
+}
+
+/* SVG Flow diagram text in light mode */
+.visual .cbax-flow-text {
+  transition: fill var(--cbax-transition-normal);
+}
+
+.visual .cbax-flow-label {
+  transition: fill var(--cbax-transition-normal);
+}
+
+html[data-theme="light"] .visual .cbax-flow-text {
+  fill: var(--cbax-text);
+}
+
+html[data-theme="light"] .visual .cbax-flow-box-accent + .cbax-flow-text,
+html[data-theme="light"] .visual .cbax-flow-box-accent ~ .cbax-flow-label {
+  fill: var(--cbax-accent);
+}
+
+/* Competitive table styling */
+.slide-competitive .cbax-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 20px;
+  box-shadow: var(--cbax-box-shadow);
+}
+
+.slide-competitive .cbax-table th {
+  padding: 10px 15px;
+  background-color: var(--cbax-primary-light);
+  border-bottom: 2px solid var(--cbax-primary);
+  font-weight: 600;
+  text-align: left;
+  color: var(--cbax-text);
+}
+
+.slide-competitive .cbax-table td {
+  padding: 8px 15px;
+  border-bottom: 1px solid var(--cbax-border);
+  text-align: left;
+}
+
+.slide-competitive .cbax-table tr:last-child td {
+  border-bottom: none;
+}
+
+.slide-competitive .cbax-table tr.highlighted {
+  background-color: var(--cbax-success-light);
+}
+
+.slide-competitive .cbax-text-primary {
+  color: var(--cbax-primary);
+  font-weight: 600;
+}
+
+.slide-competitive .cbax-text-accent {
+  color: var(--cbax-accent);
+  font-weight: 600;
+}
+
+.slide-competitive .cbax-card-primary {
+  background-color: var(--cbax-primary-light);
+  border-left: 4px solid var(--cbax-primary);
+  border-radius: var(--cbax-border-radius);
+  padding: 10px 15px;
+  margin: 15px 0;
+  display: inline-block;
+  width: auto;
+  min-width: 50%;
+}
+
+.slide-competitive .cbax-card-primary p {
+  margin: 0;
+  color: var(--cbax-text);
+}
+
+/* Advisors section */
+.advisors-section {
+  margin-top: 20px;
+  padding: 15px;
+  border-top: 1px solid var(--cbax-border);
+  text-align: center;
+}
+
+.advisors {
+  margin: 0;
+  color: var(--cbax-primary);
+  display: inline-block;
+  border-bottom: 2px solid var(--cbax-primary);
+  padding-bottom: 5px;
+}
+
+.team-member a {
+  color: var(--cbax-primary);
+  text-decoration: none;
+  transition: color var(--cbax-transition-normal), text-decoration var(--cbax-transition-normal);
+  font-size: 0.9em;
+  display: inline-block;
+  margin-top: 5px;
+}
+
+.team-member a:hover {
+  color: var(--cbax-secondary);
+  text-decoration: underline;
+}
+
+.team-member p {
+  font-size: 0.9em;
+  margin: 0.3em 0;
+  line-height: 1.4;
+}
+
+.slide-team .slide-content {
+  text-align: center;
+}
+
+.slide-team h2 {
+  text-align: center;
+  border-bottom-width: 0;
+}
+
+/* Growth multiplier styles for financial slide */
+.growth-multiplier {
+  color: var(--cbax-success);
+  font-size: 0.8em;
+  font-weight: 600;
+  margin-left: 8px;
+  display: inline-block;
+  vertical-align: middle;
+  font-family: var(--cbax-body-font);
+}
+
+.growth-summary {
+  background-color: var(--cbax-card-bg);
+  border-radius: var(--cbax-border-radius);
+  padding: 15px;
+  margin-top: 15px;
+  border: 1px solid var(--cbax-border);
+}
+
+.growth-summary h3 {
+  margin-top: 0;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: var(--cbax-text);
+}
+
+.growth-summary ul {
+  margin-bottom: 0;
+}
+
+.growth-summary li {
+  font-size: 0.9em;
+  margin-bottom: 8px;
+}
+
+/* Financial slide subtitle */
+.slide-financials .subtitle {
+  color: var(--cbax-text-secondary);
+  margin-top: -15px;
+  margin-bottom: 15px;
+  font-style: italic;
+  text-align: center;
+}
+
+/* Neater list for revenue targets */
+.revenue-targets ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.revenue-targets li {
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--cbax-border);
+}
+
+.revenue-targets li:last-child {
+  border-bottom: none;
+}
+
+/* Enhanced column layout for financial slide */
+.slide-financials .two-column {
+  align-items: stretch;
+}
+
+.slide-financials .left-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.slide-financials .right-column {
+  align-items: stretch;
+}
+
+.slide-financials .cbax-chart-container {
+  height: 340px;
+  max-height: 340px;
+}
+
+/* Responsive adjustments for financials */
+@media (max-width: 1024px) {
+  .growth-summary {
+    margin-top: 10px;
+    padding: 10px;
+  }
+  
+  .growth-summary li {
+    font-size: 0.85em;
+  }
+}
+
+/* Styled cards for Funding slide */
+.revenue-targets.cbax-card-primary {
+  background-color: var(--cbax-primary-light);
+  border-left: 4px solid var(--cbax-primary);
+  border-radius: var(--cbax-border-radius);
+  padding: 12px 15px;
+}
+
+.use-of-funds.cbax-card-primary {
+  margin-bottom: 15px;
+}
+
+.use-of-funds h3 {
+  margin-top: 0;
+  font-size: 1.1em;
+}
+
+.runway.cbax-card-success {
+  background-color: var(--cbax-success-light);
+  border-left: 4px solid var(--cbax-success);
+}
+
+.runway.cbax-card-success p {
+  margin: 0;
+}
+
+.runway.cbax-card-success strong {
+  color: var(--cbax-success);
+}
+
+.slide-funding .raise {
+  font-size: 1.2em;
+  margin-bottom: 25px;
+}
+
+.slide-closing .closing-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.slide-closing .closing-content {
+  text-align: center;
+}
+
+.slide-closing .summary {
+  font-size: 1.3em;
+  margin-bottom: 25px;
+  line-height: 1.4;
+  color: var(--cbax-text);
+}
+
+.slide-closing .closing-cta {
+  background-color: var(--cbax-primary-light);
+  border-radius: var(--cbax-border-radius);
+  padding: 20px;
+  margin-top: 20px;
+  border-left: 4px solid var(--cbax-primary);
+}
+
+.slide-closing .call-to-action {
+  font-size: 1.2em;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: var(--cbax-text);
+}
+
+.slide-closing .contact {
+  margin: 0;
+  color: var(--cbax-text-secondary);
+}
+
+.slide-closing .download-buttons {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.slide-closing .btn {
+  background-color: var(--cbax-primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.slide-closing .btn:hover {
+  background-color: var(--cbax-secondary);
+  transform: translateY(-2px);
+  box-shadow: var(--cbax-box-shadow);
+}
+
+/* Mobile-specific adjustments for closing slide */
+@media (max-width: 768px) {
+  .slide-closing .closing-content {
+    padding: 10px 0;
+  }
+  
+  .slide-closing .summary {
+    font-size: 1.1em;
+  }
+}
+
+/* Touchscreen device optimizations */
+@media (pointer: coarse) {
+  /* Make buttons easier to tap */
+  .btn, .theme-toggle button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 24px;
+  }
+  
+  /* Add more space between links and interactive elements */
+  .team-member a, .slide-competitive .cbax-table td, .reveal ul li, .reveal ol li {
+    padding: 6px 0;
+  }
+  
+  /* Make scrolling smoother on touch devices */
+  .reveal .slides section {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Prevent accidental zooming on tables */
+  .comparison-table, .cbax-table {
+    touch-action: pan-x pan-y;
+    font-size: 16px;
+  }
+  
+  /* Ensure SVGs are properly displayed on high-density screens */
+  svg {
+    shape-rendering: geometricPrecision;
+  }
+}
+
+/* Optimizations for high-density/retina displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Enhance text rendering */
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Ensure borders are crisp */
+  .cbax-card, .cbax-card-primary, .cbax-card-success, .comparison-table, .cbax-table, .market-item {
+    border-width: 0.5px;
+  }
+  
+  /* Optimize image rendering */
+  .ui-screenshot, .team-image-framed {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* iPad-specific optimizations */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  /* Adjust font sizes for better readability */
+  .reveal {
+    font-size: 0.95em;
+  }
+  
+  /* Increase spacing between interactive elements */
+  .reveal .controls {
+    bottom: 20px;
+  }
+  
+  /* Optimize for both orientations */
+  @media (orientation: portrait) {
+    .two-column {
+      flex-direction: column;
+    }
+    
+    .cbax-two-column {
+      flex-direction: column;
+    }
+  }
+  
+  @media (orientation: landscape) {
+    .reveal .slides section {
+      padding: 20px 40px;
+    }
+  }
+}
+
+/* Customized styles for Coinbax Pitch Deck with Reveal.js */
+
+:root {
+    /* Main colors */
+    --cbax-primary: #605cff;
+    --cbax-primary-light: rgba(96, 92, 255, 0.1);
+    --cbax-primary-dark: #4a47cc;
+    --cbax-accent: #ff5c5c;
+    --cbax-accent-light: rgba(255, 92, 92, 0.1);
+    --cbax-success: #00C49F;
+    --cbax-success-light: rgba(0, 196, 159, 0.1);
+    --cbax-warning: #FFB142;
+    --cbax-warning-light: rgba(255, 177, 66, 0.1);
+    
+    /* Text colors */
+    --cbax-text: #121212;
+    --cbax-text-secondary: #666666;
+    --cbax-text-inverse: #ffffff;
+    
+    /* Background colors */
+    --cbax-bg: #ffffff;
+    --cbax-card-bg: #f8f9fa;
+    
+    /* Borders */
+    --cbax-border: #e0e0e0;
+    --cbax-border-radius: 8px;
+    
+    /* Fonts */
+    --cbax-heading-font: 'Space Grotesk', sans-serif;
+    --cbax-body-font: 'IBM Plex Mono', monospace;
+    
+    /* Spacing */
+    --cbax-spacing-xs: 4px;
+    --cbax-spacing-sm: 8px;
+    --cbax-spacing-md: 16px;
+    --cbax-spacing-lg: 24px;
+    --cbax-spacing-xl: 32px;
+    
+    /* Shadows */
+    --cbax-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    /* Transitions */
+    --cbax-transition: all 0.3s ease;
+}
+
+/* Dark theme overrides */
+html[data-theme="dark"] {
+    --cbax-text: #f8f9fa;
+    --cbax-text-secondary: #a0a0a0;
+    --cbax-text-inverse: #121212;
+    --cbax-bg: #121212;
+    --cbax-card-bg: #222222;
+    --cbax-border: #333333;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+}
+
+#theme-switch {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+#theme-switch:hover {
+    background-color: rgba(150, 150, 150, 0.2);
+}
+
+.moon-icon, .sun-icon {
+    stroke: var(--cbax-text);
+    width: 24px;
+    height: 24px;
+}
+
+html[data-theme="dark"] .moon-icon {
+    display: none;
+}
+
+html[data-theme="light"] .sun-icon {
+    display: none;
+}
+
+/* Slide Content Layout */
+.slide-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Grid layouts */
+.grid {
+    display: grid;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.mt-3 {
+    margin-top: 1.5rem;
+}
+
+/* Custom styling for cards */
+.card {
+    background-color: var(--cbax-card-bg);
+    border: 1px solid var(--cbax-border);
+    border-radius: var(--cbax-border-radius);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.card-primary {
+    border-color: var(--cbax-primary);
+    background-color: var(--cbax-primary-light);
+}
+
+.card-success {
+    border-color: var(--cbax-success);
+    background-color: var(--cbax-success-light);
+}
+
+/* CTA Buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--cbax-primary);
+    color: white;
+    border: none;
+    border-radius: var(--cbax-border-radius);
+    font-family: var(--cbax-body-font);
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--cbax-transition);
+    text-decoration: none;
+    margin: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+    background-color: var(--cbax-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+    background-color: var(--cbax-primary);
+    color: white;
+    font-weight: 600;
+}
+
+/* Add focus styles for accessibility */
+.btn:focus {
+    outline: 2px solid var(--cbax-accent);
+    outline-offset: 2px;
+}
+
+/* Text utilities */
+.text-center {
+    text-align: center;
+}
+
+.text-primary {
+    color: var(--cbax-primary);
+}
+
+.section-title {
+    color: var(--cbax-primary);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    opacity: 0.85;
+    margin-bottom: 2rem;
+}
+
+/* List styling */
+.cbax-list {
+    padding-left: 1.5rem;
+}
+
+.cbax-list li {
+    margin-bottom: 0.75rem;
+    position: relative;
+}
+
+/* Logo styling */
+.coinbax-logo {
+    font-family: var(--cbax-heading-font);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--cbax-primary);
+    margin: 2rem 0;
+}
+
+/* Market value display */
+.market-value {
+    font-family: var(--cbax-heading-font);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--cbax-primary);
+}
+
+.market-label {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+/* Table styling */
+.responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.responsive-table th, .responsive-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border: 1px solid var(--cbax-border);
+}
+
+.responsive-table th {
+    background-color: var(--cbax-card-bg);
+    font-weight: 600;
+}
+
+.responsive-table .highlighted-row {
+    background-color: var(--cbax-primary-light);
+}
+
+/* Team member styling */
+.team-member {
+    margin-bottom: 2rem;
+}
+
+.team-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
+    border: 3px solid var(--cbax-primary);
+}
+
+/* Chart container */
+.chart-container {
+    height: 300px;
+    width: 100%;
+    margin: 1rem 0;
+    position: relative;
+}
+
+/* Utility for images */
+.responsive-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--cbax-border-radius);
+    box-shadow: var(--cbax-shadow);
+}
+
+.image-caption {
+    font-size: 0.9rem;
+    color: var(--cbax-text-secondary);
+    margin-top: 0.5rem;
+}
+
+/* Source citation */
+.source {
+    font-size: 0.8rem;
+    color: var(--cbax-text-secondary);
+    font-style: italic;
+    margin-top: 1rem;
+}
+
+/* Export buttons */
+.export-buttons {
+    position: fixed;
+    top: 1rem;
+    right: 4.5rem; /* Position to the left of the theme toggle */
+    z-index: 1000;
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Return Reveal.js controls to default position (bottom right) */
+.reveal .controls {
+    /* Default Reveal.js positioning */
+}
+
+/* Print styles */
+@media print {
+    .theme-toggle, .export-buttons {
+        display: none !important;
+    }
+    
+    .reveal .slides section {
+        height: 100vh !important;
+        page-break-after: always;
+        page-break-inside: avoid;
+    }
+    
+    body {
+        background: white;
+    }
+    
+    html {
+        font-size: 14px;
+    }
+    
+    /* Ensure all charts print properly */
+    .chart-container {
+        page-break-inside: avoid;
+    }
+}
+
+/* Reveal.js specific adjustments */
+.reveal h1, .reveal h2, .reveal h3 {
+    font-family: var(--cbax-heading-font);
+    color: var(--cbax-text);
+    margin-bottom: 1rem;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.reveal h1 {
+    font-size: 2.5rem;
+}
+
+.reveal h2 {
+    font-size: 2rem;
+}
+
+.reveal h3 {
+    font-size: 1.5rem;
+}
+
+.reveal p, .reveal li {
+    font-family: var(--cbax-body-font);
+    color: var(--cbax-text);
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.reveal .slide-cover {
+    text-align: center;
+}
+
+.reveal .slide-cover h1 {
+    margin-bottom: 1rem;
+}
+
+.reveal .slides section {
+    height: 700px;
+}
+
+/* Focus on important content for slide format */
+.reveal .slides section {
+    overflow-y: auto !important; /* Allow scrolling if needed */
+}
+
+/* Override some Reveal default styles */
+.reveal ul, .reveal ol {
+    display: block;
+    margin-left: 1.5rem;
+}
+
+.reveal table {
+    margin: 1rem 0;
+    font-family: var(--cbax-body-font);
+}
+
+.reveal a {
+    color: var(--cbax-primary);
+}
+
+.reveal a:hover {
+    color: var(--cbax-primary-dark);
+}
+
+/* Fix for canvas elements in slides */
+.reveal canvas {
+    max-width: 100%;
+    max-height: 300px;
+}
+
+/* Fix for image caption in slide view */
+.slide-how-it-works .ui-screenshot-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slide-how-it-works .image-caption {
+  position: relative;
+  top: auto;
+  right: auto;
+  margin-top: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.slide-how-it-works .responsive-image {
+  max-width: 100%;
+  max-height: 340px;
+  object-fit: contain;
+  margin-bottom: 5px;
+}
+
+/* Team slide styling */
+.slide-team .slide-content {
+  text-align: center;
+}
+
+.slide-team h2 {
+  text-align: center;
+  border-bottom-width: 0;
+}
+
+.team-content {
+  display: flex;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.team-member {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto 1em;
+}
+
+.team-member h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.3rem;
+  color: var(--cbax-primary);
+}
+
+.team-member .title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--cbax-text);
+}
+
+.team-member .bio {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.team-member .bio p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 0.7rem;
+}
+
+.team-member .linkedin {
+  margin-top: 1rem;
+}
+
+.team-member .linkedin a {
+  color: var(--cbax-primary);
+  text-decoration: none;
+  transition: color var(--cbax-transition-normal);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.team-member .linkedin a:hover {
+  color: var(--cbax-secondary);
+  text-decoration: underline;
+}
+
+.team-member img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  object-fit: cover;
+  border: 4px solid var(--cbax-primary);
+  background-color: var(--cbax-primary-light);
+  padding: 3px;
+  box-shadow: var(--cbax-box-shadow);
+  transition: transform var(--cbax-transition-normal), box-shadow var(--cbax-transition-normal);
+}
+
+.team-member img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.team-image {
+  width: 180px;
+  height: 180px;
+  border-radius: 50% !important;
+  object-fit: cover;
+  margin: 0 auto 1.5rem;
+  border: 4px solid var(--cbax-primary) !important;
+  background-color: var(--cbax-primary-light);
+  padding: 3px;
+  box-shadow: var(--cbax-box-shadow);
+}
+
+/* Advisors section styling */
+.advisors-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-top: 1px solid var(--cbax-border);
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.advisors-section h3 {
+  color: var(--cbax-primary);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.advisors-section p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Contact container styling */
+.contact-container {
+  background-color: var(--cbax-primary-light);
+  border-left: 4px solid var(--cbax-primary);
+  border-radius: var(--cbax-border-radius);
+  padding: 15px 20px;
+  margin: 10px auto;
+  max-width: 320px;
+  box-shadow: var(--cbax-box-shadow);
+  transition: transform var(--cbax-transition-normal), box-shadow var(--cbax-transition-normal);
+}
+
+.contact-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.contact-container p {
+  margin: 6px 0;
+  font-weight: 500;
+  text-align: center;
+}
+
+.contact-container p:nth-child(1) {
+  font-size: 1.1em;
+  color: var(--cbax-primary);
+  font-weight: 600;
+}
+
+.contact-container p:nth-child(2) {
+  font-style: italic;
+  color: var(--cbax-text-secondary);
+  margin-bottom: 15px;
+}
+
+.contact-container p:nth-child(3),
+.contact-container p:nth-child(4) {
+  font-family: var(--cbax-body-font);
+}
+
+/* Team-specific contact container modifications */
+.team-contact {
+  margin: 15px auto;
+  max-width: 280px;
+  padding: 10px 15px;
+}
+
+.team-contact p {
+  margin: 4px 0;
+}
+
+.team-contact p:nth-child(1),
+.team-contact p:nth-child(2) {
+  font-size: 0.9em;
+  color: var(--cbax-text);
+  font-weight: 500;
+}
+
+.team-contact p:nth-child(1) {
+  color: var(--cbax-primary);
+} 
