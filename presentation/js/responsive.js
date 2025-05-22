@@ -64,8 +64,8 @@ function initThemeToggle() {
   
   if (!themeToggleBtn) return;
   
-  // Set initial state from localStorage or default to dark
-  const currentTheme = localStorage.getItem('theme') || 'dark';
+  // Set initial state from localStorage or default to light
+  const currentTheme = localStorage.getItem('theme') || 'light';
   htmlElement.setAttribute('data-theme', currentTheme);
   
   // Add click event to toggle button

@@ -601,8 +601,8 @@ function initThemeToggle() {
   const darkTheme = document.getElementById('theme-dark');
   const lightTheme = document.getElementById('theme-light');
   
-  // Set initial state from localStorage or default to dark
-  const currentTheme = localStorage.getItem('theme') || 'dark';
+  // Set initial state from localStorage or default to light
+  const currentTheme = localStorage.getItem('theme') || 'light';
   htmlElement.setAttribute('data-theme', currentTheme);
   
   // Set the correct theme stylesheet
