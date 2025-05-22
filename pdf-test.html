@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Download Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            text-align: center;
+            padding: 20px;
+        }
+        button {
+            background-color: #605cff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px;
+        }
+        button:hover {
+            background-color: #4b47d9;
+        }
+        .description {
+            margin-bottom: 30px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>PDF Download Test</h1>
+    <p class="description">This page tests both direct and programmatic PDF downloads to diagnose issues with blank PDFs.</p>
+    
+    <div>
+        <h2>Test 1: Direct Link</h2>
+        <p>Click the button below to download the PDF using a direct link:</p>
+        <a href="assets/Coinbax_whitepaper_DRAFT_v3.8.pdf?v=3.8" download="Coinbax_Whitepaper.pdf">Download Whitepaper</a>
+    </div>
+    
+    <div>
+        <h2>Test 2: JavaScript Download</h2>
+        <p>Click the button below to download the PDF using JavaScript:</p>
+        <button id="js-download">Download PDF via JavaScript</button>
+    </div>
+
+    <script>
+        document.getElementById('js-download').addEventListener('click', function() {
+            // Create and trigger a direct download link
+            const downloadLink = document.createElement('a');
+            downloadLink.href = 'assets/Coinbax_whitepaper_DRAFT_v3.8.pdf?v=3.8';
+            downloadLink.download = 'Coinbax_Whitepaper.pdf';
+            downloadLink.target = '_blank';
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        });
+    </script>
+</body>
+</html> 

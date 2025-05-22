@@ -1,0 +1,18 @@
+# Cache Control
+<FilesMatch "\.(pdf)$">
+  # Disable caching for PDFs
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </IfModule>
+</FilesMatch>
+
+# Specific cache control for whitepaper
+<FilesMatch "Coinbax_whitepaper.*\.pdf$">
+  <IfModule mod_headers.c>
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires 0
+  </IfModule>
+</FilesMatch> 
