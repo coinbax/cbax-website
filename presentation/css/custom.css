@@ -1495,6 +1495,8 @@ html[data-theme="light"] .sun-icon {
     width: 100%;
     border-collapse: collapse;
     margin: 1.5rem 0;
+    border: 2px solid var(--cbax-border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
 .responsive-table th, .responsive-table td {
@@ -1506,6 +1508,11 @@ html[data-theme="light"] .sun-icon {
 .responsive-table th {
     background-color: var(--cbax-card-bg);
     font-weight: 600;
+    border-bottom: 2px solid var(--cbax-border);
+}
+
+.responsive-table tr:nth-child(even) {
+    background-color: var(--cbax-card-bg);
 }
 
 .responsive-table .highlighted-row {
@@ -1869,4 +1876,34 @@ html[data-theme="light"] .sun-icon {
 
 .team-contact p:nth-child(1) {
   color: var(--cbax-primary);
+}
+
+#business-model .responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    border: 3px solid var(--cbax-primary);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#business-model .responsive-table th, 
+#business-model .responsive-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border: 1px solid var(--cbax-border);
+}
+
+#business-model .responsive-table th {
+    background-color: var(--cbax-primary-light);
+    font-weight: 600;
+    border-bottom: 2px solid var(--cbax-primary);
+}
+
+#business-model .responsive-table tr:nth-child(even) {
+    background-color: var(--cbax-card-bg);
+}
+
+#business-model .responsive-table .highlighted-row {
+    background-color: var(--cbax-primary-light);
+    border: 2px solid var(--cbax-primary);
 } 

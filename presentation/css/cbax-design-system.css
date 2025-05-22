@@ -284,6 +284,7 @@ html[data-theme="light"] .cbax-flow-label {
   border-collapse: collapse;
   margin: var(--cbax-space-md) 0;
   font-family: var(--cbax-body-font);
+  border: 1px solid var(--cbax-border);
 }
 
 .cbax-table th,
@@ -291,6 +292,7 @@ html[data-theme="light"] .cbax-flow-label {
   padding: var(--cbax-space-md);
   text-align: left;
   border-bottom: 1px solid var(--cbax-border);
+  border-right: 1px solid var(--cbax-border);
 }
 
 .cbax-table th {
