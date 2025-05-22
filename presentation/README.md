@@ -53,7 +53,7 @@ The presentation covers:
 
 ## Continuous Scroll Version
 
-A responsive, mobile-first version of the presentation with continuous scrolling has been added, inspired by the layout of a16z Crypto's website.
+A responsive, mobile-first version of the presentation with continuous scrolling has been added for a modern user experience.
 
 ### Features
 

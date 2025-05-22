@@ -1,6 +1,6 @@
 /**
  * CBAX Responsive Design System
- * Mobile-first, continuous scrolling layout similar to a16z Crypto
+ * Mobile-first, continuous scrolling layout
  */
 
 :root {
@@ -24,8 +24,8 @@
   --subsection-spacing: 32px;
   
   /* Layout variables */
-  --max-content-width: 1200px;
-  --sidebar-width: 300px;
+  --max-content-width: 1400px;
+  --sidebar-width: 260px;
 }
 
 /* Base Layout */
@@ -356,11 +356,13 @@ body {
   margin-top: var(--section-spacing);
 }
 
-/* a16z-Crypto-Inspired Desktop Layout (top-left positioned content) */
+/* Desktop Layout Improvements */
 @media (min-width: 769px) {
   .container {
     flex-direction: row;
     flex-wrap: wrap;
+    max-width: 100%;
+    padding: 0;
   }
   
   .header {
@@ -371,22 +373,22 @@ body {
   
   .content {
     flex-direction: row;
-    padding: var(--content-padding-desktop);
-    max-width: var(--max-content-width);
-    margin: 0 auto;
+    padding: 0;
+    max-width: 100%;
+    margin: 0;
   }
   
   /* Left sidebar on desktop */
   .sidebar {
     width: var(--sidebar-width);
-    margin-left: 0;
-    margin-right: 40px;
+    margin-left: var(--content-padding-desktop);
+    margin-right: 0;
     position: sticky;
     top: 100px;
     align-self: flex-start;
     max-height: calc(100vh - 100px);
     overflow-y: auto;
-    padding-left: 20px;
+    padding-left: 0;
     order: 0;
     margin-bottom: 0;
   }
@@ -399,10 +401,10 @@ body {
   /* Main content padding adjustments for desktop */
   .main-content {
     flex: 1;
-    max-width: calc(100% - var(--sidebar-width) - 40px);
-    margin-left: auto; /* Push content to the right of sidebar */
-    margin-right: 0;
-    padding: 0;
+    max-width: calc(100% - var(--sidebar-width) - 80px);
+    margin-left: 40px;
+    margin-right: var(--content-padding-desktop);
+    padding: var(--content-padding-desktop) 0;
   }
   
   /* Hide mobile footer on desktop */
@@ -434,7 +436,7 @@ body {
     overflow-x: visible;
   }
   
-  /* For a16z-inspired layout, use left-aligned headings */
+  /* For left-aligned layout, use left-aligned headings */
   h1, h2, h3, .section-title {
     text-align: left;
   }
@@ -901,7 +903,7 @@ html[data-theme="light"] .moon-icon {
     font-size: 1.5rem;
   }
   
-  /* A16z-style top-left primary content positioning */
+  /* Modern top-left primary content positioning */
   .main-content {
     padding-right: 40px;
   }
@@ -1037,24 +1039,16 @@ svg.cbax-flow-diagram {
   height: auto;
 }
 
-/* A16z-Style Continuous Scroll Improvements */
+/* Enhanced Wider Screen Layout */
 @media (min-width: 1200px) {
-  /* For wider screens, create a more a16z-like layout with content starting from the left */
-  .container {
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  
-  .content {
-    padding: 40px 60px;
+  /* For wider screens, create a more modern, left-aligned layout */
+  .sidebar {
+    margin-left: calc(var(--content-padding-desktop) * 2);
   }
   
   .main-content {
-    max-width: 72%; /* Align with a16z site's content width */
-  }
-  
- .sidebar {
-    width: 24%;
+    max-width: 70%;
+    margin-right: calc(var(--content-padding-desktop) * 2);
   }
   
   /* Enhanced visual hierarchy */
