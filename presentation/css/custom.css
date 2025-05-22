@@ -756,9 +756,43 @@ body {
 /* UI Screenshot container */
 .ui-screenshot-container {
   width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.ui-screenshot-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--cbax-border-radius);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--cbax-border);
+  margin: 0 auto;
+  display: block;
+  object-fit: contain;
+}
+
+.slide-how-it-works .responsive-image {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+  border-radius: var(--cbax-border-radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Make sure the image is properly contained in all views */
+#how-it-works .visual-container {
+  width: 100%;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 10px;
+  overflow: hidden;
+}
+
+#how-it-works .ui-screenshot-container {
+  max-width: 100%;
 }
 
 /* Responsive layout for tablets and mobile */
@@ -1637,7 +1671,10 @@ html[data-theme="light"] .sun-icon {
   max-width: 100%;
   max-height: 340px;
   object-fit: contain;
-  margin-bottom: 5px;
+  margin: 0 auto;
+  display: block;
+  border-radius: var(--cbax-border-radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Team slide styling */
