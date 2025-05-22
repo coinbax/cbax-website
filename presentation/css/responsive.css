@@ -113,23 +113,27 @@ body {
 .content {
   display: flex;
   flex-direction: column;
-  padding: var(--content-padding-mobile);
+  padding: 0;
 }
 
 /* For mobile: TOC as dropdown at the top */
 .sidebar {
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 0;
   order: -1; /* Position at the top of the flex container */
+  padding: 0;
 }
 
 /* Dropdown TOC for mobile */
 .toc-dropdown {
   position: relative;
-  z-index: 1000; /* Increased z-index to ensure it's above all content */
+  z-index: 1000;
   margin-bottom: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  border-radius: var(--cbax-border-radius);
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .toc-dropdown-btn {
@@ -137,16 +141,19 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 12px 15px;
-  background-color: var(--cbax-dark);
-  border: 1px solid var(--cbax-border);
-  border-radius: var(--cbax-border-radius);
+  padding: 16px var(--content-padding-mobile);
+  background-color: var(--cbax-darker);
+  border: none;
+  border-top: 1px solid var(--cbax-border);
+  border-bottom: 1px solid var(--cbax-border);
+  border-radius: 0;
   color: var(--cbax-text);
   font-family: var(--cbax-heading-font);
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.2s;
+  text-align: left;
 }
 
 .toc-dropdown-btn:hover {
@@ -156,6 +163,8 @@ body {
 .toc-dropdown-btn svg {
   margin-left: 8px;
   transition: transform 0.3s;
+  width: 18px;
+  height: 18px;
 }
 
 .toc-dropdown-btn.active svg {
@@ -167,30 +176,33 @@ body {
   top: 100%;
   left: 0;
   right: 0;
-  background-color: var(--cbax-dark);
-  border: 1px solid var(--cbax-border);
-  border-radius: var(--cbax-border-radius);
-  margin-top: 5px;
+  background-color: var(--cbax-darker);
+  border: none;
+  border-bottom: 1px solid var(--cbax-border);
+  border-radius: 0;
+  margin-top: 0;
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   z-index: 95;
 }
 
 .toc-dropdown-content.open {
-  max-height: 700px; /* Increased from 500px to accommodate all menu items */
+  max-height: 80vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .toc-dropdown-content ul {
   list-style: none;
-  padding: 10px 0;
+  padding: 0;
   margin: 0;
 }
 
 .toc-dropdown-content a {
   display: block;
-  padding: 10px 15px;
+  padding: 12px var(--content-padding-mobile);
   color: var(--cbax-text);
   text-decoration: none;
   transition: background-color 0.2s;
@@ -384,6 +396,15 @@ body {
     display: none;
   }
   
+  /* Main content padding adjustments for desktop */
+  .main-content {
+    flex: 1;
+    max-width: calc(100% - var(--sidebar-width) - 40px);
+    margin-left: auto; /* Push content to the right of sidebar */
+    margin-right: 0;
+    padding: 0;
+  }
+  
   /* Hide mobile footer on desktop */
   .mobile-footer {
     display: none;
@@ -399,13 +420,6 @@ body {
     display: block;
   }
   
-  .main-content {
-    flex: 1;
-    max-width: calc(100% - var(--sidebar-width) - 40px);
-    margin-left: auto; /* Push content to the right of sidebar */
-    margin-right: 0;
-  }
-  
   .section {
     margin-bottom: calc(var(--section-spacing) * 1.5);
     scroll-margin-top: 100px;
@@ -418,11 +432,6 @@ body {
   .responsive-table {
     display: table;
     overflow-x: visible;
-  }
-  
-  .footer {
-    width: 100%;
-    padding: 40px var(--content-padding-desktop);
   }
   
   /* For a16z-inspired layout, use left-aligned headings */
@@ -958,6 +967,10 @@ html[data-theme="light"] .moon-icon {
     padding: 8px 10px;
     font-size: 0.9em;
   }
+  
+  section:last-of-type {
+    margin-bottom: 60px;
+  }
 }
 
 /* Image caption styling */
@@ -1378,4 +1391,9 @@ body.printing-active .main-content {
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+}
+
+/* Adjust main content padding */
+.main-content {
+  padding: var(--content-padding-mobile);
 } 
