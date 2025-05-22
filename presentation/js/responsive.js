@@ -119,9 +119,24 @@ function initTocDropdown() {
   if (!tocDropdownBtn || !tocDropdownContent) return;
   
   // Toggle dropdown on button click
-  tocDropdownBtn.addEventListener('click', function() {
+  tocDropdownBtn.addEventListener('click', function(e) {
+    e.stopPropagation(); // Prevent event bubbling to document
     tocDropdownContent.classList.toggle('open');
     tocDropdownBtn.classList.toggle('active');
+    
+    // If opening and near bottom of viewport, scroll to ensure full visibility
+    if (tocDropdownContent.classList.contains('open')) {
+      const dropdownRect = tocDropdownContent.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      // If dropdown would extend beyond viewport, scroll to make it visible
+      if (dropdownRect.bottom > viewportHeight) {
+        window.scrollBy({
+          top: Math.min(150, dropdownRect.bottom - viewportHeight + 50),
+          behavior: 'smooth'
+        });
+      }
+    }
   });
   
   // Close dropdown when a link is clicked

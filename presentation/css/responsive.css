@@ -179,7 +179,7 @@ body {
 }
 
 .toc-dropdown-content.open {
-  max-height: 500px; /* Large enough to fit all items */
+  max-height: 700px; /* Increased from 500px to accommodate all menu items */
 }
 
 .toc-dropdown-content ul {
@@ -1145,6 +1145,25 @@ svg.cbax-flow-diagram {
     text-align: center;
     padding: 14px 20px;
     box-sizing: border-box;
+  }
+  
+  /* Mobile specific dropdown improvements */
+  .toc-dropdown {
+    position: relative;
+    z-index: 1000;
+    margin-bottom: 20px;
+  }
+  
+  .toc-dropdown-content.open {
+    max-height: 80vh; /* Use viewport height instead of fixed pixel value */
+    overflow-y: auto; /* Make it scrollable if content exceeds height */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+  
+  .toc-dropdown-content::after {
+    content: '';
+    display: block;
+    height: 10px; /* Add padding at the bottom of dropdown */
   }
 }
 
