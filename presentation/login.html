@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Coinbax Presentation - Login</title>
+    <link rel="stylesheet" href="css/cbax-design-system.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .login-card {
+            background-color: var(--cbax-card-bg);
+            border-radius: var(--cbax-border-radius);
+            padding: 40px;
+            box-shadow: var(--cbax-box-shadow);
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-logo {
+            font-family: var(--cbax-heading-font);
+            font-weight: 700;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--cbax-primary);
+        }
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .form-label {
+            font-family: var(--cbax-heading-font);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--cbax-text);
+        }
+        .form-input {
+            font-family: var(--cbax-body-font);
+            padding: 12px 15px;
+            border-radius: var(--cbax-border-radius);
+            border: 1px solid var(--cbax-border);
+            background-color: var(--cbax-bg);
+            font-size: 1rem;
+            color: var(--cbax-text);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--cbax-primary);
+            box-shadow: 0 0 0 2px rgba(var(--cbax-primary-rgb), 0.2);
+        }
+        .login-button {
+            background-color: var(--cbax-primary);
+            color: white;
+            font-family: var(--cbax-heading-font);
+            font-weight: 600;
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--cbax-border-radius);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .login-button:hover {
+            background-color: var(--cbax-secondary);
+            transform: translateY(-2px);
+        }
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        .back-link a {
+            color: var(--cbax-primary);
+            text-decoration: none;
+        }
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-logo">COINBAX</div>
+            <h1 class="text-center">Presentation Access</h1>
+            <p class="text-center">Please enter the password to access the presentation</p>
+            
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Enter access password">
+                </div>
+                <button type="button" id="login-btn" class="login-button">Access Presentation</button>
+                <div id="error-message" class="error-message">Incorrect password. Please try again.</div>
+            </div>
+            
+            <div class="back-link">
+                <a href="/">Return to Homepage</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const correctPassword = 'trustcbax';
+            const loginBtn = document.getElementById('login-btn');
+            const passwordInput = document.getElementById('password');
+            const errorMessage = document.getElementById('error-message');
+            
+            // Function to handle login
+            function attemptLogin() {
+                const password = passwordInput.value;
+                
+                if (password === correctPassword) {
+                    // Set authentication in session storage
+                    sessionStorage.setItem('cbax_auth', 'true');
+                    
+                    // Redirect to the presentation
+                    window.location.href = 'index.html';
+                } else {
+                    // Show error message
+                    errorMessage.style.display = 'block';
+                    passwordInput.focus();
+                }
+            }
+            
+            // Login on button click
+            loginBtn.addEventListener('click', attemptLogin);
+            
+            // Login on Enter key
+            passwordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    attemptLogin();
+                }
+            });
+            
+            // Focus password field on load
+            passwordInput.focus();
+        });
+    </script>
+</body>
+</html> 
