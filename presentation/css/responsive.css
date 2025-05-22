@@ -395,11 +395,99 @@ body {
     order: 0;
     margin-bottom: 0;
     background: transparent;
+    display: block; /* Ensure it's visible */
   }
   
-  /* Hide TOC dropdown on desktop */
-  .toc-dropdown {
-    display: none;
+  /* Remove card styling from TOC in desktop view */
+  .sidebar .card:first-child,
+  .sidebar .sidebar-toc {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    display: block; /* Ensure it's visible */
+  }
+  
+  /* Style the TOC heading to match the screenshot */
+  .sidebar .card:first-child h3,
+  .sidebar .sidebar-toc h3 {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    font-family: var(--cbax-heading-font);
+  }
+  
+  /* Add vertical line to TOC */
+  .toc-links {
+    border-left: 2px solid var(--cbax-border);
+    padding-left: 15px;
+    margin-top: 0;
+    display: block; /* Ensure it's visible */
+  }
+  
+  /* Style TOC links */
+  .toc-links li {
+    margin-bottom: 0.7rem;
+  }
+  
+  .toc-links a {
+    font-family: var(--cbax-heading-font);
+    font-size: 0.95rem;
+    color: var(--cbax-text);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: block;
+    padding: 4px 0;
+    /* Ensure no background or borders by default */
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+  }
+  
+  .toc-links a:hover {
+    color: var(--cbax-primary);
+  }
+  
+  /* Active state for TOC items - only highlight text color */
+  .toc-links a.active {
+    color: var(--cbax-primary);
+    font-weight: 600;
+    /* Explicitly remove any background/border styling */
+    background: none;
+    border: none !important;
+    border-left: none !important;
+    padding-left: 0;
+    margin-left: 0;
+    box-shadow: none;
+    text-decoration: none;
+    outline: none !important;
+  }
+  
+  /* Additional specific overrides to ensure no outline */
+  .toc-links li a.active {
+    border: none !important;
+    outline: none !important;
+  }
+  
+  /* Remove outline from all toc links */
+  .toc-links a, 
+  .toc-links a:focus,
+  .toc-links a:active,
+  .toc-links a:hover {
+    outline: none !important;
+    border: none !important;
+  }
+  
+  /* Remove border from all cards in sidebar for a cleaner look */
+  .sidebar .card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
 }
 
@@ -1407,378 +1495,180 @@ body.printing-active .main-content {
 
 /* For desktop: improve TOC styling */
 @media (min-width: 769px) {
-  /* Left sidebar on desktop with open design */
-  .sidebar {
-    width: var(--sidebar-width);
-    margin-left: var(--content-padding-desktop);
-    margin-right: 0;
-    position: sticky;
-    top: 100px;
-    align-self: flex-start;
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-    padding-left: 0;
-    order: 0;
-    margin-bottom: 0;
-    background: transparent;
-  }
-  
-  /* Remove card styling from TOC in desktop view */
-  .sidebar .card:first-child {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  /* Style the TOC heading to match the screenshot */
-  .sidebar .card:first-child h3 {
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    letter-spacing: 1px;
-    font-family: var(--cbax-heading-font);
-  }
-  
-  /* Add vertical line to TOC */
-  .toc-links {
-    border-left: 2px solid var(--cbax-border);
-    padding-left: 15px;
-    margin-top: 0;
-  }
-  
-  /* Style TOC links */
-  .toc-links li {
-    margin-bottom: 0.7rem;
-  }
-  
-  .toc-links a {
-    font-family: var(--cbax-heading-font);
-    font-size: 0.95rem;
-    color: var(--cbax-text);
-    text-decoration: none;
-    transition: color 0.2s;
-    display: block;
-    padding: 4px 0;
-    /* Ensure no background or borders by default */
-    background: none;
-    border: none;
-    box-shadow: none;
-    outline: none;
-  }
-  
-  .toc-links a:hover {
-    color: var(--cbax-primary);
-  }
-  
-  /* Active state for TOC items - only highlight text color */
-  .toc-links a.active {
-    color: var(--cbax-primary);
-    font-weight: 600;
-    /* Explicitly remove any background/border styling */
-    background: none;
-    border: none !important;
-    border-left: none !important;
-    padding-left: 0;
-    margin-left: 0;
-    box-shadow: none;
-    text-decoration: none;
-    outline: none !important;
-  }
-  
-  /* Additional specific overrides to ensure no outline */
-  .toc-links li a.active {
-    border: none !important;
-    outline: none !important;
-  }
-  
-  /* Remove outline from all toc links */
-  .toc-links a, 
-  .toc-links a:focus,
-  .toc-links a:active,
-  .toc-links a:hover {
-    outline: none !important;
-    border: none !important;
-  }
-  
-  /* Remove border from all cards in sidebar for a cleaner look */
-  .sidebar .card {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-  }
-}
-
-/* Ensure main content doesn't overlap with fixed TOC */
-.section:first-of-type {
-  padding-top: 20px;
-}
-
-/* For immediate effect on all devices */
-.sidebar-toc {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-}
-
-/* For desktop: improve TOC styling */
-@media (min-width: 769px) {
-  /* Left sidebar on desktop with open design */
-  .sidebar {
-    width: var(--sidebar-width);
-    margin-left: var(--content-padding-desktop);
-    margin-right: 0;
-    position: sticky;
-    top: 100px;
-    align-self: flex-start;
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-    padding-left: 0;
-    order: 0;
-    margin-bottom: 0;
-    background: transparent;
-  }
-  
-  /* Remove card styling from TOC in desktop view */
-  .sidebar .card:first-child {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  /* Style the TOC heading to match the screenshot */
-  .sidebar .card:first-child h3 {
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    letter-spacing: 1px;
-    font-family: var(--cbax-heading-font);
-  }
-  
-  /* Add vertical line to TOC */
-  .toc-links {
-    border-left: 2px solid var(--cbax-border);
-    padding-left: 15px;
-    margin-top: 0;
-  }
-  
-  /* Style TOC links */
-  .toc-links li {
-    margin-bottom: 0.7rem;
-  }
-  
-  .toc-links a {
-    font-family: var(--cbax-heading-font);
-    font-size: 0.95rem;
-    color: var(--cbax-text);
-    text-decoration: none;
-    transition: color 0.2s;
-    display: block;
-    padding: 4px 0;
-    /* Ensure no background or borders by default */
-    background: none;
-    border: none;
-    box-shadow: none;
-    outline: none;
-  }
-  
-  .toc-links a:hover {
-    color: var(--cbax-primary);
-  }
-  
-  /* Active state for TOC items - only highlight text color */
-  .toc-links a.active {
-    color: var(--cbax-primary);
-    font-weight: 600;
-    /* Explicitly remove any background/border styling */
-    background: none;
-    border: none !important;
-    border-left: none !important;
-    padding-left: 0;
-    margin-left: 0;
-    box-shadow: none;
-    text-decoration: none;
-    outline: none !important;
-  }
-  
-  /* Additional specific overrides to ensure no outline */
-  .toc-links li a.active {
-    border: none !important;
-    outline: none !important;
-  }
-  
-  /* Remove outline from all toc links */
-  .toc-links a, 
-  .toc-links a:focus,
-  .toc-links a:active,
-  .toc-links a:hover {
-    outline: none !important;
-    border: none !important;
-  }
-  
-  /* Remove border from all cards in sidebar for a cleaner look */
-  .sidebar .card {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-  }
-}
-
-/* Ensure consistent styling for focus states */
-.toc-dropdown-btn:focus,
-.toc-dropdown-content:focus,
-.toc-dropdown:focus {
-  outline: none;
-  box-shadow: none;
-  border-color: var(--cbax-border);
-}
-
-/* Active state cleanup */
-.toc-dropdown-btn.active {
-  background-color: var(--cbax-darker);
-  border: none;
-}
-
-/* Ensure dropdown shadow is consistent */
-.toc-dropdown-content.open {
-  max-height: 70vh; /* Limit height to avoid covering entire screen */
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  border-top: none;
-  border-bottom: 1px solid var(--cbax-border);
-}
-
-/* Clean up any purple bottom border that might be showing */
-.toc-dropdown::after,
-.toc-dropdown-content::after {
-  content: none;
-  display: none;
-}
-
-/* Ensure TOC is hidden properly when closed */
-.toc-dropdown-content:not(.open) {
-  border: none;
-  box-shadow: none;
-}
-
-/* Restore card styling for non-TOC cards in sidebar */
-.sidebar .card:not(.sidebar-toc) {
-  background-color: var(--cbax-card-bg);
-  border-radius: var(--cbax-border-radius);
-  padding: 20px;
-  margin-bottom: 20px;
-  border: 1px solid var(--cbax-border);
-}
-
-/* Ensure card-primary still has correct styling */
-.sidebar .card.card-primary:not(.sidebar-toc) {
-  border-left: 4px solid var(--cbax-primary);
-  background-color: var(--cbax-primary-light);
-}
-
-/* Contact section in closing */
-.contact-section {
-  margin-top: 50px;
-  margin-bottom: 30px;
-}
-
-.contact-card {
-  max-width: 400px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.contact-info {
-  padding: 10px;
-}
-
-.contact-info p {
-  margin: 5px 0;
-}
-
-/* Ensure mobile footer is hidden on desktop */
-@media (min-width: 769px) {
-  .mobile-footer {
-    display: none;
-  }
-  
-  /* Hide all sidebar cards except the TOC */
-  .sidebar > *:not(.sidebar-toc) {
-    display: none !important;
-  }
-}
-
-/* UI Screenshot container styling */
-.ui-screenshot-container {
-  width: 100%;
-  text-align: center;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.ui-screenshot-container img {
-  max-width: 100%;
-  height: auto;
-  border-radius: var(--cbax-border-radius);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border: 1px solid var(--cbax-border);
-  margin: 0 auto;
-  display: block;
-}
-
-/* Ensure proper spacing in the How It Works grid */
-#how-it-works .grid-2 {
-  align-items: flex-start;
-  gap: 30px;
-}
-
-.visual-container {
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-/* For smaller mobile devices */
-@media (max-width: 380px) {
-  .toc-dropdown {
-    top: 50px;
-  }
-}
-
-/* Final overrides for desktop view to ensure mobile fixes don't break desktop layout */
-@media (min-width: 769px) {
   /* Reset header to sticky */
   .header {
     position: sticky;
     top: 0;
+    padding: 16px var(--content-padding-desktop);
+    height: 60px;
   }
   
-  /* Reset content margin */
+  /* Reset content margin and layout */
   .content {
     margin-top: 0;
+    flex-direction: row;
+    padding: 0;
   }
   
-  /* Reset main content padding */
-  .main-content {
-    padding-top: var(--content-padding-desktop);
+  /* Container layout */
+  .container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 100%;
+    padding: 0;
+    margin: 0 auto;
   }
   
-  /* Hide TOC dropdown */
+  /* Left sidebar on desktop with open design */
+  .sidebar {
+    width: var(--sidebar-width);
+    margin-left: var(--content-padding-desktop);
+    margin-right: 0;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-left: 0;
+    order: 0;
+    margin-bottom: 0;
+    background: transparent;
+    display: block; /* Ensure it's visible */
+  }
+  
+  /* Remove card styling from TOC in desktop view */
+  .sidebar .card:first-child,
+  .sidebar .sidebar-toc {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    display: block; /* Ensure it's visible */
+  }
+  
+  /* Style the TOC heading to match the screenshot */
+  .sidebar .card:first-child h3,
+  .sidebar .sidebar-toc h3 {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    font-family: var(--cbax-heading-font);
+  }
+  
+  /* Add vertical line to TOC */
+  .toc-links {
+    border-left: 2px solid var(--cbax-border);
+    padding-left: 15px;
+    margin-top: 0;
+    display: block; /* Ensure it's visible */
+  }
+  
+  /* Style TOC links */
+  .toc-links li {
+    margin-bottom: 0.7rem;
+  }
+  
+  .toc-links a {
+    font-family: var(--cbax-heading-font);
+    font-size: 0.95rem;
+    color: var(--cbax-text);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: block;
+    padding: 4px 0;
+    /* Ensure no background or borders by default */
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+  }
+  
+  .toc-links a:hover {
+    color: var(--cbax-primary);
+  }
+  
+  /* Active state for TOC items - only highlight text color */
+  .toc-links a.active {
+    color: var(--cbax-primary);
+    font-weight: 600;
+    /* Explicitly remove any background/border styling */
+    background: none;
+    border: none !important;
+    border-left: none !important;
+    padding-left: 0;
+    margin-left: 0;
+    box-shadow: none;
+    text-decoration: none;
+    outline: none !important;
+  }
+  
+  /* Hide TOC dropdown on desktop */
   .toc-dropdown {
+    display: none;
+  }
+  
+  /* Hide mobile footer on desktop */
+  .mobile-footer {
     display: none;
   }
   
   /* Reset section spacing */
   .section:first-of-type {
     padding-top: 0;
+  }
+  
+  /* Set proper spacing for all sections */
+  .section {
+    margin-bottom: calc(var(--section-spacing) * 1.5);
+    scroll-margin-top: 100px;
+  }
+  
+  /* Make sure main content layout is correct */
+  .main-content {
+    flex: 1;
+    max-width: calc(100% - var(--sidebar-width) - 80px);
+    margin-left: 40px;
+    margin-right: var(--content-padding-desktop);
+    padding: var(--content-padding-desktop);
+  }
+  
+  /* Make tables display properly */
+  .responsive-table {
+    display: table;
+    overflow-x: visible;
+  }
+  
+  /* For left-aligned layout, use left-aligned headings */
+  h1, h2, h3, .section-title {
+    text-align: left;
+  }
+  
+  /* Grid layout adjustments for desktop */
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  
+  /* Larger chart containers on desktop */
+  .chart-container {
+    height: 350px;
+  }
+  
+  /* Show sidebar cards and TOC links */
+  .sidebar .card:not(:first-child) {
+    display: block;
+  }
+  
+  .card .toc-links {
+    display: block;
+  }
+  
+  /* Properly style titles */
+  .section-title {
+    font-size: 2.2rem;
   }
 } 
