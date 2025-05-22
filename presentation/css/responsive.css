@@ -822,6 +822,7 @@ html[data-theme="light"] .moon-icon {
   transition: all 0.3s;
   font-family: var(--cbax-heading-font);
   cursor: pointer;
+  margin: 5px;
 }
 
 .btn:hover {
@@ -1102,10 +1103,48 @@ svg.cbax-flow-diagram {
     gap: 15px;
   }
   
-  /* Optimize touch targets */
+  /* Mobile-specific button styling for all contexts */
   .btn {
+    display: block;
     width: 100%;
+    margin: 10px auto;
+    box-sizing: border-box;
+    padding: 15px;
     text-align: center;
+  }
+  
+  /* Sidebar button styling */
+  .sidebar .card .btn {
+    display: block;
+    width: 100%;
+    margin: 10px auto;
+  }
+  
+  /* More space between buttons */
+  .btn + .btn {
+    margin-top: 15px;
+  }
+  
+  /* General container improvements */
+  .text-center .btn,
+  .call-to-action .btn,
+  .closing-content .btn {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .call-to-action {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .call-to-action .btn {
+    width: 100%;
+    margin: 5px 0;
+    text-align: center;
+    padding: 14px 20px;
+    box-sizing: border-box;
   }
 }
 
