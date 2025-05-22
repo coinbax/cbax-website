@@ -124,16 +124,30 @@ body {
   padding: 0;
 }
 
+/* For immediate effect on all devices - remove container styling from TOC */
+.sidebar-toc {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
 /* Dropdown TOC for mobile */
 .toc-dropdown {
-  position: relative;
-  z-index: 1000;
-  margin-bottom: 20px;
-  width: 100vw;
-  left: 50%;
-  transform: translateX(-50%);
-  box-shadow: none;
+  position: fixed;
+  top: 50px; /* Place it right below the header */
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 95;
+  margin-bottom: 0;
+  transform: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 0;
+  background-color: var(--cbax-darker);
+  border-bottom: 1px solid var(--cbax-border);
+  outline: none;
 }
 
 .toc-dropdown-btn {
@@ -141,23 +155,33 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 16px var(--content-padding-mobile);
+  padding: 14px var(--content-padding-mobile);
   background-color: var(--cbax-darker);
   border: none;
-  border-top: 1px solid var(--cbax-border);
-  border-bottom: 1px solid var(--cbax-border);
+  border-top: none;
+  border-bottom: none;
   border-radius: 0;
   color: var(--cbax-text);
   font-family: var(--cbax-heading-font);
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
   text-align: left;
+  position: relative;
+  outline: none;
+}
+
+.toc-dropdown-btn::after {
+  display: none;
+}
+
+.toc-dropdown-btn:hover::after {
+  display: none;
 }
 
 .toc-dropdown-btn:hover {
-  background-color: var(--cbax-primary-light);
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 .toc-dropdown-btn svg {
@@ -172,10 +196,11 @@ body {
 }
 
 .toc-dropdown-content {
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: 95px; /* Position below the dropdown button */
   left: 0;
   right: 0;
+  width: 100%;
   background-color: var(--cbax-darker);
   border: none;
   border-bottom: 1px solid var(--cbax-border);
@@ -185,11 +210,12 @@ body {
   overflow: hidden;
   transition: max-height 0.3s ease-out;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  z-index: 95;
+  z-index: 94;
+  outline: none;
 }
 
 .toc-dropdown-content.open {
-  max-height: 80vh;
+  max-height: 70vh; /* Limit height to avoid covering entire screen */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -216,8 +242,8 @@ body {
 
 .toc-dropdown-content a:hover,
 .toc-dropdown-content a.active {
-  background-color: var(--cbax-primary-light);
   color: var(--cbax-primary);
+  background-color: transparent;
 }
 
 /* Hide horizontal TOC on mobile, we'll use dropdown instead */
@@ -268,6 +294,12 @@ body {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
+/* Main content cards should maintain their styling */
+.main-content .card {
+  background-color: var(--cbax-card-bg);
+  border: 1px solid var(--cbax-border);
+}
+
 .card:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
@@ -288,76 +320,29 @@ body {
   background-color: var(--cbax-success-light);
 }
 
-/* Visual elements */
-.visual-container {
-  width: 100%;
-  margin: 20px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+/* Adjust spacing to account for fixed dropdown */
+.section:first-of-type {
+  padding-top: 70px;
 }
 
-.chart-container {
-  width: 100%;
-  height: 300px;
-  margin: 20px 0;
-}
-
-/* Images */
-.responsive-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: var(--cbax-border-radius);
-  display: block;
-  margin: 0 auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Tables */
-.responsive-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  overflow-x: auto;
-  display: block;
-  border-radius: var(--cbax-border-radius);
-  border: 1px solid var(--cbax-border);
-}
-
-.responsive-table th,
-.responsive-table td {
-  padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid var(--cbax-border);
-}
-
-.responsive-table th {
-  background-color: var(--cbax-table-header);
-  position: sticky;
-  top: 0;
-  font-weight: 600;
-}
-
-.responsive-table tr:last-child td {
-  border-bottom: none;
-}
-
-.responsive-table tr.highlighted-row {
-  background-color: var(--cbax-primary-light);
-}
-
-/* Footer */
-.footer {
-  padding: 40px var(--content-padding-mobile);
-  background-color: var(--cbax-darker);
-  border-top: 1px solid var(--cbax-border);
-  text-align: center;
-  margin-top: var(--section-spacing);
+/* Adjust main content padding to account for fixed TOC */
+.main-content {
+  padding: var(--content-padding-mobile);
+  padding-top: 60px; /* Add extra padding at top for fixed TOC */
+  margin-top: 0;
 }
 
 /* Desktop Layout Improvements */
 @media (min-width: 769px) {
+  /* Reset mobile TOC spacing */
+  .section:first-of-type {
+    padding-top: 0;
+  }
+  
+  .main-content {
+    padding-top: var(--content-padding-desktop);
+  }
+  
   .container {
     flex-direction: row;
     flex-wrap: wrap;
@@ -378,7 +363,7 @@ body {
     margin: 0;
   }
   
-  /* Left sidebar on desktop */
+  /* Left sidebar on desktop with open design */
   .sidebar {
     width: var(--sidebar-width);
     margin-left: var(--content-padding-desktop);
@@ -391,6 +376,88 @@ body {
     padding-left: 0;
     order: 0;
     margin-bottom: 0;
+    background: transparent;
+  }
+  
+  /* Remove card styling from TOC in desktop view */
+  .sidebar .card:first-child {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Style the TOC heading to match the screenshot */
+  .sidebar .card:first-child h3 {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    font-family: var(--cbax-heading-font);
+  }
+  
+  /* Add vertical line to TOC */
+  .toc-links {
+    border-left: 2px solid var(--cbax-border);
+    padding-left: 15px;
+    margin-top: 0;
+  }
+  
+  /* Style TOC links */
+  .toc-links li {
+    margin-bottom: 0.7rem;
+  }
+  
+  .toc-links a {
+    font-family: var(--cbax-heading-font);
+    font-size: 0.95rem;
+    color: var(--cbax-text);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: block;
+    padding: 4px 0;
+    /* Ensure no background or borders by default */
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+  }
+  
+  .toc-links a:hover {
+    color: var(--cbax-primary);
+  }
+  
+  /* Active state for TOC items - only highlight text color */
+  .toc-links a.active {
+    color: var(--cbax-primary);
+    font-weight: 600;
+    /* Explicitly remove any background/border styling */
+    background: none;
+    border: none !important;
+    border-left: none !important;
+    padding-left: 0;
+    margin-left: 0;
+    box-shadow: none;
+    text-decoration: none;
+    outline: none !important;
+  }
+  
+  /* Additional specific overrides to ensure no outline */
+  .toc-links li a.active {
+    border: none !important;
+    outline: none !important;
+  }
+  
+  /* Remove outline from all toc links */
+  .toc-links a, 
+  .toc-links a:focus,
+  .toc-links a:active,
+  .toc-links a:hover {
+    outline: none !important;
+    border: none !important;
   }
   
   /* Hide TOC dropdown on desktop */
@@ -494,6 +561,32 @@ html[data-theme="light"] .moon-icon {
   height: 4px;
   background: var(--cbax-primary);
   width: 0%;
+}
+
+/* Remove any progress bar styling that might be showing as a purple line */
+.progress-bar:before,
+.progress-bar:after {
+  display: none;
+  content: none;
+}
+
+/* Make sure the body doesn't have any unwanted borders */
+body:after {
+  display: none;
+  content: none;
+}
+
+/* Prevent any random purple bars from showing */
+.toc-dropdown:before,
+.toc-dropdown:after,
+.toc-dropdown-content:before,
+.toc-dropdown-content:after,
+.toc-dropdown-btn:before,
+.toc-dropdown-btn:after {
+  display: none !important;
+  content: none !important;
+  border: none !important;
+  background: none !important;
 }
 
 /* Grid layouts */
@@ -683,6 +776,36 @@ html[data-theme="light"] .moon-icon {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+/* Final TOC link styling overrides to remove any outlines */
+.toc-links a,
+.toc-links a:hover,
+.toc-links a:focus,
+.toc-links a:active,
+.toc-links a.active,
+.toc-links a::before,
+.toc-links a::after,
+.toc-links a.active::before,
+.toc-links a.active::after {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+/* Only allow text color to change for active items */
+.toc-links a.active {
+  color: var(--cbax-primary) !important;
+  font-weight: 600 !important;
+}
+
+/* Ensure the TOC keeps the vertical line on desktop */
+@media (min-width: 769px) {
+  .toc-links {
+    border-left: 2px solid var(--cbax-border) !important;
+    padding-left: 15px !important;
+  }
 }
 
 .toc-links li {
@@ -988,9 +1111,11 @@ html[data-theme="light"] .moon-icon {
 .toc-links a.active {
   color: var(--cbax-primary);
   font-weight: 600;
-  border-left: 3px solid var(--cbax-primary);
-  padding-left: 10px;
-  margin-left: -13px;
+  /* Remove all border/background highlighting */
+  border-left: none;
+  background: none;
+  padding-left: 0;
+  margin-left: 0;
 }
 
 /* Context note styling */
@@ -1390,4 +1515,321 @@ body.printing-active .main-content {
 /* Adjust main content padding */
 .main-content {
   padding: var(--content-padding-mobile);
+}
+
+/* Adjust main content to account for the fixed TOC */
+.main-content {
+  margin-top: 0;
+}
+
+/* For desktop: improve TOC styling */
+@media (min-width: 769px) {
+  /* Left sidebar on desktop with open design */
+  .sidebar {
+    width: var(--sidebar-width);
+    margin-left: var(--content-padding-desktop);
+    margin-right: 0;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-left: 0;
+    order: 0;
+    margin-bottom: 0;
+    background: transparent;
+  }
+  
+  /* Remove card styling from TOC in desktop view */
+  .sidebar .card:first-child {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Style the TOC heading to match the screenshot */
+  .sidebar .card:first-child h3 {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    font-family: var(--cbax-heading-font);
+  }
+  
+  /* Add vertical line to TOC */
+  .toc-links {
+    border-left: 2px solid var(--cbax-border);
+    padding-left: 15px;
+    margin-top: 0;
+  }
+  
+  /* Style TOC links */
+  .toc-links li {
+    margin-bottom: 0.7rem;
+  }
+  
+  .toc-links a {
+    font-family: var(--cbax-heading-font);
+    font-size: 0.95rem;
+    color: var(--cbax-text);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: block;
+    padding: 4px 0;
+    /* Ensure no background or borders by default */
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+  }
+  
+  .toc-links a:hover {
+    color: var(--cbax-primary);
+  }
+  
+  /* Active state for TOC items - only highlight text color */
+  .toc-links a.active {
+    color: var(--cbax-primary);
+    font-weight: 600;
+    /* Explicitly remove any background/border styling */
+    background: none;
+    border: none !important;
+    border-left: none !important;
+    padding-left: 0;
+    margin-left: 0;
+    box-shadow: none;
+    text-decoration: none;
+    outline: none !important;
+  }
+  
+  /* Additional specific overrides to ensure no outline */
+  .toc-links li a.active {
+    border: none !important;
+    outline: none !important;
+  }
+  
+  /* Remove outline from all toc links */
+  .toc-links a, 
+  .toc-links a:focus,
+  .toc-links a:active,
+  .toc-links a:hover {
+    outline: none !important;
+    border: none !important;
+  }
+  
+  /* Remove border from all cards in sidebar for a cleaner look */
+  .sidebar .card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+}
+
+/* Ensure main content doesn't overlap with fixed TOC */
+.section:first-of-type {
+  padding-top: 20px;
+}
+
+/* For immediate effect on all devices */
+.sidebar-toc {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* For desktop: improve TOC styling */
+@media (min-width: 769px) {
+  /* Left sidebar on desktop with open design */
+  .sidebar {
+    width: var(--sidebar-width);
+    margin-left: var(--content-padding-desktop);
+    margin-right: 0;
+    position: sticky;
+    top: 100px;
+    align-self: flex-start;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-left: 0;
+    order: 0;
+    margin-bottom: 0;
+    background: transparent;
+  }
+  
+  /* Remove card styling from TOC in desktop view */
+  .sidebar .card:first-child {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Style the TOC heading to match the screenshot */
+  .sidebar .card:first-child h3 {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    letter-spacing: 1px;
+    font-family: var(--cbax-heading-font);
+  }
+  
+  /* Add vertical line to TOC */
+  .toc-links {
+    border-left: 2px solid var(--cbax-border);
+    padding-left: 15px;
+    margin-top: 0;
+  }
+  
+  /* Style TOC links */
+  .toc-links li {
+    margin-bottom: 0.7rem;
+  }
+  
+  .toc-links a {
+    font-family: var(--cbax-heading-font);
+    font-size: 0.95rem;
+    color: var(--cbax-text);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: block;
+    padding: 4px 0;
+    /* Ensure no background or borders by default */
+    background: none;
+    border: none;
+    box-shadow: none;
+    outline: none;
+  }
+  
+  .toc-links a:hover {
+    color: var(--cbax-primary);
+  }
+  
+  /* Active state for TOC items - only highlight text color */
+  .toc-links a.active {
+    color: var(--cbax-primary);
+    font-weight: 600;
+    /* Explicitly remove any background/border styling */
+    background: none;
+    border: none !important;
+    border-left: none !important;
+    padding-left: 0;
+    margin-left: 0;
+    box-shadow: none;
+    text-decoration: none;
+    outline: none !important;
+  }
+  
+  /* Additional specific overrides to ensure no outline */
+  .toc-links li a.active {
+    border: none !important;
+    outline: none !important;
+  }
+  
+  /* Remove outline from all toc links */
+  .toc-links a, 
+  .toc-links a:focus,
+  .toc-links a:active,
+  .toc-links a:hover {
+    outline: none !important;
+    border: none !important;
+  }
+  
+  /* Remove border from all cards in sidebar for a cleaner look */
+  .sidebar .card {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+}
+
+/* Ensure consistent styling for focus states */
+.toc-dropdown-btn:focus,
+.toc-dropdown-content:focus,
+.toc-dropdown:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: var(--cbax-border);
+}
+
+/* Active state cleanup */
+.toc-dropdown-btn.active {
+  background-color: var(--cbax-darker);
+  border: none;
+}
+
+/* Ensure dropdown shadow is consistent */
+.toc-dropdown-content.open {
+  max-height: 70vh; /* Limit height to avoid covering entire screen */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  border-top: none;
+  border-bottom: 1px solid var(--cbax-border);
+}
+
+/* Clean up any purple bottom border that might be showing */
+.toc-dropdown::after,
+.toc-dropdown-content::after {
+  content: none;
+  display: none;
+}
+
+/* Ensure TOC is hidden properly when closed */
+.toc-dropdown-content:not(.open) {
+  border: none;
+  box-shadow: none;
+}
+
+/* Restore card styling for non-TOC cards in sidebar */
+.sidebar .card:not(.sidebar-toc) {
+  background-color: var(--cbax-card-bg);
+  border-radius: var(--cbax-border-radius);
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--cbax-border);
+}
+
+/* Ensure card-primary still has correct styling */
+.sidebar .card.card-primary:not(.sidebar-toc) {
+  border-left: 4px solid var(--cbax-primary);
+  background-color: var(--cbax-primary-light);
+}
+
+/* Contact section in closing */
+.contact-section {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.contact-card {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-info {
+  padding: 10px;
+}
+
+.contact-info p {
+  margin: 5px 0;
+}
+
+/* Ensure mobile footer is hidden on desktop */
+@media (min-width: 769px) {
+  .mobile-footer {
+    display: none;
+  }
+  
+  /* Hide all sidebar cards except the TOC */
+  .sidebar > *:not(.sidebar-toc) {
+    display: none !important;
+  }
 } 

@@ -119,24 +119,16 @@ function initTocDropdown() {
   if (!tocDropdownBtn || !tocDropdownContent) return;
   
   // Toggle dropdown on button click
-  tocDropdownBtn.addEventListener('click', function(e) {
-    e.stopPropagation(); // Prevent event bubbling to document
+  tocDropdownBtn.addEventListener('click', function() {
+    // Toggle the open class on the dropdown content
     tocDropdownContent.classList.toggle('open');
+    // Toggle the active class on the button
     tocDropdownBtn.classList.toggle('active');
     
-    // If opening and near bottom of viewport, scroll to ensure full visibility
-    if (tocDropdownContent.classList.contains('open')) {
-      const dropdownRect = tocDropdownContent.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      
-      // If dropdown would extend beyond viewport, scroll to make it visible
-      if (dropdownRect.bottom > viewportHeight) {
-        window.scrollBy({
-          top: Math.min(150, dropdownRect.bottom - viewportHeight + 50),
-          behavior: 'smooth'
-        });
-      }
-    }
+    // Clean up any potential inline styles that might be causing purple lines
+    tocDropdownContent.style.borderBottom = tocDropdownContent.classList.contains('open') ? 
+        '1px solid var(--cbax-border)' : 'none';
+    tocDropdownBtn.style.borderBottom = 'none';
   });
   
   // Close dropdown when a link is clicked
@@ -181,7 +173,7 @@ function initTocDropdown() {
 }
 
 /**
- * Highlight active section in TOC based on scroll position
+ * Initialize active section highlighting in TOC
  */
 function initActiveSection() {
   const sections = document.querySelectorAll('section[id]');
@@ -201,10 +193,16 @@ function initActiveSection() {
         // Get the id of the section that is currently visible
         const id = entry.target.getAttribute('id');
         
-        // Remove 'active' class from all links
+        // Remove 'active' class from all links and any potential inline styles
         tocLinks.forEach(link => {
           link.classList.remove('active');
+          // Clear any unwanted inline styles 
+          link.style.border = '';
+          link.style.outline = '';
+          link.style.boxShadow = '';
+          
           if (link.getAttribute('href') === `#${id}`) {
+            // Add active class but ensure no additional styles
             link.classList.add('active');
           }
         });
@@ -232,7 +230,13 @@ function initActiveSection() {
     
     tocLinks.forEach(link => {
       link.classList.remove('active');
+      // Clear any unwanted inline styles
+      link.style.border = '';
+      link.style.outline = '';
+      link.style.boxShadow = '';
+      
       if (link.getAttribute('href') === `#${currentSection}`) {
+        // Add active class but ensure no additional styles
         link.classList.add('active');
       }
     });
