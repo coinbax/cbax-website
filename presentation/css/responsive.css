@@ -1832,4 +1832,34 @@ body.printing-active .main-content {
   .sidebar > *:not(.sidebar-toc) {
     display: none !important;
   }
+}
+
+/* UI Screenshot container styling */
+.ui-screenshot-container {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.ui-screenshot-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--cbax-border-radius);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--cbax-border);
+  margin: 0 auto;
+  display: block;
+}
+
+/* Ensure proper spacing in the How It Works grid */
+#how-it-works .grid-2 {
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.visual-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
 } 
