@@ -51,7 +51,7 @@ body {
 .container {
   width: 100%;
   max-width: 100%;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -59,8 +59,11 @@ body {
 
 /* Header */
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 100;
   background-color: var(--cbax-darker);
   border-bottom: 1px solid var(--cbax-border);
@@ -111,6 +114,7 @@ body {
 
 /* Main content */
 .content {
+  margin-top: 50px; /* Equal to header height */
   display: flex;
   flex-direction: column;
   padding: 0;
@@ -136,12 +140,12 @@ body {
 /* Dropdown TOC for mobile */
 .toc-dropdown {
   position: fixed;
-  top: 50px; /* Place it right below the header */
+  top: 50px; /* Exactly at bottom of header */
   left: 0;
   right: 0;
   width: 100%;
   z-index: 95;
-  margin-bottom: 0;
+  margin: 0;
   transform: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 0;
@@ -328,19 +332,18 @@ body {
 /* Adjust main content padding to account for fixed TOC */
 .main-content {
   padding: var(--content-padding-mobile);
-  padding-top: 60px; /* Add extra padding at top for fixed TOC */
+  padding-top: 120px; /* Allow space for fixed header (50px) + TOC button (~50px) + extra padding */
   margin-top: 0;
 }
 
 /* Desktop Layout Improvements */
 @media (min-width: 769px) {
-  /* Reset mobile TOC spacing */
-  .section:first-of-type {
-    padding-top: 0;
-  }
-  
-  .main-content {
-    padding-top: var(--content-padding-desktop);
+  /* Reset mobile-specific fixed positioning for header on desktop */
+  .header {
+    position: sticky;
+    width: 100%;
+    padding: 16px var(--content-padding-desktop);
+    height: 60px;
   }
   
   .container {
@@ -348,19 +351,34 @@ body {
     flex-wrap: wrap;
     max-width: 100%;
     padding: 0;
-  }
-  
-  .header {
-    width: 100%;
-    padding: 16px var(--content-padding-desktop);
-    height: 60px;
+    margin: 0 auto;
   }
   
   .content {
     flex-direction: row;
     padding: 0;
+    margin-top: 0; /* Reset mobile margin */
     max-width: 100%;
-    margin: 0;
+  }
+  
+  /* Reset mobile TOC spacing */
+  .section:first-of-type {
+    padding-top: 0;
+  }
+  
+  /* Main content padding adjustments for desktop */
+  .main-content {
+    flex: 1;
+    max-width: calc(100% - var(--sidebar-width) - 80px);
+    margin-left: 40px;
+    margin-right: var(--content-padding-desktop);
+    padding: var(--content-padding-desktop);
+    padding-top: var(--content-padding-desktop);
+  }
+  
+  /* Hide mobile footer on desktop */
+  .mobile-footer {
+    display: none;
   }
   
   /* Left sidebar on desktop with open design */
@@ -379,144 +397,9 @@ body {
     background: transparent;
   }
   
-  /* Remove card styling from TOC in desktop view */
-  .sidebar .card:first-child {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  /* Style the TOC heading to match the screenshot */
-  .sidebar .card:first-child h3 {
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    letter-spacing: 1px;
-    font-family: var(--cbax-heading-font);
-  }
-  
-  /* Add vertical line to TOC */
-  .toc-links {
-    border-left: 2px solid var(--cbax-border);
-    padding-left: 15px;
-    margin-top: 0;
-  }
-  
-  /* Style TOC links */
-  .toc-links li {
-    margin-bottom: 0.7rem;
-  }
-  
-  .toc-links a {
-    font-family: var(--cbax-heading-font);
-    font-size: 0.95rem;
-    color: var(--cbax-text);
-    text-decoration: none;
-    transition: color 0.2s;
-    display: block;
-    padding: 4px 0;
-    /* Ensure no background or borders by default */
-    background: none;
-    border: none;
-    box-shadow: none;
-    outline: none;
-  }
-  
-  .toc-links a:hover {
-    color: var(--cbax-primary);
-  }
-  
-  /* Active state for TOC items - only highlight text color */
-  .toc-links a.active {
-    color: var(--cbax-primary);
-    font-weight: 600;
-    /* Explicitly remove any background/border styling */
-    background: none;
-    border: none !important;
-    border-left: none !important;
-    padding-left: 0;
-    margin-left: 0;
-    box-shadow: none;
-    text-decoration: none;
-    outline: none !important;
-  }
-  
-  /* Additional specific overrides to ensure no outline */
-  .toc-links li a.active {
-    border: none !important;
-    outline: none !important;
-  }
-  
-  /* Remove outline from all toc links */
-  .toc-links a, 
-  .toc-links a:focus,
-  .toc-links a:active,
-  .toc-links a:hover {
-    outline: none !important;
-    border: none !important;
-  }
-  
   /* Hide TOC dropdown on desktop */
   .toc-dropdown {
     display: none;
-  }
-  
-  /* Main content padding adjustments for desktop */
-  .main-content {
-    flex: 1;
-    max-width: calc(100% - var(--sidebar-width) - 80px);
-    margin-left: 40px;
-    margin-right: var(--content-padding-desktop);
-    padding: var(--content-padding-desktop) 0;
-  }
-  
-  /* Hide mobile footer on desktop */
-  .mobile-footer {
-    display: none;
-  }
-  
-  /* Show sidebar cards on desktop */
-  .sidebar .card:not(:first-child) {
-    display: block;
-  }
-  
-  /* Show vertical TOC on desktop */
-  .card .toc-links {
-    display: block;
-  }
-  
-  .section {
-    margin-bottom: calc(var(--section-spacing) * 1.5);
-    scroll-margin-top: 100px;
-  }
-  
-  .section-title {
-    font-size: 2.2rem;
-  }
-  
-  .responsive-table {
-    display: table;
-    overflow-x: visible;
-  }
-  
-  /* For left-aligned layout, use left-aligned headings */
-  h1, h2, h3, .section-title {
-    text-align: left;
-  }
-  
-  /* Grid layout adjustments for desktop */
-  .grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-  }
-  
-  /* Larger chart containers on desktop */
-  .chart-container {
-    height: 350px;
   }
 }
 
@@ -1862,4 +1745,40 @@ body.printing-active .main-content {
   width: 100%;
   padding: 0;
   margin: 0;
+}
+
+/* For smaller mobile devices */
+@media (max-width: 380px) {
+  .toc-dropdown {
+    top: 50px;
+  }
+}
+
+/* Final overrides for desktop view to ensure mobile fixes don't break desktop layout */
+@media (min-width: 769px) {
+  /* Reset header to sticky */
+  .header {
+    position: sticky;
+    top: 0;
+  }
+  
+  /* Reset content margin */
+  .content {
+    margin-top: 0;
+  }
+  
+  /* Reset main content padding */
+  .main-content {
+    padding-top: var(--content-padding-desktop);
+  }
+  
+  /* Hide TOC dropdown */
+  .toc-dropdown {
+    display: none;
+  }
+  
+  /* Reset section spacing */
+  .section:first-of-type {
+    padding-top: 0;
+  }
 } 
