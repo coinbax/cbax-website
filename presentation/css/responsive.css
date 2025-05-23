@@ -242,8 +242,8 @@ body {
   order: 999; /* Make sure it's at the bottom */
 }
 
-/* Hide the regular sidebar cards for Contact and Download */
-.sidebar .card:not(:first-child) {
+/* Hide the regular sidebar cards for Contact and Download, but not the TOC */
+.sidebar .card:not(.sidebar-toc) {
   display: none;
 }
 
@@ -392,6 +392,11 @@ body {
     padding: 0;
     margin: 0;
     display: block; /* Ensure it's visible */
+  }
+  
+  /* Ensure TOC is visible on desktop - override mobile hiding rule */
+  .sidebar .card.sidebar-toc {
+    display: block !important;
   }
   
   /* Style the TOC heading to match the screenshot */
