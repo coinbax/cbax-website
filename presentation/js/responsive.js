@@ -203,7 +203,7 @@ function initTocDropdown() {
  */
 function initActiveSection() {
   const sections = document.querySelectorAll('section[id]');
-  const tocLinks = document.querySelectorAll('.toc-links a, .toc-horizontal a, .toc-dropdown-content a');
+  const tocLinks = document.querySelectorAll('.toc-links a, .toc-dropdown-content a');
   
   if (sections.length === 0 || tocLinks.length === 0) return;
   

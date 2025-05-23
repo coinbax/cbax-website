@@ -166,20 +166,31 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: background-color 0.2s ease;
+}
+
+.toc-dropdown-btn:hover {
+  background-color: var(--cbax-primary-light);
+}
+
+.toc-dropdown-btn svg {
+  transition: transform 0.3s ease;
+  opacity: 0.7;
 }
 
 .toc-dropdown-content {
   position: static;
   width: 100%;
-  height: 0;
+  max-height: 0;
   overflow: hidden;
-  transition: height 0.3s ease;
+  transition: max-height 0.3s ease-out;
+  background-color: var(--cbax-darker);
 }
 
 .toc-dropdown-content.open {
-  height: auto;
   max-height: 80vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .toc-dropdown-content ul {
@@ -188,30 +199,37 @@ body {
   margin: 0;
 }
 
+.toc-dropdown-content li {
+  border-bottom: 1px solid var(--cbax-border);
+}
+
+.toc-dropdown-content li:last-child {
+  border-bottom: none;
+}
+
 .toc-dropdown-content a {
   display: block;
   padding: 12px var(--content-padding-mobile);
   color: var(--cbax-text);
   text-decoration: none;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
   font-family: var(--cbax-heading-font);
-  border-bottom: 1px solid var(--cbax-border);
+  font-size: 0.95rem;
+  position: relative;
 }
 
-.toc-dropdown-content a:last-child {
-  border-bottom: none;
+.toc-dropdown-content a:hover {
+  color: var(--cbax-primary);
+  background-color: var(--cbax-primary-light);
 }
 
-.toc-dropdown-content a:hover,
 .toc-dropdown-content a.active {
   color: var(--cbax-primary);
-  background-color: transparent;
+  background-color: var(--cbax-primary-light);
+  font-weight: 600;
+  border-left: 3px solid var(--cbax-primary);
 }
 
-/* Hide horizontal TOC on mobile, we'll use dropdown instead */
-.toc-container {
-  display: none;
-}
 
 /* Move Contact and Download to bottom of page in mobile view */
 .mobile-footer {
@@ -1350,7 +1368,6 @@ svg.cbax-flow-diagram {
     .header,
     .sidebar,
     .toc-dropdown,
-    .toc-container,
     .progress-container,
     .skip-link,
     .mobile-footer,
@@ -1450,7 +1467,6 @@ svg.cbax-flow-diagram {
 body.printing-active .header,
 body.printing-active .sidebar,
 body.printing-active .toc-dropdown,
-body.printing-active .toc-container,
 body.printing-active .progress-container,
 body.printing-active .skip-link,
 body.printing-active .mobile-footer,

@@ -1,4 +1,4 @@
-// Simple password protection for presentation
+// Enhanced password protection for presentation
 (function() {
   // Password configuration
   const correctPassword = "trustcbax";
@@ -13,35 +13,18 @@
     sessionStorage.setItem('cbax_auth', value ? 'true' : 'false');
   }
   
-  // Prompt for password 
-  function promptPassword() {
-    const password = prompt("Please enter the password to access this presentation:", "");
-    
-    if (password === correctPassword) {
-      setAuthenticated(true);
-      return true;
-    } else {
-      if (password !== null) { // Only show error if they actually attempted a password
-        alert("Incorrect password. Access denied.");
-      }
-      return false;
-    }
-  }
-  
   // Main authentication flow
   function checkAuth() {
-    // Skip auth check if we're in PDF print mode
-    if (window.location.search.includes('print-pdf')) {
+    // Skip auth check if we're in PDF print mode or on the login page
+    if (window.location.search.includes('print-pdf') || 
+        window.location.pathname.includes('login.html')) {
       return true;
     }
     
     if (!isAuthenticated()) {
-      // If not authenticated, prompt for password
-      if (!promptPassword()) {
-        // If authentication failed, redirect to login page
-        window.location.href = "login.html";
-        return false;
-      }
+      // Redirect to the full-screen login page
+      window.location.href = "login.html";
+      return false;
     }
     return true;
   }
@@ -56,6 +39,8 @@
     check: checkAuth,
     logout: function() {
       setAuthenticated(false);
-    }
+      window.location.href = "login.html";
+    },
+    isAuthenticated: isAuthenticated
   };
 })(); 

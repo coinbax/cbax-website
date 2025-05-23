@@ -1,124 +1,289 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Coinbax Presentation - Login</title>
-    <link rel="stylesheet" href="css/cbax-design-system.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>CBAX - Presentation Access</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        .login-container {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+            color: white;
+            font-family: 'IBM Plex Mono', monospace;
+            text-align: center;
+            min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 25% 25%, #605cff 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, #4338ca 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(1deg); }
+            66% { transform: translate(-20px, 20px) rotate(-1deg); }
+        }
+        
+        .login-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 500px;
             padding: 20px;
         }
-        .login-card {
-            background-color: var(--cbax-card-bg);
-            border-radius: var(--cbax-border-radius);
+        
+        .logo {
+            font-size: 3.5rem;
+            font-weight: bold;
+            letter-spacing: 6px;
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #605cff, #4338ca);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { 
+                filter: drop-shadow(0 0 20px rgba(96, 92, 255, 0.3));
+            }
+            to { 
+                filter: drop-shadow(0 0 30px rgba(96, 92, 255, 0.5));
+            }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        .description {
+            font-size: 1rem;
+            margin-bottom: 40px;
+            opacity: 0.7;
+            line-height: 1.5;
+        }
+        
+        .form-container {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
             padding: 40px;
-            box-shadow: var(--cbax-box-shadow);
-            width: 100%;
-            max-width: 400px;
+            border-radius: 16px;
+            border: 1px solid rgba(96, 92, 255, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
         }
-        .login-logo {
-            font-family: var(--cbax-heading-font);
-            font-weight: 700;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--cbax-primary);
-        }
-        .login-form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+        
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
+            margin-bottom: 25px;
         }
+        
         .form-label {
-            font-family: var(--cbax-heading-font);
+            font-family: 'Inter', sans-serif;
             font-weight: 600;
             font-size: 1rem;
-            color: var(--cbax-text);
+            color: rgba(255, 255, 255, 0.9);
+            text-align: left;
         }
+        
         .form-input {
-            font-family: var(--cbax-body-font);
-            padding: 12px 15px;
-            border-radius: var(--cbax-border-radius);
-            border: 1px solid var(--cbax-border);
-            background-color: var(--cbax-bg);
-            font-size: 1rem;
-            color: var(--cbax-text);
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        .form-input:focus {
-            outline: none;
-            border-color: var(--cbax-primary);
-            box-shadow: 0 0 0 2px rgba(var(--cbax-primary-rgb), 0.2);
-        }
-        .login-button {
-            background-color: var(--cbax-primary);
+            font-family: 'IBM Plex Mono', monospace;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 2px solid rgba(96, 92, 255, 0.3);
+            background: rgba(42, 42, 42, 0.8);
             color: white;
-            font-family: var(--cbax-heading-font);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .form-input:focus {
+            border-color: #605cff;
+            box-shadow: 
+                0 0 0 3px rgba(96, 92, 255, 0.2),
+                0 4px 12px rgba(96, 92, 255, 0.1);
+            background: rgba(42, 42, 42, 1);
+        }
+        
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .login-button {
+            background: linear-gradient(135deg, #605cff, #4338ca);
+            color: white;
+            font-family: 'Inter', sans-serif;
             font-weight: 600;
-            padding: 12px 20px;
+            padding: 16px 32px;
             border: none;
-            border-radius: var(--cbax-border-radius);
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s, transform 0.2s;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
+        
         .login-button:hover {
-            background-color: var(--cbax-secondary);
             transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(96, 92, 255, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.2);
         }
+        
+        .login-button:active {
+            transform: translateY(0);
+        }
+        
+        .login-button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .login-button:hover:before {
+            left: 100%;
+        }
+        
         .error-message {
-            color: #e74c3c;
-            font-size: 0.9rem;
+            color: #ff6b6b;
+            font-size: 0.95rem;
             margin-top: 15px;
-            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
             display: none;
+            animation: shake 0.5s ease-in-out;
         }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
         .back-link {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.9rem;
+            margin-top: 30px;
+            font-size: 0.95rem;
         }
+        
         .back-link a {
-            color: var(--cbax-primary);
+            color: #605cff;
             text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
         }
+        
         .back-link a:hover {
+            opacity: 1;
             text-decoration: underline;
+        }
+        
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .loading .login-button {
+            background: linear-gradient(135deg, #4a4a4a, #3a3a3a);
+        }
+        
+        .loading .login-button:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            margin: auto;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+            
+            .form-container {
+                padding: 30px 25px;
+                margin: 0 10px;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .description {
+                font-size: 0.95rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="background-pattern"></div>
+    
     <div class="login-container">
-        <div class="login-card">
-            <div class="login-logo">COINBAX</div>
-            <h1 class="text-center">Presentation Access</h1>
-            <p class="text-center">Please enter the password to access the presentation</p>
-            
-            <div class="login-form">
-                <div class="form-group">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" id="password" class="form-input" placeholder="Enter access password">
-                </div>
-                <button type="button" id="login-btn" class="login-button">Access Presentation</button>
-                <div id="error-message" class="error-message">Incorrect password. Please try again.</div>
+        <div class="logo">COINBAX</div>
+        <div class="subtitle">Presentation Access</div>
+        <div class="description">Enter the password to access our secure presentation</div>
+        
+        <div class="form-container">
+            <div class="form-group">
+                <label for="password" class="form-label">Access Password</label>
+                <input type="password" id="password" class="form-input" placeholder="Enter your password" autocomplete="off">
             </div>
-            
-            <div class="back-link">
-                <a href="/">Return to Homepage</a>
+            <button type="button" id="login-btn" class="login-button">
+                <span>Access Presentation</span>
+            </button>
+            <div id="error-message" class="error-message">
+                Incorrect password. Please try again.
             </div>
+        </div>
+        
+        <div class="back-link">
+            <a href="/">← Return to Homepage</a>
         </div>
     </div>
 
@@ -128,22 +293,56 @@
             const loginBtn = document.getElementById('login-btn');
             const passwordInput = document.getElementById('password');
             const errorMessage = document.getElementById('error-message');
+            const formContainer = document.querySelector('.form-container');
             
             // Function to handle login
             function attemptLogin() {
-                const password = passwordInput.value;
+                const password = passwordInput.value.trim();
                 
-                if (password === correctPassword) {
-                    // Set authentication in session storage
-                    sessionStorage.setItem('cbax_auth', 'true');
-                    
-                    // Redirect to the presentation
-                    window.location.href = 'index.html';
-                } else {
-                    // Show error message
-                    errorMessage.style.display = 'block';
-                    passwordInput.focus();
+                if (!password) {
+                    showError('Please enter a password');
+                    return;
                 }
+                
+                // Add loading state
+                formContainer.classList.add('loading');
+                loginBtn.innerHTML = '<span></span>';
+                
+                // Simulate a brief loading period for better UX
+                setTimeout(() => {
+                    if (password === correctPassword) {
+                        // Set authentication in session storage
+                        sessionStorage.setItem('cbax_auth', 'true');
+                        
+                        // Success animation
+                        loginBtn.innerHTML = '<span>Access Granted ✓</span>';
+                        loginBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+                        
+                        // Redirect after brief success indication
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 800);
+                    } else {
+                        // Remove loading state
+                        formContainer.classList.remove('loading');
+                        loginBtn.innerHTML = '<span>Access Presentation</span>';
+                        
+                        // Show error message
+                        showError('Incorrect password. Please try again.');
+                        passwordInput.focus();
+                        passwordInput.select();
+                    }
+                }, 600);
+            }
+            
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+                
+                // Hide error after 4 seconds
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 4000);
             }
             
             // Login on button click
@@ -156,8 +355,18 @@
                 }
             });
             
+            // Clear error when typing
+            passwordInput.addEventListener('input', function() {
+                errorMessage.style.display = 'none';
+            });
+            
             // Focus password field on load
             passwordInput.focus();
+            
+            // Check if already authenticated
+            if (sessionStorage.getItem('cbax_auth') === 'true') {
+                window.location.href = 'index.html';
+            }
         });
     </script>
 </body>
