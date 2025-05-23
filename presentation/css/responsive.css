@@ -32,6 +32,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px; /* Account for fixed header */
+  /* iOS fix for smooth scrolling */
+  -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -45,6 +47,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.5;
   font-size: 16px;
+  /* Force hardware acceleration on iOS for fixed elements */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Main container */
@@ -73,6 +77,12 @@ body {
   align-items: center;
   height: 50px;
   box-sizing: border-box;
+  /* iOS fixes for fixed positioning */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .header-logo {
@@ -152,6 +162,12 @@ body {
   background-color: var(--cbax-darker);
   border-bottom: 1px solid var(--cbax-border);
   outline: none;
+  /* iOS-specific fixes for position:fixed */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: position;
 }
 
 .toc-dropdown-btn {
@@ -1252,9 +1268,27 @@ svg.cbax-flow-diagram {
   
   /* Mobile specific dropdown improvements */
   .toc-dropdown {
-    position: relative;
+    position: fixed;
+    top: 50px !important; /* Force the correct position */
     z-index: 1000;
     margin-bottom: 20px;
+    /* Additional iOS-specific fixes */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: position;
+  }
+  
+  /* Fix for header on iOS */
+  .header {
+    position: fixed !important;
+    top: 0 !important;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: position;
   }
   
   .toc-dropdown-content.open {

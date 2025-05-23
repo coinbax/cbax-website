@@ -14,6 +14,26 @@ document.addEventListener('DOMContentLoaded', function() {
   initTocDropdown();
   initLightbox();
   
+  // Special fix for iOS - ensure TOC is properly positioned immediately
+  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+    // Force TOC positioning on iOS right away, don't wait
+    setTimeout(function() {
+      const header = document.querySelector('.header');
+      const tocDropdown = document.querySelector('.toc-dropdown');
+      
+      if (header && tocDropdown) {
+        // Force reflow and positioning
+        tocDropdown.style.position = 'fixed';
+        tocDropdown.style.top = `${header.offsetHeight}px`;
+        tocDropdown.style.opacity = '0.99';
+        
+        // Apply hardware acceleration to prevent jumping
+        tocDropdown.style.webkitTransform = 'translateZ(0)';
+        tocDropdown.style.transform = 'translateZ(0)';
+      }
+    }, 100); // Short delay to ensure DOM is ready
+  }
+  
   // Handle theme changes
   window.addEventListener('themechange', function() {
     initCharts(); // Redraw charts when theme changes
@@ -23,6 +43,16 @@ document.addEventListener('DOMContentLoaded', function() {
   // Register resize handler
   window.addEventListener('resize', debounce(function() {
     initCharts(); // Redraw charts on resize
+    
+    // Re-fix TOC positioning on resize for iOS
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+      const header = document.querySelector('.header');
+      const tocDropdown = document.querySelector('.toc-dropdown');
+      
+      if (header && tocDropdown) {
+        tocDropdown.style.top = `${header.offsetHeight}px`;
+      }
+    }
   }, 250));
   
   // Call this once after page load to ensure SVGs use correct colors
@@ -36,21 +66,21 @@ document.addEventListener('DOMContentLoaded', function() {
   if (exportBtn) {
     exportBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      exportPDF();
+      exportPDF(e);
     });
   }
   
   if (mobileExportBtn) {
     mobileExportBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      exportPDF();
+      exportPDF(e);
     });
   }
 
   if (closingExportBtn) {
     closingExportBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      exportPDF();
+      exportPDF(e);
     });
   }
 });
@@ -117,6 +147,31 @@ function initTocDropdown() {
   const tocDropdownContent = document.querySelector('.toc-dropdown-content');
   
   if (!tocDropdownBtn || !tocDropdownContent) return;
+  
+  // Detect iOS
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  
+  // Apply iOS-specific position fix on page load
+  if (isIOS) {
+    // Force reflow to ensure fixed positioning works correctly on iOS
+    document.querySelector('.toc-dropdown').style.opacity = '0.99';
+    
+    // Additional iOS fixes
+    function fixIOSPositioning() {
+      const header = document.querySelector('.header');
+      const tocDropdown = document.querySelector('.toc-dropdown');
+      
+      if (header && tocDropdown) {
+        tocDropdown.style.top = `${header.offsetHeight}px`;
+      }
+    }
+    
+    // Apply fix on load and scroll
+    fixIOSPositioning();
+    window.addEventListener('scroll', fixIOSPositioning);
+    window.addEventListener('resize', fixIOSPositioning);
+    window.addEventListener('orientationchange', fixIOSPositioning);
+  }
   
   // Toggle dropdown on button click
   tocDropdownBtn.addEventListener('click', function() {
@@ -695,177 +750,6 @@ function hideLoading() {
   if (loadingElement) {
     loadingElement.style.display = 'none';
   }
-}
-
-/**
- * PDF Export functionality
- */
-function exportPDF() {
-    const clickedBtn = event.target;
-    const originalText = clickedBtn.textContent;
-    clickedBtn.textContent = 'Preparing PDF...';
-    clickedBtn.disabled = true;
-    clickedBtn.style.backgroundColor = '#999';
-
-    const originalTheme = document.documentElement.getAttribute('data-theme');
-    const bodyEl = document.body;
-    const htmlEl = document.documentElement;
-
-    // Store original canvases to restore them later
-    const originalCanvases = new Map();
-    document.querySelectorAll('canvas').forEach(canvas => {
-        if (canvas.id) { // Ensure canvas has an ID
-            originalCanvases.set(canvas.id, {
-                element: canvas.cloneNode(true),
-                parent: canvas.parentNode
-            });
-        }
-    });
-
-    const prepareForPrint = async () => {
-        // Switch to light theme
-        htmlEl.setAttribute('data-theme', 'light');
-        // Dispatch themechange for SVGs and other elements that might adapt
-        window.dispatchEvent(new Event('themechange')); 
-        // A small delay for theme changes to apply visually if needed by charts before conversion
-        await new Promise(resolve => setTimeout(resolve, 50));
-
-
-        // Add printing class to apply print-specific styles
-        bodyEl.classList.add('printing-active');
-
-        // Convert charts to images
-        const chartConversionPromises = [];
-        document.querySelectorAll('canvas').forEach(canvas => {
-            const chartId = canvas.id;
-            if (!chartId) return; // Skip canvases without ID
-
-            const chartInstance = Chart.getChart(chartId);
-            if (chartInstance) {
-                const promise = new Promise((resolve, reject) => {
-                    try {
-                        const img = new Image();
-                        img.onload = () => {
-                            if (canvas.parentNode) {
-                                canvas.parentNode.replaceChild(img, canvas);
-                            }
-                            resolve();
-                        };
-                        img.onerror = (err) => {
-                            console.error(`Failed to load image for chart ${chartId}:`, err);
-                            const placeholder = document.createElement('div');
-                            placeholder.className = 'chart-render-error';
-                            placeholder.textContent = `[Chart: ${chartId} - Failed to render for PDF]`;
-                            if (canvas.parentNode) {
-                                canvas.parentNode.replaceChild(placeholder, canvas);
-                            }
-                            resolve(); // Resolve even on error to not block printing
-                        };
-                        img.src = chartInstance.toBase64Image();
-                        img.style.maxWidth = '100%';
-                        img.style.height = 'auto';
-                        img.style.display = 'block'; // Ensure it takes space
-                        img.setAttribute('data-chart-id', chartId); // Mark for restoration
-                    } catch (e) {
-                        console.error(`Error converting chart ${chartId} to image:`, e);
-                        const placeholder = document.createElement('div');
-                        placeholder.className = 'chart-render-error';
-                        placeholder.textContent = `[Chart: ${chartId} - Error during conversion]`;
-                        if (canvas.parentNode) {
-                            canvas.parentNode.replaceChild(placeholder, canvas);
-                        }
-                        resolve(); // Resolve
-                    }
-                });
-                chartConversionPromises.push(promise);
-            }
-        });
-
-        try {
-            await Promise.all(chartConversionPromises);
-        } catch (error) {
-            console.error("Error during chart conversions:", error);
-            // Proceed anyway, some charts might be missing
-        }
-        
-        // Small delay to ensure DOM is updated with images and styles are applied
-        await new Promise(resolve => setTimeout(resolve, 300));
-    };
-
-    const cleanupAfterPrint = () => {
-        bodyEl.classList.remove('printing-active');
-        htmlEl.setAttribute('data-theme', originalTheme);
-
-        // Restore canvases
-        document.querySelectorAll('img[data-chart-id]').forEach(imgPlaceholder => {
-            const chartId = imgPlaceholder.getAttribute('data-chart-id');
-            if (originalCanvases.has(chartId)) {
-                const originalCanvasInfo = originalCanvases.get(chartId);
-                if (imgPlaceholder.parentNode) {
-                    imgPlaceholder.parentNode.replaceChild(originalCanvasInfo.element, imgPlaceholder);
-                }
-            }
-        });
-        // Also remove error placeholders if any
-         document.querySelectorAll('.chart-render-error').forEach(placeholder => {
-            // This part needs to know which canvas to restore. Assuming ID convention.
-            // For simplicity, if its ID was based on chartId, we could try to restore.
-            // This example is simplified, proper restoration might need more context.
-            if(placeholder.parentNode) placeholder.parentNode.removeChild(placeholder);
-         });
-
-
-        initCharts(); // Re-initialize all charts
-
-        window.dispatchEvent(new Event('themechange'));
-
-        clickedBtn.textContent = originalText;
-        clickedBtn.disabled = false;
-        clickedBtn.style.backgroundColor = '';
-    };
-
-    const printMediaQuery = window.matchMedia('print');
-    let printDialogOpened = false;
-
-    const handlePrintMediaChange = (mql) => {
-        if (mql.matches) {
-            // This means the print dialog is about to be shown or is shown.
-            printDialogOpened = true;
-        } else {
-            // This means the print dialog has been closed.
-            if (printDialogOpened) { // Ensure it was opened by this instance
-                cleanupAfterPrint();
-                printMediaQuery.removeEventListener('change', handlePrintMediaChange); // Use 'change' for modern browsers
-            }
-        }
-    };
-    
-    // For modern browsers, the 'change' event is preferred.
-    printMediaQuery.addEventListener('change', handlePrintMediaChange);
-    
-    // Fallback for older browsers or immediate cancellation.
-    // `window.onafterprint` is an option but not universally supported for cancellations.
-    // This timeout is a less reliable fallback.
-    let fallbackTimeout = setTimeout(() => {
-        if (printDialogOpened) { // If dialog was opened but 'change' didn't fire for closing (unlikely with modern browsers)
-             // cleanupAfterPrint(); // Be cautious with this, could interfere
-             // printMediaQuery.removeEventListener('change', handlePrintMediaChange);
-        }
-    }, 5000); // 5 seconds to assume print was cancelled if no other event.
-
-    prepareForPrint()
-        .then(() => {
-            window.print();
-            // Note: `window.print()` is blocking in most browsers.
-            // The `handlePrintMediaChange` listener will handle cleanup.
-            // If it's cancelled very quickly, the `mql.matches` might go false almost immediately.
-        })
-        .catch(error => {
-            console.error('Error preparing for print:', error);
-            cleanupAfterPrint(); // Ensure cleanup on error
-            printMediaQuery.removeEventListener('change', handlePrintMediaChange);
-            clearTimeout(fallbackTimeout);
-        });
 }
 
 /**
