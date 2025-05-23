@@ -14,38 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
   initTocDropdown();
   initLightbox();
   
-  // Special fix for iOS - ensure TOC is properly positioned immediately
-  if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
-    // Force TOC positioning on iOS right away, don't wait
-    setTimeout(function() {
-      const header = document.querySelector('.header');
-      const tocDropdown = document.querySelector('.toc-dropdown');
-      
-      if (header && tocDropdown) {
-        // Change approach for iOS - use absolute positioning with fixed header height
-        document.body.classList.add('ios-device');
-        
-        // On iOS, we'll use absolute positioning with margin-top
-        tocDropdown.style.position = 'absolute';
-        tocDropdown.style.top = '0';
-        tocDropdown.style.marginTop = `${header.offsetHeight}px`;
-        
-        // Ensure the header stays in view
-        header.style.position = 'fixed';
-        header.style.top = '0';
-        
-        // Adjust main content padding
-        const mainContent = document.querySelector('.main-content');
-        if (mainContent) {
-          mainContent.style.paddingTop = `${header.offsetHeight + tocDropdown.offsetHeight + 20}px`;
-        }
-        
-        // Prevent any visual jumps
-        document.body.style.paddingTop = `${header.offsetHeight}px`;
-      }
-    }, 100); // Short delay to ensure DOM is ready
-  }
-  
   // Handle theme changes
   window.addEventListener('themechange', function() {
     initCharts(); // Redraw charts when theme changes
@@ -55,22 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Register resize handler
   window.addEventListener('resize', debounce(function() {
     initCharts(); // Redraw charts on resize
-    
-    // Re-fix TOC positioning on resize for iOS
-    if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
-      const header = document.querySelector('.header');
-      const tocDropdown = document.querySelector('.toc-dropdown');
-      
-      if (header && tocDropdown) {
-        tocDropdown.style.marginTop = `${header.offsetHeight}px`;
-        
-        // Readjust main content padding if needed
-        const mainContent = document.querySelector('.main-content');
-        if (mainContent) {
-          mainContent.style.paddingTop = `${header.offsetHeight + tocDropdown.offsetHeight + 20}px`;
-        }
-      }
-    }
   }, 250));
   
   // Call this once after page load to ensure SVGs use correct colors
@@ -166,55 +118,18 @@ function initTocDropdown() {
   
   if (!tocDropdownBtn || !tocDropdownContent) return;
   
-  // Detect iOS
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  
-  // Apply iOS-specific position fix on page load
-  if (isIOS) {
-    const header = document.querySelector('.header');
-    const tocDropdown = document.querySelector('.toc-dropdown');
-    
-    if (header && tocDropdown) {
-      // Use absolute positioning with margin-top for iOS
-      tocDropdown.style.position = 'absolute';
-      tocDropdown.style.top = '0';
-      tocDropdown.style.marginTop = `${header.offsetHeight}px`;
-      
-      // Make the header fixed for iOS
-      header.style.position = 'fixed';
-      header.style.top = '0';
-      
-      // Create a scroll handler specifically for iOS
-      window.addEventListener('scroll', function() {
-        // Ensure TOC dropdown stays properly positioned relative to scroll
-        const scrollY = window.scrollY || window.pageYOffset;
-        
-        if (scrollY <= header.offsetHeight) {
-          // Normal positioning when at top
-          tocDropdown.style.position = 'absolute';
-          tocDropdown.style.marginTop = `${header.offsetHeight}px`;
-          tocDropdown.style.top = '0';
-        } else {
-          // Switch to fixed positioning when scrolled
-          tocDropdown.style.position = 'fixed';
-          tocDropdown.style.marginTop = '0';
-          tocDropdown.style.top = `${header.offsetHeight}px`;
-        }
-      });
-    }
-  }
-  
-  // Toggle dropdown on button click
+  // Simple toggle for dropdown on button click
   tocDropdownBtn.addEventListener('click', function() {
-    // Toggle the open class on the dropdown content
+    // Toggle the open class for dropdown content
     tocDropdownContent.classList.toggle('open');
-    // Toggle the active class on the button
-    tocDropdownBtn.classList.toggle('active');
     
-    // Clean up any potential inline styles that might be causing purple lines
-    tocDropdownContent.style.borderBottom = tocDropdownContent.classList.contains('open') ? 
-        '1px solid var(--cbax-border)' : 'none';
-    tocDropdownBtn.style.borderBottom = 'none';
+    // Update arrow direction if we have an SVG
+    const svg = tocDropdownBtn.querySelector('svg');
+    if (svg) {
+      svg.style.transform = tocDropdownContent.classList.contains('open') 
+        ? 'rotate(180deg)' 
+        : 'rotate(0)';
+    }
   });
   
   // Close dropdown when a link is clicked
@@ -222,7 +137,10 @@ function initTocDropdown() {
   dropdownLinks.forEach(link => {
     link.addEventListener('click', function() {
       tocDropdownContent.classList.remove('open');
-      tocDropdownBtn.classList.remove('active');
+      const svg = tocDropdownBtn.querySelector('svg');
+      if (svg) {
+        svg.style.transform = 'rotate(0)';
+      }
     });
   });
   
@@ -231,7 +149,10 @@ function initTocDropdown() {
     if (!tocDropdownBtn.contains(event.target) && 
         !tocDropdownContent.contains(event.target)) {
       tocDropdownContent.classList.remove('open');
-      tocDropdownBtn.classList.remove('active');
+      const svg = tocDropdownBtn.querySelector('svg');
+      if (svg) {
+        svg.style.transform = 'rotate(0)';
+      }
     }
   });
   
