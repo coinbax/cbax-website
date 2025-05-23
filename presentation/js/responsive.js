@@ -156,27 +156,46 @@ function initTocDropdown() {
     }
   });
   
-  // Update active link in dropdown based on current section
-  window.addEventListener('scroll', debounce(function() {
+  // Update active link in dropdown and button text based on current section
+  function updateCurrentSection() {
     const sections = document.querySelectorAll('section[id]');
     let currentSection = '';
+    let currentSectionTitle = 'Table of Contents';
     
     sections.forEach(section => {
       const sectionTop = section.offsetTop;
       const sectionHeight = section.offsetHeight;
-      if (window.pageYOffset >= sectionTop - 100 && 
-          window.pageYOffset < sectionTop + sectionHeight - 100) {
+      if (window.pageYOffset >= sectionTop - 150 && 
+          window.pageYOffset < sectionTop + sectionHeight - 150) {
         currentSection = section.getAttribute('id');
+        // Get the section title from the heading
+        const heading = section.querySelector('h1, h2, .section-title');
+        if (heading) {
+          currentSectionTitle = heading.textContent.trim();
+        }
       }
     });
     
+    // Update dropdown links
     dropdownLinks.forEach(link => {
       link.classList.remove('active');
       if (link.getAttribute('href') === `#${currentSection}`) {
         link.classList.add('active');
       }
     });
-  }, 100));
+    
+    // Update button text to show current section
+    const buttonTextNode = tocDropdownBtn.firstChild;
+    if (buttonTextNode && buttonTextNode.nodeType === Node.TEXT_NODE) {
+      buttonTextNode.textContent = currentSectionTitle + ' ';
+    }
+  }
+  
+  // Update on scroll
+  window.addEventListener('scroll', debounce(updateCurrentSection, 100));
+  
+  // Initial update
+  updateCurrentSection();
 }
 
 /**

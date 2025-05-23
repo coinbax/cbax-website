@@ -31,7 +31,7 @@
 /* Base Layout */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* Account for fixed header */
+  scroll-padding-top: 120px; /* Increased to account for header + TOC */
   /* iOS fix for smooth scrolling */
   -webkit-overflow-scrolling: touch;
 }
@@ -61,10 +61,12 @@ body {
   flex-direction: column;
 }
 
-/* Header */
+/* Header - Always fixed at top */
 .header {
-  position: static;
-  width: 100%;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
   height: 50px;
   z-index: 100;
   background-color: var(--cbax-darker);
@@ -73,6 +75,7 @@ body {
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
+  padding: 0 var(--content-padding-mobile);
 }
 
 .header-logo {
@@ -138,12 +141,13 @@ body {
   margin: 0 !important;
 }
 
-/* Dropdown TOC for mobile */
+/* Dropdown TOC for mobile - Always fixed just below header */
 .toc-dropdown {
-  position: static;
-  width: 100%;
+  position: fixed !important;
+  top: 50px !important; /* Position right below the header */
+  left: 0 !important;
+  width: 100% !important;
   z-index: 95;
-  margin: 50px 0 0 0; /* Account for header height */
   background-color: var(--cbax-darker);
   border-bottom: 1px solid var(--cbax-border);
 }
@@ -229,7 +233,7 @@ body {
 .section {
   margin-bottom: var(--section-spacing);
   width: 100%;
-  scroll-margin-top: 80px; /* Ensure scrolling targets account for fixed header */
+  scroll-margin-top: 120px; /* Increased to ensure scrolling targets account for fixed header + TOC */
 }
 
 .section-title {
@@ -280,21 +284,26 @@ body {
 
 /* Adjust spacing to account for fixed dropdown */
 .section:first-of-type {
-  padding-top: 20px;
+  padding-top: 0; /* Remove extra padding since main-content handles it now */
 }
 
-/* Adjust main content padding to account for fixed TOC */
+/* Adjust main content padding to account for fixed header and TOC */
 .main-content {
-  padding-top: 20px;
+  padding-top: 120px !important; /* Space for header + TOC */
   margin-top: 0;
+  padding-left: var(--content-padding-mobile);
+  padding-right: var(--content-padding-mobile);
+  padding-bottom: var(--content-padding-mobile);
 }
 
 /* Desktop Layout Improvements */
 @media (min-width: 769px) {
-  /* Reset mobile-specific fixed positioning for header on desktop */
+  /* Keep header fixed on desktop */
   .header {
-    position: sticky;
-    width: 100%;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
     padding: 16px var(--content-padding-desktop);
     height: 60px;
   }
@@ -310,7 +319,7 @@ body {
   .content {
     flex-direction: row;
     padding: 0;
-    margin-top: 0; /* Reset mobile margin */
+    margin-top: 60px; /* Account for fixed header */
     max-width: 100%;
   }
   
@@ -325,8 +334,8 @@ body {
     max-width: calc(100% - var(--sidebar-width) - 80px);
     margin-left: 40px;
     margin-right: var(--content-padding-desktop);
-    padding: var(--content-padding-desktop);
-    padding-top: var(--content-padding-desktop);
+    padding: var(--content-padding-desktop) !important;
+    padding-top: 40px !important; /* Less padding since no TOC dropdown */
   }
   
   /* Hide mobile footer on desktop */
@@ -334,21 +343,26 @@ body {
     display: none;
   }
   
-  /* Left sidebar on desktop with open design */
+  /* Left sidebar on desktop with sticky positioning */
   .sidebar {
     width: var(--sidebar-width);
     margin-left: var(--content-padding-desktop);
     margin-right: 0;
     position: sticky;
-    top: 100px;
+    top: 80px; /* Position below fixed header */
     align-self: flex-start;
-    max-height: calc(100vh - 100px);
+    max-height: calc(100vh - 80px);
     overflow-y: auto;
     padding-left: 0;
     order: 0;
     margin-bottom: 0;
     background: transparent;
-    display: block; /* Ensure it's visible */
+    display: block;
+  }
+  
+  /* Hide dropdown TOC on desktop */
+  .toc-dropdown {
+    display: none !important;
   }
   
   /* Remove card styling from TOC in desktop view */
@@ -942,7 +956,7 @@ body:after {
     font-size: 2.5rem;
   }
   
-  .section-title {
+ .section-title {
     font-size: 2.5rem;
   }
   
@@ -1458,310 +1472,4 @@ body.printing-active .main-content {
     padding: 0 !important;
 }
 
-/* Adjust main content padding */
-.main-content {
-  padding: var(--content-padding-mobile);
-}
-
-/* Adjust main content to account for the fixed TOC */
-.main-content {
-  margin-top: 0;
-}
-
-/* For desktop: improve TOC styling */
-@media (min-width: 769px) {
-  /* Reset header to sticky */
-  .header {
-    position: sticky;
-    top: 0;
-    padding: 16px var(--content-padding-desktop);
-    height: 60px;
-  }
-  
-  /* Reset content margin and layout */
-  .content {
-    margin-top: 0;
-    flex-direction: row;
-    padding: 0;
-  }
-  
-  /* Container layout */
-  .container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    max-width: 100%;
-    padding: 0;
-    margin: 0 auto;
-  }
-  
-  /* Left sidebar on desktop with open design */
-  .sidebar {
-    width: var(--sidebar-width);
-    margin-left: var(--content-padding-desktop);
-    margin-right: 0;
-    position: sticky;
-    top: 100px;
-    align-self: flex-start;
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-    padding-left: 0;
-    order: 0;
-    margin-bottom: 0;
-    background: transparent;
-    display: block; /* Ensure it's visible */
-  }
-  
-  /* Remove card styling from TOC in desktop view */
-  .sidebar .card:first-child,
-  .sidebar .sidebar-toc {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
-    display: block; /* Ensure it's visible */
-  }
-  
-  /* Style the TOC heading to match the screenshot */
-  .sidebar .card:first-child h3,
-  .sidebar .sidebar-toc h3 {
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    letter-spacing: 1px;
-    font-family: var(--cbax-heading-font);
-  }
-  
-  /* Add vertical line to TOC */
-  .toc-links {
-    border-left: 2px solid var(--cbax-border);
-    padding-left: 15px;
-    margin-top: 0;
-    display: block; /* Ensure it's visible */
-  }
-  
-  /* Style TOC links */
-  .toc-links li {
-    margin-bottom: 0.7rem;
-  }
-  
-  .toc-links a {
-    font-family: var(--cbax-heading-font);
-    font-size: 0.95rem;
-    color: var(--cbax-text);
-    text-decoration: none;
-    transition: color 0.2s;
-    display: block;
-    padding: 4px 0;
-    /* Ensure no background or borders by default */
-    background: none;
-    border: none;
-    box-shadow: none;
-    outline: none;
-  }
-  
-  .toc-links a:hover {
-    color: var(--cbax-primary);
-  }
-  
-  /* Active state for TOC items - only highlight text color */
-  .toc-links a.active {
-    color: var(--cbax-primary);
-    font-weight: 600;
-    /* Explicitly remove any background/border styling */
-    background: none;
-    border: none !important;
-    border-left: none !important;
-    padding-left: 0;
-    margin-left: 0;
-    box-shadow: none;
-    text-decoration: none;
-    outline: none !important;
-  }
-  
-  /* Hide TOC dropdown on desktop */
-  .toc-dropdown {
-    display: none;
-  }
-  
-  /* Hide mobile footer on desktop */
-  .mobile-footer {
-    display: none;
-  }
-  
-  /* Reset section spacing */
-  .section:first-of-type {
-    padding-top: 0;
-  }
-  
-  /* Set proper spacing for all sections */
-  .section {
-    margin-bottom: calc(var(--section-spacing) * 1.5);
-    scroll-margin-top: 100px;
-  }
-  
-  /* Make sure main content layout is correct */
-  .main-content {
-    flex: 1;
-    max-width: calc(100% - var(--sidebar-width) - 80px);
-    margin-left: 40px;
-    margin-right: var(--content-padding-desktop);
-    padding: var(--content-padding-desktop);
-  }
-  
-  /* Make tables display properly */
-  .responsive-table {
-    display: table;
-    overflow-x: visible;
-  }
-  
-  /* For left-aligned layout, use left-aligned headings */
-  h1, h2, h3, .section-title {
-    text-align: left;
-  }
-  
-  /* Grid layout adjustments for desktop */
-  .grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
-  }
-  
-  /* Larger chart containers on desktop */
-  .chart-container {
-    height: 350px;
-  }
-  
-  /* Show sidebar cards and TOC links */
-  .sidebar .card:not(:first-child) {
-    display: block;
-  }
-  
-  .card .toc-links {
-    display: block;
-  }
-  
-  /* Properly style titles */
-  .section-title {
-    font-size: 2.2rem;
-  }
-}
-
-/* iOS-specific fixes */
-body.ios-device {
-  /* Ensure the body accommodates the fixed header */
-  padding-top: 0;
-}
-
-body.ios-device .main-content {
-  /* Ensure content starts below the fixed header and TOC */
-  padding-top: 20px;
-}
-
-body.ios-device .toc-dropdown {
-  /* iOS-specific TOC styling */
-  position: static;
-  margin-top: 0;
-}
-
-/* Adjust main content padding for iOS */
-@media (max-width: 480px) {
-  body.ios-device .main-content {
-    padding-top: 140px; /* Increased padding to ensure content is visible */
-  }
-  
-  body.ios-device .section:first-of-type {
-    padding-top: 20px; /* Reduced padding for first section */
-  }
-}
-
-/* Mobile Browser Fixes */
-@media screen and (max-width: 768px) {
-  /* Wrapper to ensure proper layout on mobile */
-  .container {
-    padding-top: 50px; /* Account for header height */
-  }
-  
-  /* Header positioning for mobile */
-  .header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 100;
-  }
-  
-  /* TOC positioning for mobile */
-  .toc-dropdown {
-    margin-top: 0;
-    position: relative;
-    z-index: 95;
-  }
-  
-  /* Main content adjustments */
-  .main-content {
-    padding: var(--content-padding-mobile);
-    margin-top: 30px;
-  }
-}
-
-/* Specific fixes for very small mobile screens */
-@media screen and (max-width: 480px) {
-  /* Reset any problematic fixed positioning */
-  .header, .toc-dropdown {
-    position: static !important;
-    width: 100% !important;
-  }
-  
-  /* Ensure the container has proper spacing */
-  .container {
-    padding-top: 0 !important;
-  }
-  
-  /* Simple flex column layout */
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Header at the top */
-  .header {
-    order: 0;
-  }
-  
-  /* TOC below header */
-  .toc-dropdown {
-    order: 1;
-  }
-  
-  /* Content below TOC */
-  .content {
-    order: 2;
-  }
-  
-  /* Ensure padding is adequate */
-  .main-content {
-    padding: var(--content-padding-mobile);
-    margin-top: 10px;
-  }
-}
-
-/* Additional iOS Safari compatibility fix */
-@supports (-webkit-touch-callout: none) {
-  /* iOS specific rules */
-  body, html {
-    height: 100% !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-  
-  .toc-dropdown-content.open {
-    height: auto !important;
-    max-height: 80vh !important;
-    overflow-y: auto !important;
-  }
-  
-  .header, .toc-dropdown {
-    position: static !important;
-  }
-} 
+/* End of CSS - removed all conflicting overrides */ 
