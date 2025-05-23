@@ -22,14 +22,26 @@ document.addEventListener('DOMContentLoaded', function() {
       const tocDropdown = document.querySelector('.toc-dropdown');
       
       if (header && tocDropdown) {
-        // Force reflow and positioning
-        tocDropdown.style.position = 'fixed';
-        tocDropdown.style.top = `${header.offsetHeight}px`;
-        tocDropdown.style.opacity = '0.99';
+        // Change approach for iOS - use absolute positioning with fixed header height
+        document.body.classList.add('ios-device');
         
-        // Apply hardware acceleration to prevent jumping
-        tocDropdown.style.webkitTransform = 'translateZ(0)';
-        tocDropdown.style.transform = 'translateZ(0)';
+        // On iOS, we'll use absolute positioning with margin-top
+        tocDropdown.style.position = 'absolute';
+        tocDropdown.style.top = '0';
+        tocDropdown.style.marginTop = `${header.offsetHeight}px`;
+        
+        // Ensure the header stays in view
+        header.style.position = 'fixed';
+        header.style.top = '0';
+        
+        // Adjust main content padding
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+          mainContent.style.paddingTop = `${header.offsetHeight + tocDropdown.offsetHeight + 20}px`;
+        }
+        
+        // Prevent any visual jumps
+        document.body.style.paddingTop = `${header.offsetHeight}px`;
       }
     }, 100); // Short delay to ensure DOM is ready
   }
@@ -50,7 +62,13 @@ document.addEventListener('DOMContentLoaded', function() {
       const tocDropdown = document.querySelector('.toc-dropdown');
       
       if (header && tocDropdown) {
-        tocDropdown.style.top = `${header.offsetHeight}px`;
+        tocDropdown.style.marginTop = `${header.offsetHeight}px`;
+        
+        // Readjust main content padding if needed
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+          mainContent.style.paddingTop = `${header.offsetHeight + tocDropdown.offsetHeight + 20}px`;
+        }
       }
     }
   }, 250));
@@ -153,24 +171,37 @@ function initTocDropdown() {
   
   // Apply iOS-specific position fix on page load
   if (isIOS) {
-    // Force reflow to ensure fixed positioning works correctly on iOS
-    document.querySelector('.toc-dropdown').style.opacity = '0.99';
+    const header = document.querySelector('.header');
+    const tocDropdown = document.querySelector('.toc-dropdown');
     
-    // Additional iOS fixes
-    function fixIOSPositioning() {
-      const header = document.querySelector('.header');
-      const tocDropdown = document.querySelector('.toc-dropdown');
+    if (header && tocDropdown) {
+      // Use absolute positioning with margin-top for iOS
+      tocDropdown.style.position = 'absolute';
+      tocDropdown.style.top = '0';
+      tocDropdown.style.marginTop = `${header.offsetHeight}px`;
       
-      if (header && tocDropdown) {
-        tocDropdown.style.top = `${header.offsetHeight}px`;
-      }
+      // Make the header fixed for iOS
+      header.style.position = 'fixed';
+      header.style.top = '0';
+      
+      // Create a scroll handler specifically for iOS
+      window.addEventListener('scroll', function() {
+        // Ensure TOC dropdown stays properly positioned relative to scroll
+        const scrollY = window.scrollY || window.pageYOffset;
+        
+        if (scrollY <= header.offsetHeight) {
+          // Normal positioning when at top
+          tocDropdown.style.position = 'absolute';
+          tocDropdown.style.marginTop = `${header.offsetHeight}px`;
+          tocDropdown.style.top = '0';
+        } else {
+          // Switch to fixed positioning when scrolled
+          tocDropdown.style.position = 'fixed';
+          tocDropdown.style.marginTop = '0';
+          tocDropdown.style.top = `${header.offsetHeight}px`;
+        }
+      });
     }
-    
-    // Apply fix on load and scroll
-    fixIOSPositioning();
-    window.addEventListener('scroll', fixIOSPositioning);
-    window.addEventListener('resize', fixIOSPositioning);
-    window.addEventListener('orientationchange', fixIOSPositioning);
   }
   
   // Toggle dropdown on button click

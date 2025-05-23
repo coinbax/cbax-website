@@ -168,6 +168,9 @@ body {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   will-change: position;
+  /* Additional iOS fix */
+  -webkit-position: sticky;
+  position: -webkit-sticky;
 }
 
 .toc-dropdown-btn {
@@ -1268,7 +1271,8 @@ svg.cbax-flow-diagram {
   
   /* Mobile specific dropdown improvements */
   .toc-dropdown {
-    position: fixed;
+    position: -webkit-sticky !important;
+    position: sticky !important;
     top: 50px !important; /* Force the correct position */
     z-index: 1000;
     margin-bottom: 20px;
@@ -1282,13 +1286,14 @@ svg.cbax-flow-diagram {
   
   /* Fix for header on iOS */
   .header {
-    position: fixed !important;
+    position: -webkit-sticky !important;
+    position: sticky !important;
     top: 0 !important;
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    will-change: position;
+    will-change: transform;
   }
   
   .toc-dropdown-content.open {
@@ -1704,5 +1709,37 @@ body.printing-active .main-content {
   /* Properly style titles */
   .section-title {
     font-size: 2.2rem;
+  }
+}
+
+/* iOS-specific fixes */
+body.ios-device {
+  /* Ensure the body accommodates the fixed header */
+  padding-top: 50px;
+}
+
+body.ios-device .main-content {
+  /* Ensure content starts below the fixed header and TOC */
+  padding-top: 120px;
+}
+
+body.ios-device .toc-dropdown {
+  /* iOS-specific TOC styling */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 95;
+}
+
+/* Adjust main content padding for iOS */
+@media (max-width: 480px) {
+  body.ios-device .main-content {
+    padding-top: 140px; /* Increased padding to ensure content is visible */
+  }
+  
+  body.ios-device .section:first-of-type {
+    padding-top: 20px; /* Reduced padding for first section */
   }
 } 
