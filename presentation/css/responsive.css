@@ -139,6 +139,8 @@ body {
   box-shadow: none !important;
   padding: 0 !important;
   margin: 0 !important;
+  /* Hide sidebar TOC on mobile - only show dropdown */
+  display: none !important;
 }
 
 /* Dropdown TOC for mobile - Always fixed just below header */
@@ -391,7 +393,7 @@ body {
     box-shadow: none;
     padding: 0;
     margin: 0;
-    display: block; /* Ensure it's visible */
+    display: block !important; /* Ensure it's visible on desktop */
   }
   
   /* Ensure TOC is visible on desktop - override mobile hiding rule */
@@ -1001,6 +1003,12 @@ body:after {
 @media (max-width: 768px) {
   body {
     font-size: 15px;
+  }
+  
+  /* Explicitly hide sidebar TOC on mobile - only show dropdown */
+  .sidebar-toc,
+  .sidebar .sidebar-toc {
+    display: none !important;
   }
   
   .section-title {
