@@ -1501,52 +1501,102 @@ body.printing-active .main-content {
     padding: 0 !important;
 }
 
+/* Table styling for all screen sizes */
+.table-scroll-container {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1.5rem;
+}
+
+.responsive-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid var(--cbax-primary);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  margin: 0;
+}
+
+.responsive-table th {
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid var(--cbax-border);
+  background-color: var(--cbax-primary-light);
+  font-weight: 600;
+  border-bottom: 2px solid var(--cbax-primary);
+}
+
+.responsive-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border: 1px solid var(--cbax-border);
+}
+
+.responsive-table tr:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.responsive-table .highlighted-row {
+  background-color: var(--cbax-primary-light);
+  border: 2px solid var(--cbax-primary);
+}
+
+.responsive-table .highlighted-row td:first-child {
+  border-left: 3px solid var(--cbax-primary);
+}
+
 /* Mobile and Tablet Table Responsiveness - Apply to devices up to 900px */
 @media (max-width: 900px) {
-  /* Table container with horizontal scrolling - force containment */
-  .section .responsive-table {
-    max-width: 100% !important;
-    width: 100% !important;
-    margin: 0 0 1rem 0 !important;
-    display: block !important;
-    box-sizing: border-box !important;
+  .table-scroll-container {
+    margin: 0 -20px 1rem -20px; /* Extend to edge of screen */
+    padding: 0 20px; /* Add padding back inside */
+    overflow-x: auto;
   }
   
-  /* Wrap tables in scrollable container */
   .responsive-table {
-    display: block !important;
-    width: 100% !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    border: 1px solid var(--cbax-border) !important;
-  }
-
-  /* Make sure the table itself is properly structured */
-  .responsive-table table {
-    width: auto !important;
-    margin: 0 !important;
-    border-collapse: collapse !important;
-  }
-  
-  /* Keep normal table cell behavior */
-  .responsive-table thead tr,
-  .responsive-table tbody tr {
-    display: table-row !important;
+    min-width: 100%;
+    font-size: 0.8rem;
+    table-layout: fixed; /* Force equal column widths */
   }
   
   .responsive-table th,
   .responsive-table td {
-    display: table-cell !important;
-    padding: 6px 8px !important;
-    border: 1px solid var(--cbax-border) !important;
-    white-space: nowrap !important;
-    font-size: 0.75rem !important;
+    padding: 0.5rem 0.4rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
-  /* Additional fix for iOS Safari */
-  .section:has(.responsive-table) {
-    overflow: hidden !important;
-    max-width: 100% !important;
+  .responsive-table th {
+    font-size: 0.7rem;
+    padding: 0.5rem 0.3rem;
+  }
+  
+  /* Specific column width constraints for mobile */
+  .responsive-table th:first-child,
+  .responsive-table td:first-child {
+    width: 30%;
+    min-width: 80px;
+  }
+  
+  .responsive-table th:not(:first-child),
+  .responsive-table td:not(:first-child) {
+    width: 23.33%;
+    min-width: 60px;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .responsive-table th,
+  .responsive-table td {
+    padding: 0.3rem 0.2rem;
+    font-size: 0.7rem;
+  }
+  
+  .responsive-table th {
+    font-size: 0.65rem;
   }
 }
 
