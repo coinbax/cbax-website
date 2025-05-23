@@ -1062,57 +1062,6 @@ body:after {
     font-size: 0.9em;
   }
   
-  /* Make competitive table mobile-friendly */
-  .responsive-table {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    border: 1px solid var(--cbax-border) !important;
-  }
-  
-  .responsive-table thead,
-  .responsive-table tbody,
-  .responsive-table th,
-  .responsive-table td,
-  .responsive-table tr {
-    display: block;
-  }
-  
-  .responsive-table thead tr {
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-  
-  .responsive-table tr {
-    margin-bottom: 10px;
-    border: 1px solid var(--cbax-border);
-    border-radius: 8px;
-    padding: 8px;
-    background-color: var(--cbax-card-bg);
-  }
-  
-  .responsive-table td {
-    border: none !important;
-    position: relative;
-    padding: 8px 8px 8px 45% !important;
-    white-space: normal;
-    text-align: left;
-  }
-  
-  .responsive-table td:before {
-    content: attr(data-label) ": ";
-    position: absolute;
-    left: 8px;
-    width: 40%;
-    padding-right: 10px;
-    white-space: nowrap;
-    font-weight: 600;
-    color: var(--cbax-primary);
-  }
-  
   section:last-of-type {
     margin-bottom: 60px;
   }
@@ -1550,6 +1499,68 @@ body.printing-active .main-content {
     width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+}
+
+/* Mobile and Tablet Table Responsiveness - Apply to devices up to 900px */
+@media (max-width: 900px) {
+  /* Make competitive table mobile-friendly - override inline styles */
+  .responsive-table {
+    display: block !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    border: 1px solid var(--cbax-border) !important;
+    border-collapse: separate !important;
+    margin: 1rem 0 !important;
+    box-shadow: none !important;
+  }
+  
+  .responsive-table thead,
+  .responsive-table tbody,
+  .responsive-table th,
+  .responsive-table td,
+  .responsive-table tr {
+    display: block !important;
+  }
+  
+  .responsive-table thead tr {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+  }
+  
+  .responsive-table tr {
+    margin-bottom: 10px !important;
+    border: 1px solid var(--cbax-border) !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
+    background-color: var(--cbax-card-bg) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  .responsive-table td {
+    border: none !important;
+    position: relative !important;
+    padding: 8px 8px 8px 45% !important;
+    white-space: normal !important;
+    text-align: left !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  .responsive-table td:before {
+    content: attr(data-label) ": " !important;
+    position: absolute !important;
+    left: 8px !important;
+    width: 40% !important;
+    padding-right: 10px !important;
+    white-space: nowrap !important;
+    font-weight: 600 !important;
+    color: var(--cbax-primary) !important;
+    font-size: 0.9rem !important;
+  }
 }
 
 /* End of CSS - removed all conflicting overrides */ 
