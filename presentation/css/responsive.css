@@ -1745,4 +1745,23 @@ body.ios-device .toc-dropdown {
     padding: var(--content-padding-mobile);
     margin-top: 10px;
   }
+}
+
+/* Additional iOS Safari compatibility fix */
+@supports (-webkit-touch-callout: none) {
+  /* iOS specific rules */
+  body, html {
+    height: 100% !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  .toc-dropdown-content.open {
+    height: auto !important;
+    max-height: 80vh !important;
+    overflow-y: auto !important;
+  }
+  
+  .header, .toc-dropdown {
+    position: static !important;
+  }
 } 
