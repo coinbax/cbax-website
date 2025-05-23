@@ -1062,6 +1062,57 @@ body:after {
     font-size: 0.9em;
   }
   
+  /* Make competitive table mobile-friendly */
+  .responsive-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--cbax-border) !important;
+  }
+  
+  .responsive-table thead,
+  .responsive-table tbody,
+  .responsive-table th,
+  .responsive-table td,
+  .responsive-table tr {
+    display: block;
+  }
+  
+  .responsive-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  
+  .responsive-table tr {
+    margin-bottom: 10px;
+    border: 1px solid var(--cbax-border);
+    border-radius: 8px;
+    padding: 8px;
+    background-color: var(--cbax-card-bg);
+  }
+  
+  .responsive-table td {
+    border: none !important;
+    position: relative;
+    padding: 8px 8px 8px 45% !important;
+    white-space: normal;
+    text-align: left;
+  }
+  
+  .responsive-table td:before {
+    content: attr(data-label) ": ";
+    position: absolute;
+    left: 8px;
+    width: 40%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: 600;
+    color: var(--cbax-primary);
+  }
+  
   section:last-of-type {
     margin-bottom: 60px;
   }
