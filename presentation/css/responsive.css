@@ -1503,56 +1503,50 @@ body.printing-active .main-content {
 
 /* Mobile and Tablet Table Responsiveness - Apply to devices up to 900px */
 @media (max-width: 900px) {
-  /* Make tables fit on mobile - keep table format but improve sizing */
+  /* Table container with horizontal scrolling - force containment */
+  .section .responsive-table {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 0 1rem 0 !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Wrap tables in scrollable container */
   .responsive-table {
-    font-size: 0.8rem !important;
+    display: block !important;
     width: 100% !important;
     overflow-x: auto !important;
     -webkit-overflow-scrolling: touch !important;
-    display: table !important;
+    border: 1px solid var(--cbax-border) !important;
+  }
+
+  /* Make sure the table itself is properly structured */
+  .responsive-table table {
+    width: auto !important;
+    margin: 0 !important;
     border-collapse: collapse !important;
-    margin: 1rem 0 !important;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+  }
+  
+  /* Keep normal table cell behavior */
+  .responsive-table thead tr,
+  .responsive-table tbody tr {
+    display: table-row !important;
   }
   
   .responsive-table th,
   .responsive-table td {
+    display: table-cell !important;
     padding: 6px 8px !important;
-    font-size: 0.75rem !important;
     border: 1px solid var(--cbax-border) !important;
     white-space: nowrap !important;
+    font-size: 0.75rem !important;
   }
   
-  .responsive-table th {
-    background-color: var(--cbax-primary-light) !important;
-    font-weight: 600 !important;
-    font-size: 0.7rem !important;
-    padding: 8px 6px !important;
-  }
-  
-  /* Specific adjustments for competitive table columns */
-  .responsive-table td:first-child,
-  .responsive-table th:first-child {
-    min-width: 80px !important;
-    font-size: 0.7rem !important;
-  }
-  
-  .responsive-table td:nth-child(2),
-  .responsive-table th:nth-child(2) {
-    min-width: 60px !important;
-    text-align: center !important;
-  }
-  
-  .responsive-table td:nth-child(3),
-  .responsive-table th:nth-child(3) {
-    min-width: 70px !important;
-    text-align: center !important;
-  }
-  
-  .responsive-table td:nth-child(4),
-  .responsive-table th:nth-child(4) {
-    min-width: 70px !important;
-    text-align: center !important;
+  /* Additional fix for iOS Safari */
+  .section:has(.responsive-table) {
+    overflow: hidden !important;
+    max-width: 100% !important;
   }
 }
 

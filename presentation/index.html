@@ -462,37 +462,39 @@
                         </ul>
                     </div>
                     
-                    <table class="responsive-table" style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; border: 3px solid #605cff; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                        <thead>
-                            <tr>
-                                <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Processor</th>
-                                <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Fee</th>
-                                <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">What's Included</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background-color: rgba(0, 0, 0, 0.03);">
-                                <td data-label="Processor" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Credit Cards</td>
-                                <td data-label="Fee" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">1.5% – 3.5%</td>
-                                <td data-label="What's Included" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Interchange + processor fees</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Processor" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Stripe (Stablecoin)</td>
-                                <td data-label="Fee" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">1.5%</td>
-                                <td data-label="What's Included" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Basic transfer, minimal protections</td>
-                            </tr>
-                            <tr style="background-color: rgba(0, 0, 0, 0.03);">
-                                <td data-label="Processor" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Coingate</td>
-                                <td data-label="Fee" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">&lt;1%</td>
-                                <td data-label="What's Included" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Crypto transfer only</td>
-                            </tr>
-                            <tr class="highlighted-row" style="background-color: rgba(96, 92, 255, 0.1); border: 2px solid #605cff;">
-                                <td data-label="Processor" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; border-left: 3px solid #605cff;"><strong>Coinbax</strong></td>
-                                <td data-label="Fee" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;"><strong>0.25% (25 bps)</strong></td>
-                                <td data-label="What's Included" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Escrow, dispute resolution, liquidity access</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-scroll-container" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                        <table class="responsive-table" style="width: 100%; border-collapse: collapse; border: 3px solid #605cff; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Processor</th>
+                                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Fee</th>
+                                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">What's Included</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color: rgba(0, 0, 0, 0.03);">
+                                    <td data-label="Processor" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Credit Cards</td>
+                                    <td data-label="Fee" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">1.5% – 3.5%</td>
+                                    <td data-label="What's Included" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Interchange + processor fees</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Processor" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Stripe (Stablecoin)</td>
+                                    <td data-label="Fee" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">1.5%</td>
+                                    <td data-label="What's Included" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Basic transfer, minimal protections</td>
+                                </tr>
+                                <tr style="background-color: rgba(0, 0, 0, 0.03);">
+                                    <td data-label="Processor" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Coingate</td>
+                                    <td data-label="Fee" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">&lt;1%</td>
+                                    <td data-label="What's Included" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Crypto transfer only</td>
+                                </tr>
+                                <tr class="highlighted-row" style="background-color: rgba(96, 92, 255, 0.1); border: 2px solid #605cff;">
+                                    <td data-label="Processor" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; border-left: 3px solid #605cff;"><strong>Coinbax</strong></td>
+                                    <td data-label="Fee" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;"><strong>0.25% (25 bps)</strong></td>
+                                    <td data-label="What's Included" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Escrow, dispute resolution, liquidity access</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     
                     <p class="footer-note">Fits under 1%—built for platforms that need speed, trust, and savings.</p>
                 </section>
@@ -513,42 +515,44 @@
                 <!-- Competitive Landscape Section -->
                 <section id="competitive" class="section fade-in">
                     <h2 class="section-title">Standing Out in the Market</h2>
-                    <table class="responsive-table" style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; border: 3px solid #605cff; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                        <thead>
-                            <tr>
-                                <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Feature</th>
-                                <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Coinbax</th>
-                                <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Circle Refund Protocol</th>
-                                <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Traditional Systems</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background-color: rgba(0, 0, 0, 0.03);">
-                                <td data-label="Feature" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Multi-Chain Support</td>
-                                <td data-label="Coinbax" class="text-primary" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #605cff; font-weight: 600;">Yes</td>
-                                <td data-label="Circle Refund Protocol" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Limited</td>
-                                <td data-label="Traditional Systems" class="text-accent" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #ff5c5c; font-weight: 600;">No</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Feature" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Integrated Liquidity</td>
-                                <td data-label="Coinbax" class="text-primary" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #605cff; font-weight: 600;">Yes</td>
-                                <td data-label="Circle Refund Protocol" class="text-accent" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #ff5c5c; font-weight: 600;">No</td>
-                                <td data-label="Traditional Systems" class="text-primary" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #605cff; font-weight: 600;">Yes <span class="small" style="font-size: 0.8em; font-weight: normal;">(slow)</span></td>
-                            </tr>
-                            <tr style="background-color: rgba(0, 0, 0, 0.03);">
-                                <td data-label="Feature" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Dispute Resolution</td>
-                                <td data-label="Coinbax" class="text-primary" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #605cff; font-weight: 600;">Structured</td>
-                                <td data-label="Circle Refund Protocol" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Basic</td>
-                                <td data-label="Traditional Systems" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Chargebacks</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Feature" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">AI Risk Scoring</td>
-                                <td data-label="Coinbax" class="text-primary" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #605cff; font-weight: 600;">Dynamic</td>
-                                <td data-label="Circle Refund Protocol" class="text-accent" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #ff5c5c; font-weight: 600;">Not Available</td>
-                                <td data-label="Traditional Systems" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Static</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-scroll-container" style="width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 1.5rem;">
+                        <table class="responsive-table" style="width: 100%; border-collapse: collapse; border: 3px solid #605cff; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Feature</th>
+                                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Coinbax</th>
+                                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Circle Refund Protocol</th>
+                                    <th style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; background-color: rgba(96, 92, 255, 0.1); font-weight: 600; border-bottom: 2px solid #605cff;">Traditional Systems</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background-color: rgba(0, 0, 0, 0.03);">
+                                    <td data-label="Feature" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Multi-Chain Support</td>
+                                    <td data-label="Coinbax" class="text-primary" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #605cff; font-weight: 600;">Yes</td>
+                                    <td data-label="Circle Refund Protocol" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Limited</td>
+                                    <td data-label="Traditional Systems" class="text-accent" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #ff5c5c; font-weight: 600;">No</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Feature" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Integrated Liquidity</td>
+                                    <td data-label="Coinbax" class="text-primary" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #605cff; font-weight: 600;">Yes</td>
+                                    <td data-label="Circle Refund Protocol" class="text-accent" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #ff5c5c; font-weight: 600;">No</td>
+                                    <td data-label="Traditional Systems" class="text-primary" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #605cff; font-weight: 600;">Yes <span class="small" style="font-size: 0.8em; font-weight: normal;">(slow)</span></td>
+                                </tr>
+                                <tr style="background-color: rgba(0, 0, 0, 0.03);">
+                                    <td data-label="Feature" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Dispute Resolution</td>
+                                    <td data-label="Coinbax" class="text-primary" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #605cff; font-weight: 600;">Structured</td>
+                                    <td data-label="Circle Refund Protocol" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Basic</td>
+                                    <td data-label="Traditional Systems" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Chargebacks</td>
+                                </tr>
+                                <tr>
+                                    <td data-label="Feature" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">AI Risk Scoring</td>
+                                    <td data-label="Coinbax" class="text-primary" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #605cff; font-weight: 600;">Dynamic</td>
+                                    <td data-label="Circle Refund Protocol" class="text-accent" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0; color: #ff5c5c; font-weight: 600;">Not Available</td>
+                                    <td data-label="Traditional Systems" style="padding: 0.75rem; text-align: left; border: 1px solid #e0e0e0;">Static</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <div class="card card-primary mt-3">
                         <p><strong>Edge:</strong> Programmable trust layer with AI-driven risk scoring, instant liquidity, and dispute resolution</p>
                     </div>
