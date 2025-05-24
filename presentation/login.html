@@ -498,17 +498,20 @@
                                 console.log('📋 Tracking result:', result);
                                 console.log('🚀 Redirecting to presentation...');
                                 
-                                // Redirect immediately after tracking completion
-                                window.location.href = 'index.html';
+                                // Redirect immediately after tracking completion - DISABLED FOR DEBUGGING
+                                console.log('🔄 Redirect would happen here (disabled for debugging)');
+                                console.log('📊 Please check your Google Form for submitted data!');
+                                // window.location.href = 'index.html';
                             })
                             .catch(error => {
                                 console.error('❌ Error in tracking function:', error);
                                 console.log('⚠️ Redirecting anyway to not block user access...');
                                 
-                                // Still redirect even if tracking fails
-                                setTimeout(() => {
-                                    window.location.href = 'index.html';
-                                }, 1000);
+                                // Still redirect even if tracking fails - ALSO DISABLED FOR DEBUGGING
+                                console.log('🔄 Error redirect would happen here (disabled for debugging)');
+                                // setTimeout(() => {
+                                //     window.location.href = 'index.html';
+                                // }, 1000);
                             });
                     } else {
                         // Remove loading state
