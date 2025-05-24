@@ -519,10 +519,12 @@
                         
                         console.log('📤 Tracking function called successfully!');
                         
-                        // Redirect after brief success indication
+                        // Redirect after brief success indication - DISABLED FOR DEBUGGING
                         setTimeout(() => {
-                            window.location.href = 'index.html';
-                        }, 800);
+                            console.log('🔄 Redirect would happen here (disabled for debugging)');
+                            console.log('📊 Check your Google Form for submitted data!');
+                            // window.location.href = 'index.html';  // COMMENTED OUT FOR DEBUGGING
+                        }, 10000); // Extended to 10 seconds
                     } else {
                         // Remove loading state
                         formContainer.classList.remove('loading');
