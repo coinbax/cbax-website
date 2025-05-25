@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CBAX - Whitepaper</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <title>COINBAX - Whitepaper</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #121212;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
             color: white;
             font-family: 'IBM Plex Mono', monospace;
             text-align: center;
@@ -15,27 +15,61 @@
             max-width: 800px;
             margin: 0 auto;
         }
-        .logo {
-            font-size: 3rem;
-            font-weight: bold;
-            letter-spacing: 4px;
-            font-family: 'Inter', sans-serif;
-            animation: fadeIn 2s ease-in-out;
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
+            background-image: 
+                radial-gradient(circle at 25% 25%, #605cff 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, #4338ca 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            z-index: -1;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0px, 0px) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(1deg); }
+            66% { transform: translate(-20px, 20px) rotate(-1deg); }
+        }
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 600;
+            letter-spacing: 6px;
+            font-family: 'Space Grotesk', sans-serif;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #605cff, #4338ca);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { 
+                filter: drop-shadow(0 0 20px rgba(96, 92, 255, 0.3));
+            }
+            to { 
+                filter: drop-shadow(0 0 30px rgba(96, 92, 255, 0.5));
+            }
         }
         .message {
             font-size: 1.5rem;
             margin-top: 20px;
             margin-bottom: 40px;
-            opacity: 0.8;
+            opacity: 0.9;
+            font-weight: 500;
         }
         .form-container {
-            background-color: #1e1e1e;
-            padding: 30px;
-            border-radius: 8px;
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(96, 92, 255, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
             max-width: 500px;
             margin: 0 auto;
         }
@@ -45,28 +79,61 @@
             gap: 20px;
         }
         input {
-            padding: 12px;
-            border-radius: 4px;
-            border: none;
-            background-color: #2a2a2a;
-            color: white;
             font-family: 'IBM Plex Mono', monospace;
-            font-size: 1rem;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 2px solid rgba(96, 92, 255, 0.3);
+            background: rgba(42, 42, 42, 0.8);
+            color: white;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        input:focus {
+            border-color: #605cff;
+            box-shadow: 
+                0 0 0 3px rgba(96, 92, 255, 0.2),
+                0 4px 12px rgba(96, 92, 255, 0.1);
+            background: rgba(42, 42, 42, 1);
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
         }
         button {
-            padding: 12px;
-            border-radius: 4px;
-            border: none;
-            background-color: #605cff;
+            background: linear-gradient(135deg, #605cff, #4338ca);
             color: white;
-            font-family: 'IBM Plex Mono', monospace;
-            font-weight: bold;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         button:hover {
-            background-color: #4b48c7;
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(96, 92, 255, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        button:hover:before {
+            left: 100%;
         }
         .success-message {
             display: none;
@@ -76,26 +143,34 @@
         a {
             color: #605cff;
             text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
         }
         a:hover {
+            opacity: 1;
             text-decoration: underline;
         }
         .back-link {
-            margin-top: 40px;
-            display: inline-block;
+            margin-top: 30px;
+            font-size: 0.95rem;
         }
         .manual-download-btn {
             display: inline-block;
             margin-top: 15px;
-            background-color: #605cff;
+            background: linear-gradient(135deg, #605cff, #4338ca);
             color: white;
             padding: 10px 20px;
-            border-radius: 4px;
+            border-radius: 12px;
             text-decoration: none;
             font-weight: bold;
+            transition: all 0.3s ease;
         }
         .manual-download-btn:hover {
-            background-color: #4b48c7;
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(96, 92, 255, 0.3),
+                0 4px 12px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
         }
         .hidden {
             display: none;
@@ -120,7 +195,9 @@
     </style>
 </head>
 <body>
-    <div class="logo">CBAX</div>
+    <div class="background-pattern"></div>
+    
+    <div class="logo">COINBAX</div>
     <div class="message">Whitepaper Download</div>
     
     <div class="form-container">
@@ -138,7 +215,9 @@
         </div>
     </div>
     
-    <a href="index.html" class="back-link">← Back to Home</a>
+    <div class="back-link">
+        <a href="/">← Back to Home</a>
+    </div>
 
     <script>
         // Your Google Form submission URL with the correct form ID
