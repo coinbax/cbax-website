@@ -192,6 +192,33 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+                letter-spacing: 4px;
+            }
+            
+            .form-container {
+                padding: 30px 20px;
+                margin: 0 10px;
+            }
+            
+            .message {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+            
+            input, button {
+                padding: 14px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
